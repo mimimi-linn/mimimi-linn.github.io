@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- PWA 核心配置 -->
-<meta name="theme-color" content="#C9985A">
+<meta name="theme-color" content="#7DD3C0">
 <meta name="application-name" content="每日打卡">
 <meta name="description" content="治愈系自律打卡工具，记录每天的成长与进步">
 <link rel="manifest" href="manifest.json">
@@ -28,28 +28,28 @@
    全局设计规范 Design System
    ============================================ */
 :root {
-  /* 主色体系 - 温暖蛋黄酥焦糖米黄 */
-  --color-primary: #C9985A;        /* 焦糖棕：按钮、选中态、完成标识、高亮文字、进度条 */
-  --color-primary-light: #FBF3E4;  /* 淡奶黄：卡片背景、输入框选中底色、页面大面积铺垫 */
-  --color-primary-dark: #8B6F47;   /* 拿铁棕：小标题强调、图标描边、分割线 */
+  /* 主色体系 - 薄荷绿 × 巧克力棕 */
+  --color-primary: #7DD3C0;        /* 薄荷绿：按钮、选中态、完成标识、高亮文字、进度条 */
+  --color-primary-light: #E8F5F1;  /* 淡薄荷：卡片背景、输入框选中底色、页面大面积铺垫 */
+  --color-primary-dark: #5D4037;   /* 巧克力棕：小标题强调、图标描边、分割线 */
 
   /* 主色渐变 */
-  --gradient-primary: linear-gradient(135deg, #C9985A 0%, #E0B973 100%);
-  --gradient-card: linear-gradient(135deg, #FBF3E4 0%, #FFFBF0 100%);
+  --gradient-primary: linear-gradient(135deg, #7DD3C0 0%, #98D8C8 100%);
+  --gradient-card: linear-gradient(135deg, #E8F5F1 0%, #F5FBF9 100%);
 
   /* 中性色系 */
   --color-white: #FFFFFF;
-  --color-bg: #FFFBF0;             /* 页面全局米白底 */
-  --color-text-primary: #5D4037;   /* 深棕主文字 */
-  --color-text-secondary: #9C857A;  /* 浅棕辅文字 */
-  --color-text-hint: #C4B5A0;      /* 提示文字 */
-  --color-border: #EDE0CC;         /* 纤细分割线 */
-  --color-card-shadow: rgba(201, 152, 90, 0.12);
+  --color-bg: #F5FBF9;             /* 页面全局薄荷底 */
+  --color-text-primary: #5D4037;   /* 巧克力棕主文字 */
+  --color-text-secondary: #8D7B68;  /* 浅棕辅文字 */
+  --color-text-hint: #B5A99A;      /* 提示文字 */
+  --color-border: #D4E8E0;         /* 纤细分割线 */
+  --color-card-shadow: rgba(125, 211, 192, 0.15);
 
   /* 状态色 */
-  --color-checked-bg: #FBF3E4;     /* 已打卡卡片底色 */
-  --color-checked-accent: #C9985A; /* 已打卡点缀色 */
-  --color-unchecked-bg: #FFFDF7;   /* 未打卡卡片底色 */
+  --color-checked-bg: #E8F5F1;     /* 已打卡卡片底色 */
+  --color-checked-accent: #7DD3C0; /* 已打卡点缀色 */
+  --color-unchecked-bg: #FAFEFC;   /* 未打卡卡片底色 */
 
   /* 圆角规范 */
   --radius-xs: 8px;
@@ -83,7 +83,7 @@
 
   /* 阴影 */
   --shadow-card: 0 2px 12px var(--color-card-shadow);
-  --shadow-float: 0 4px 20px rgba(201, 152, 90, 0.18);
+  --shadow-float: 0 4px 20px rgba(125, 211, 192, 0.20);
 }
 
 /* ============================================
