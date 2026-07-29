@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>摄影剪辑</title>
+  <style>
+/* ============================================
+   detail-common.css - H5二级详情页共享样式
+   薄荷绿色调 | 375px移动端 | 极简治愈风格
+   ============================================ */
+
+/* --- Reset & Base --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  color: #2d3436;
+  background: #f0faf5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Top Fixed Header --- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.header-back {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #e8f8f0;
+  border-radius: 12px;
+  font-size: 18px;
+  color: #00b894;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.header-back:hover {
+  background: #d0f0e0;
+}
+
+.header-title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3436;
+  letter-spacing: 0.5px;
+}
+
+.header-drawer {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #e8f8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  color: #00b894;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.header-drawer:hover {
+  background: #d0f0e0;
+}
+
+/* --- Main Content Area --- */
+.main {
+  padding: 72px 16px 120px;
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+/* --- Card --- */
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0, 184, 148, 0.08);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-title .emoji {
+  font-size: 18px;
+}
+
+/* --- List Item --- */
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: #f7fdfb;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.list-item:last-child {
+  margin-bottom: 0;
+}
+
+.list-item-label {
+  font-size: 13px;
+  color: #2d3436;
+  font-weight: 500;
+}
+
+.list-item-value {
+  font-size: 12px;
+  color: #999;
+}
+
+/* --- Stat Row --- */
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: #00b894;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* --- Note Textarea --- */
+.note-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px;
+  border: 2px solid #e8f8f0;
+  border-radius: 14px;
+  font-size: 14px;
+  color: #2d3436;
+  background: #fafffe;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.note-textarea::placeholder {
+  color: #b2bec3;
+}
+
+.note-textarea:focus {
+  border-color: #00b894;
+}
+
+/* --- Info Card (News) --- */
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: #f7fdfb;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  transition: transform 0.2s;
+}
+
+.info-card:last-child {
+  margin-bottom: 0;
+}
+
+.info-card:active {
+  transform: scale(0.98);
+}
+
+.info-card-img {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f8f0;
+  border-radius: 14px;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.info-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d3436;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.info-card-source {
+  font-size: 11px;
+  color: #b2bec3;
+}
+
+/* --- Progress Ring --- */
+.progress-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: #e8f8f0;
+  stroke-width: 8;
+}
+
+.progress-ring-fg {
+  fill: none;
+  stroke: #00b894;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.ring-label {
+  font-size: 13px;
+  color: #999;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* --- Todo Item --- */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f7fdfb;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.todo-item:last-child {
+  margin-bottom: 0;
+}
+
+.todo-item:active {
+  background: #e8f8f0;
+}
+
+.todo-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d0e8dc;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.todo-item.done .todo-checkbox {
+  background: #00b894;
+  border-color: #00b894;
+  color: #fff;
+}
+
+.todo-text {
+  font-size: 13px;
+  color: #2d3436;
+  line-height: 1.4;
+  transition: color 0.2s;
+}
+
+.todo-item.done .todo-text {
+  color: #b2bec3;
+  text-decoration: line-through;
+}
+
+/* --- Emoji Mood Selector --- */
+.mood-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.mood-item {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: #f7fdfb;
+  cursor: pointer;
+  transition: all 0.25s;
+  user-select: none;
+}
+
+.mood-item.active {
+  border-color: #00b894;
+  background: #d0f0e0;
+  transform: scale(1.1);
+}
+
+/* --- Bottom Fixed Action Bar --- */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+.btn-primary {
+  flex: 1.2;
+  height: 48px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.2s, transform 0.15s;
+  letter-spacing: 1px;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+  transform: scale(0.97);
+}
+
+.btn-primary.checked {
+  background: linear-gradient(135deg, #b2bec3, #dfe6e9);
+  color: #fff;
+}
+
+.btn-secondary {
+  flex: 0.8;
+  height: 48px;
+  border: 2px solid #00b894;
+  border-radius: 16px;
+  background: #fff;
+  color: #00b894;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.btn-secondary:active {
+  background: #f0faf5;
+  transform: scale(0.97);
+}
+
+/* --- Toast --- */
+.toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  padding: 10px 24px;
+  background: rgba(0, 184, 148, 0.92);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s ease;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* --- Income / Expense Stat --- */
+.stat-income {
+  font-size: 28px;
+  font-weight: 700;
+  color: #00b894;
+}
+
+.stat-expense {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e17055;
+}
+
+
+/* 右侧滑出抽屉 */
+.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.drawer-overlay.open { opacity: 1; visibility: visible; }
+.drawer { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #FFFFFF; z-index: 301; transition: right 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.08); }
+.drawer.open { right: 0; }
+.drawer-header { padding: 24px 20px 16px; border-bottom: 1px solid #E0EBE6; }
+.drawer-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 28px; }
+.drawer-title { font-size: 18px; font-weight: 700; color: #5A8C78; margin-bottom: 4px; }
+.drawer-subtitle { font-size: 13px; color: #B0C4C0; }
+.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
+.drawer-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #2D3436; font-size: 15px; }
+.drawer-menu-item:active { background: #E6F2ED; }
+.drawer-menu-item.active { background: #E6F2ED; color: #5A8C78; font-weight: 600; }
+.drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+.drawer-menu-item.home-link { border-bottom: 1px solid #E0EBE6; margin-bottom: 8px; color: #5A8C78; font-weight: 600; }
+.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid #E0EBE6; }
+.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #E6F2ED; border: 1.5px solid #8FBCA8; color: #5A8C78; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
+.drawer-reset-btn:active { background: #8FBCA8; color: #fff; }
+
+</style>
+<meta name="theme-color" content="#C9985A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+</head>
+<body>
+<!-- 右侧滑出抽屉 -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="sideDrawer">
+  <div class="drawer-header">
+    <div class="drawer-avatar">🌿</div>
+    <div class="drawer-title">每日打卡工作台</div>
+    <div class="drawer-subtitle">每天进步一点点 ✨</div>
+  </div>
+  <div class="drawer-menu">
+    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a><a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a><a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a><a class="drawer-menu-item" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a><a class="drawer-menu-item" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a><a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a><a class="drawer-menu-item" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a><a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a><a class="drawer-menu-item active" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a><a class="drawer-menu-item" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a><a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a><a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a><a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-reset-btn" id="resetBtn">🔄 每日重置</button>
+  </div>
+</div>
+
+  <!-- 顶部固定标题栏 -->
+  <div class="header">
+    <a class="header-back" href="index.html">&#8592;</a>
+    <span class="header-title">摄影剪辑</span>
+    <button type="button" class="header-drawer" id="drawerBtn" style="cursor:pointer;border:none;background:#e8f8f0">&#9776;</button>
+  </div>
+
+  <!-- 中间主体内容区 -->
+  <div class="main">
+
+    <!-- 拍摄任务清单卡 -->
+    <div class="card">
+      <div class="card-title"><span class="emoji">&#128247;</span> 拍摄任务清单</div>
+      <div class="todo-item done" onclick="toggleTodo(this)">
+        <div class="checkbox">&#10003;</div>
+        <span class="todo-text">外景拍摄</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="checkbox"></div>
+        <span class="todo-text">棚拍</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="checkbox"></div>
+        <span class="todo-text">素材整理</span>
+      </div>
+    </div>
+
+    <!-- 剪辑进度记录卡 -->
+    <div class="card">
+      <div class="card-title"><span class="emoji">&#127916;</span> 剪辑进度记录</div>
+      <div class="list-item">
+        <div class="item-left">
+          <div class="item-name">城市风光短片</div>
+          <div class="item-meta">剪辑中 · 已完成 75%</div>
+        </div>
+        <div class="item-right">
+          <span class="tag">75%</span>
+        </div>
+      </div>
+      <div class="list-item">
+        <div class="item-left">
+          <div class="item-name">美食探店vlog</div>
+          <div class="item-meta">剪辑中 · 已完成 40%</div>
+        </div>
+        <div class="item-right">
+          <span class="tag">40%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 素材管理打卡卡 -->
+    <div class="card">
+      <div class="card-title"><span class="emoji">&#128190;</span> 素材管理打卡</div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-number">12</div>
+          <div class="stat-label">今日新增素材</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">356</div>
+          <div class="stat-label">总素材</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部固定操作区 -->
+  <div class="footer">
+    <button class="btn-primary" id="checkinBtn">打卡提交</button>
+    <button class="btn-secondary" id="saveBtn">记录保存</button>
+  </div>
+
+  <script>
+function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
+function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
+function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
+function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
+function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
+function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
+function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
+function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');if(!o||!d)return;var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
+function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 🌿')}
+function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
+function initDrawerEvents(){
+  var btn=document.getElementById('drawerBtn');
+  var overlay=document.getElementById('drawerOverlay');
+  var resetBtn=document.getElementById('resetBtn');
+  var checkinBtn=document.getElementById('checkinBtn');
+  var saveBtn=document.getElementById('saveBtn');
+  if(btn){btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});}
+  if(overlay){overlay.addEventListener('click',function(e){toggleDrawer()});}
+  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
+  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(8)});}
+  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
+}
+document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
+initCheckinState(8);
+</script>
+
+<!-- Service Worker 注册（PWA 离线支持） -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>

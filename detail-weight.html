@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>体重管理</title>
+<style>
+
+:root {
+  --color-primary: #8FBCA8;
+  --color-primary-light: #E6F2ED;
+  --color-primary-dark: #5A8C78;
+  --gradient-primary: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%);
+  --color-white: #FFFFFF;
+  --color-bg: #F5FAF7;
+  --color-text-primary: #2D3436;
+  --color-text-secondary: #7B8D8E;
+  --color-text-hint: #B0C4C0;
+  --color-border: #E0EBE6;
+  --color-card-shadow: rgba(143, 188, 168, 0.12);
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 50%;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-xxl: 24px;
+  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', 'Helvetica Neue', sans-serif;
+  --font-size-hero: 28px;
+  --font-size-title: 18px;
+  --font-size-body: 15px;
+  --font-size-caption: 13px;
+  --font-size-small: 11px;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --shadow-card: 0 2px 12px var(--color-card-shadow);
+  --shadow-float: 0 4px 20px rgba(143, 188, 168, 0.18);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-family); background-color: var(--color-bg); color: var(--color-text-primary); min-height: 100vh; max-width: 430px; margin: 0 auto; position: relative; padding-bottom: 90px; -webkit-font-smoothing: antialiased; }
+.detail-header { position: sticky; top: 0; z-index: 100; background: var(--color-bg); display: flex; align-items: center; justify-content: space-between; padding: var(--space-lg) var(--space-xl); height: 56px; }
+.back-btn { width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--color-white); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-card); color: var(--color-text-primary); flex-shrink: 0; text-decoration: none; }
+.back-btn:active { transform: scale(0.92); }
+.back-btn svg { width: 20px; height: 20px; }
+.detail-title { font-size: var(--font-size-title); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+.drawer-btn { width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--gradient-primary); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-float); flex-shrink: 0; }
+.drawer-btn:active { transform: scale(0.92); }
+.drawer-btn .hamburger-icon { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.drawer-btn .hamburger-icon span { display: block; width: 14px; height: 2px; background: var(--color-white); border-radius: 1px; }
+.detail-body { padding: var(--space-lg) var(--space-xl); }
+.module-title { font-size: var(--font-size-title); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm); }
+.module-title .title-emoji { font-size: 22px; }
+.card { background: var(--color-white); border-radius: var(--radius-lg); padding: var(--space-xl); box-shadow: var(--shadow-card); margin-bottom: var(--space-lg); }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
+.card-label { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); color: var(--color-primary-dark); }
+.card-label svg { width: 18px; height: 18px; }
+.stat-row { display: flex; align-items: baseline; gap: var(--space-sm); }
+.stat-big { font-size: var(--font-size-hero); font-weight: var(--font-weight-bold); color: var(--color-primary-dark); font-variant-numeric: tabular-nums; line-height: 1; }
+.stat-small { font-size: var(--font-size-caption); color: var(--color-text-hint); }
+.list-item { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
+.list-item:last-child { border-bottom: none; }
+.list-item-icon { width: 36px; height: 36px; border-radius: var(--space-xs); background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.list-item-content { flex: 1; }
+.list-item-title { font-size: var(--font-size-body); font-weight: var(--font-weight-medium); color: var(--color-text-primary); margin-bottom: 2px; }
+.list-item-sub { font-size: var(--font-size-small); color: var(--color-text-hint); }
+.list-item-meta { font-size: var(--font-size-small); color: var(--color-text-hint); flex-shrink: 0; }
+.note-textarea { width: 100%; min-height: 80px; border: 1.5px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-md); font-size: var(--font-size-body); font-family: var(--font-family); color: var(--color-text-primary); background: var(--color-bg); resize: none; outline: none; line-height: 1.6; transition: border 0.2s; }
+.note-textarea:focus { border-color: var(--color-primary); background: var(--color-white); }
+.note-textarea::placeholder { color: var(--color-text-hint); }
+.log-item { display: flex; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
+.log-item:last-child { border-bottom: none; }
+.log-time { font-size: var(--font-size-small); color: var(--color-text-hint); flex-shrink: 0; width: 50px; padding-top: 2px; }
+.log-content { flex: 1; }
+.todo-item { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
+.todo-item:last-child { border-bottom: none; }
+.todo-check { width: 22px; height: 22px; border-radius: var(--space-xs); border: 1.5px solid var(--color-border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.todo-check.done { background: var(--color-primary); border-color: var(--color-primary); }
+.todo-check.done svg { display: block; }
+.todo-check svg { display: none; width: 14px; height: 14px; }
+.todo-text { flex: 1; font-size: var(--font-size-body); color: var(--color-text-primary); }
+.todo-item.done .todo-text { text-decoration: line-through; color: var(--color-text-hint); }
+.progress-ring-wrap { display: flex; align-items: center; justify-content: center; padding: var(--space-md) 0; }
+.progress-ring { position: relative; width: 120px; height: 120px; }
+.progress-ring svg { transform: rotate(-90deg); }
+.progress-ring .ring-bg { fill: none; stroke: var(--color-border); stroke-width: 8; }
+.progress-ring .ring-fg { fill: none; stroke: var(--color-primary); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+.progress-ring .ring-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.progress-ring .ring-percent { font-size: var(--font-size-hero); font-weight: var(--font-weight-bold); color: var(--color-primary-dark); }
+.progress-ring .ring-label { font-size: var(--font-size-small); color: var(--color-text-hint); }
+.chart-container { width: 100%; height: 140px; position: relative; }
+.chart-container svg { width: 100%; height: 100%; }
+.detail-footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: var(--color-white); padding: var(--space-md) var(--space-xl); padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 20px)); display: flex; gap: var(--space-md); box-shadow: 0 -2px 12px rgba(143, 188, 168, 0.1); z-index: 50; }
+.btn-primary { flex: 2; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--gradient-primary); border: none; color: var(--color-white); font-size: var(--font-size-body); font-weight: var(--font-weight-semibold); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: transform 0.2s; box-shadow: var(--shadow-card); }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary svg { width: 18px; height: 18px; }
+.btn-primary.checked { background: var(--color-primary-light); color: var(--color-primary-dark); border: 1.5px solid var(--color-primary); }
+.btn-secondary { flex: 1; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--color-white); border: 1.5px solid var(--color-primary); color: var(--color-primary-dark); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: all 0.2s; }
+.btn-secondary:active { background: var(--color-primary-light); }
+.btn-secondary svg { width: 16px; height: 16px; }
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); background: rgba(45, 52, 54, 0.88); color: #fff; padding: 14px 22px; border-radius: var(--radius-sm); font-size: var(--font-size-caption); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: center; max-width: 240px; line-height: 1.5; backdrop-filter: blur(8px); }
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+
+/* 右侧滑出抽屉 */
+.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.drawer-overlay.open { opacity: 1; visibility: visible; }
+.drawer { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #FFFFFF; z-index: 301; transition: right 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.08); }
+.drawer.open { right: 0; }
+.drawer-header { padding: 24px 20px 16px; border-bottom: 1px solid #E0EBE6; }
+.drawer-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 28px; }
+.drawer-title { font-size: 18px; font-weight: 700; color: #5A8C78; margin-bottom: 4px; }
+.drawer-subtitle { font-size: 13px; color: #B0C4C0; }
+.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
+.drawer-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #2D3436; font-size: 15px; }
+.drawer-menu-item:active { background: #E6F2ED; }
+.drawer-menu-item.active { background: #E6F2ED; color: #5A8C78; font-weight: 600; }
+.drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+.drawer-menu-item.home-link { border-bottom: 1px solid #E0EBE6; margin-bottom: 8px; color: #5A8C78; font-weight: 600; }
+.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid #E0EBE6; }
+.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #E6F2ED; border: 1.5px solid #8FBCA8; color: #5A8C78; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
+.drawer-reset-btn:active { background: #8FBCA8; color: #fff; }
+
+</style>
+<meta name="theme-color" content="#C9985A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+</head>
+<body>
+<!-- 右侧滑出抽屉 -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="sideDrawer">
+  <div class="drawer-header">
+    <div class="drawer-avatar">🌿</div>
+    <div class="drawer-title">每日打卡工作台</div>
+    <div class="drawer-subtitle">每天进步一点点 ✨</div>
+  </div>
+  <div class="drawer-menu">
+    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a><a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a><a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a><a class="drawer-menu-item active" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a><a class="drawer-menu-item" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a><a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a><a class="drawer-menu-item" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a><a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a><a class="drawer-menu-item" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a><a class="drawer-menu-item" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a><a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a><a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a><a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-reset-btn" id="resetBtn">🔄 每日重置</button>
+  </div>
+</div>
+
+<!-- 顶部固定标题栏 -->
+<div class="detail-header">
+  <a class="back-btn" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+  <span class="detail-title">🧍‍♀️ 体重管理</span>
+  <button type="button" class="drawer-btn" id="drawerBtn"><div class="hamburger-icon"><span></span><span></span><span></span></div></button>
+</div>
+
+<!-- 主体内容区 -->
+<div class="detail-body">
+  <div class="module-title"><span class="title-emoji">🧍‍♀️</span><span>体重管理</span></div>
+
+  <!-- 体重录入卡 -->
+  <div class="card">
+    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="15" width="20" height="5" rx="2"/><path d="M12 15V5"/><circle cx="12" cy="4" r="1"/></svg>体重录入</div></div>
+    <div style="display:flex; gap:24px; align-items:baseline;">
+      <div><div class="stat-big">58.5</div><div class="stat-small">当前体重（kg）</div></div>
+      <div><div class="stat-big" style="font-size:18px;color:var(--color-text-hint)">55.0</div><div class="stat-small">目标体重（kg）</div></div>
+    </div>
+  </div>
+
+  <!-- 体重波动趋势折线图卡 -->
+  <div class="card">
+    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>体重波动趋势</div></div>
+    <div class="chart-container">
+      <svg viewBox="0 0 300 140" preserveAspectRatio="none">
+        <defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8FBCA8" stop-opacity="0.3"/><stop offset="100%" stop-color="#8FBCA8" stop-opacity="0"/></linearGradient></defs>
+        <path d="M10,40 L60,50 L110,35 L160,55 L210,45 L260,60 L290,70 L290,140 L10,140 Z" fill="url(#chartGrad)"/>
+        <polyline points="10,40 60,50 110,35 160,55 210,45 260,60 290,70" fill="none" stroke="#8FBCA8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g fill="#8FBCA8"><circle cx="10" cy="40" r="3"/><circle cx="60" cy="50" r="3"/><circle cx="110" cy="35" r="3"/><circle cx="160" cy="55" r="3"/><circle cx="210" cy="45" r="3"/><circle cx="260" cy="60" r="3"/><circle cx="290" cy="70" r="3"/></g>
+      </svg>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:var(--font-size-small);color:var(--color-text-hint);"><span>7/22</span><span>7/23</span><span>7/24</span><span>7/25</span><span>7/26</span><span>7/27</span><span>7/28</span></div>
+  </div>
+
+  <!-- 减重目标进度卡 -->
+  <div class="card">
+    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>减重目标进度</div></div>
+    <div class="progress-ring-wrap">
+      <div class="progress-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="ring-bg" cx="60" cy="60" r="52"/>
+          <circle class="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="189.66"/>
+        </svg>
+        <div class="ring-text"><div class="ring-percent">42%</div><div class="ring-label">距目标还差3.5kg</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 底部固定操作区 -->
+<div class="detail-footer">
+  <button class="btn-primary" id="checkinBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交</button>
+  <button class="btn-secondary" id="saveBtn">记录保存</button>
+</div>
+
+<script>
+function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
+function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
+function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
+function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
+function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
+function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
+function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
+function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');if(!o||!d)return;var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
+function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 🌿')}
+function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
+function initDrawerEvents(){
+  var btn=document.getElementById('drawerBtn');
+  var overlay=document.getElementById('drawerOverlay');
+  var resetBtn=document.getElementById('resetBtn');
+  var checkinBtn=document.getElementById('checkinBtn');
+  var saveBtn=document.getElementById('saveBtn');
+  if(btn){btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});}
+  if(overlay){overlay.addEventListener('click',function(e){toggleDrawer()});}
+  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
+  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(3)});}
+  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
+}
+document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
+initCheckinState(3);
+</script>
+
+<!-- Service Worker 注册（PWA 离线支持） -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>

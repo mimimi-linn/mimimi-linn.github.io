@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- PWA 核心配置 -->
+<meta name="theme-color" content="#C9985A">
+<meta name="application-name" content="每日打卡">
+<meta name="description" content="治愈系自律打卡工具，记录每天的成长与进步">
+<link rel="manifest" href="manifest.json">
+
+<!-- iOS Safari PWA 支持 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="每日打卡">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="shortcut icon" href="icons/favicon-32.png">
+
+<title>每日打卡 · 自律成长工作台</title>
+<style>
+/* ============================================
+   全局设计规范 Design System
+   ============================================ */
+:root {
+  /* 主色体系 - 温暖蛋黄酥焦糖米黄 */
+  --color-primary: #C9985A;        /* 焦糖棕：按钮、选中态、完成标识、高亮文字、进度条 */
+  --color-primary-light: #FBF3E4;  /* 淡奶黄：卡片背景、输入框选中底色、页面大面积铺垫 */
+  --color-primary-dark: #8B6F47;   /* 拿铁棕：小标题强调、图标描边、分割线 */
+
+  /* 主色渐变 */
+  --gradient-primary: linear-gradient(135deg, #C9985A 0%, #E0B973 100%);
+  --gradient-card: linear-gradient(135deg, #FBF3E4 0%, #FFFBF0 100%);
+
+  /* 中性色系 */
+  --color-white: #FFFFFF;
+  --color-bg: #FFFBF0;             /* 页面全局米白底 */
+  --color-text-primary: #5D4037;   /* 深棕主文字 */
+  --color-text-secondary: #9C857A;  /* 浅棕辅文字 */
+  --color-text-hint: #C4B5A0;      /* 提示文字 */
+  --color-border: #EDE0CC;         /* 纤细分割线 */
+  --color-card-shadow: rgba(201, 152, 90, 0.12);
+
+  /* 状态色 */
+  --color-checked-bg: #FBF3E4;     /* 已打卡卡片底色 */
+  --color-checked-accent: #C9985A; /* 已打卡点缀色 */
+  --color-unchecked-bg: #FFFDF7;   /* 未打卡卡片底色 */
+
+  /* 圆角规范 */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 50%;
+
+  /* 间距规范 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-xxl: 24px;
+
+  /* 字体规范 */
+  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', 'Helvetica Neue', sans-serif;
+  --font-size-clock: 60px;
+  --font-size-hero: 28px;
+  --font-size-title: 18px;
+  --font-size-body: 15px;
+  --font-size-caption: 13px;
+  --font-size-small: 11px;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --font-weight-light: 300;
+
+  /* 阴影 */
+  --shadow-card: 0 2px 12px var(--color-card-shadow);
+  --shadow-float: 0 4px 20px rgba(201, 152, 90, 0.18);
+}
+
+/* ============================================
+   基础重置 Reset
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ============================================
+   页面容器 Page Container
+   ============================================ */
+.page {
+  padding-bottom: 40px;
+  min-height: 100vh;
+}
+
+/* ============================================
+   顶部通栏导航区 Top Navigation Bar
+   ============================================ */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg) var(--space-xl);
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+}
+
+.top-nav .nav-left {
+  width: 40px;
+}
+
+.top-nav .nav-right {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-float);
+  transition: transform 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+.top-nav .nav-right:active {
+  transform: scale(0.92);
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.hamburger-icon span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 1px;
+}
+
+/* ============================================
+   实时时钟卡片 Real-time Clock Card
+   ============================================ */
+.clock-section {
+  padding: var(--space-xl) var(--space-xl) var(--space-lg);
+}
+
+.clock-card {
+  background: var(--gradient-card);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xxl) var(--space-xl);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.clock-date {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.clock-day {
+  font-size: var(--font-size-caption);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-md);
+}
+
+.clock-time {
+  font-size: var(--font-size-clock);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: var(--space-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-time .colon {
+  opacity: 0.6;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.2; }
+}
+
+.clock-greeting {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-hint);
+}
+
+/* ============================================
+   12功能宫格区域 12-Item Grid
+   ============================================ */
+.grid-section {
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.section-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.section-title .title-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--color-primary-dark);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.grid-item {
+  background: var(--color-unchecked-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg) var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  border: 1.5px solid transparent;
+  min-height: 96px;
+  text-decoration: none;
+}
+
+.grid-item:active {
+  transform: scale(0.96);
+}
+
+
+/* 宫格图标（emoji风格） */
+.grid-icon {
+  font-size: 34px;
+  line-height: 1;
+  transition: all 0.25s ease;
+}
+
+/* 宫格文字 */
+.grid-label {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+/* ============================================
+   每日语录卡片 Daily Quote Card
+   ============================================ */
+.quote-section {
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.quote-card {
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-xxl);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-card::before {
+  content: '"';
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 48px;
+  color: rgba(255,255,255,0.3);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.quote-label {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.quote-text {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-white);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.quote-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  border: none;
+  color: var(--color-white);
+  font-size: var(--font-size-small);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.quote-refresh:active {
+  background: rgba(255,255,255,0.35);
+}
+
+/* ============================================
+   全局数据统计卡片 Statistics Dashboard (2×2)
+   ============================================ */
+.stats-section {
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.stat-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:active {
+  transform: scale(0.97);
+}
+
+.stat-icon {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto var(--space-sm);
+  color: var(--color-primary);
+}
+
+.stat-number {
+  font-size: var(--font-size-hero);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: var(--space-xs);
+  transition: all 0.3s ease;
+}
+
+.stat-label {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-regular);
+}
+
+/* 数字滚动动画 */
+@keyframes countUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.stat-number.animate {
+  animation: countUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 灵感记录入口卡 Inspiration Card */
+.inspiration-card {
+  background: var(--gradient-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  min-height: 110px;
+}
+
+.inspiration-card:active {
+  transform: scale(0.97);
+}
+
+.inspiration-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+}
+
+.inspiration-title {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1.3;
+}
+
+.inspiration-subtitle {
+  font-size: var(--font-size-caption);
+  color: rgba(255,255,255,0.85);
+  margin-top: var(--space-xs);
+}
+
+/* ============================================
+   右侧滑出侧边抽屉 Right Drawer
+   ============================================ */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease;
+}
+
+.drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  background: var(--color-white);
+  z-index: 201;
+  transition: right 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+}
+
+.drawer.open {
+  right: 0;
+}
+
+/* 抽屉头部 */
+.drawer-header {
+  padding: var(--space-xxl) var(--space-xl) var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drawer-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.drawer-avatar svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-white);
+}
+
+.drawer-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.drawer-subtitle {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-hint);
+}
+
+/* 抽屉菜单列表 */
+.drawer-menu {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md) 0;
+}
+
+.drawer-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-xl);
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+}
+
+.drawer-menu-item:active {
+  background: var(--color-primary-light);
+}
+
+.drawer-menu-item.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-semibold);
+}
+
+.drawer-menu-item .menu-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.drawer-menu-item.active .menu-icon {
+  filter: drop-shadow(0 0 0 transparent);
+}
+
+/* 抽屉底部 */
+.drawer-footer {
+  padding: var(--space-lg) var(--space-xl);
+  padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 20px));
+  border-top: 1px solid var(--color-border);
+}
+
+.drawer-reset-btn {
+  width: 100%;
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  transition: all 0.2s;
+}
+
+.drawer-reset-btn:active {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* ============================================
+   底部留白 Bottom Spacer
+   ============================================ */
+.bottom-spacer {
+  height: 48px;
+}
+
+/* ============================================
+   通用工具类 Utility
+   ============================================ */
+.hidden {
+  display: none !important;
+}
+
+/* 轻提示 Toast */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(45, 52, 54, 0.88);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-caption);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+  max-width: 240px;
+  line-height: 1.5;
+  backdrop-filter: blur(8px);
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.toast .toast-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+/* ============================================
+   自定义语录底部面板 Custom Quote Sheet
+   ============================================ */
+.sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 300;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.sheet-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sheet {
+  position: fixed;
+  bottom: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  max-height: 75vh;
+  background: var(--color-white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  z-index: 301;
+  transition: bottom 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.sheet.open {
+  bottom: 0;
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  margin: var(--space-md) auto var(--space-sm);
+  flex-shrink: 0;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-xl) var(--space-md);
+  flex-shrink: 0;
+}
+
+.sheet-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.sheet-close {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.sheet-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 输入区 */
+.sheet-input-row {
+  display: flex;
+  gap: var(--space-sm);
+  padding: 0 var(--space-xl) var(--space-md);
+  flex-shrink: 0;
+}
+
+.sheet-input {
+  flex: 1;
+  padding: var(--space-md);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.sheet-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-white);
+}
+
+.sheet-input::placeholder {
+  color: var(--color-text-hint);
+}
+
+.sheet-add-btn {
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius-sm);
+  background: var(--gradient-primary);
+  border: none;
+  color: var(--color-white);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.sheet-add-btn:active {
+  transform: scale(0.95);
+}
+
+/* 语录列表 */
+.sheet-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-xl) var(--space-lg);
+  -webkit-overflow-scrolling: touch;
+}
+
+.sheet-list-title {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet-quote-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-sm);
+  cursor: pointer;
+  transition: background 0.2s;
+  border: 1.5px solid transparent;
+}
+
+.sheet-quote-item:active {
+  background: var(--color-primary-light);
+}
+
+.sheet-quote-item.selected {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.sheet-quote-text {
+  flex: 1;
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.sheet-quote-item.selected .sheet-quote-text {
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-medium);
+}
+
+.sheet-quote-check {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sheet-quote-item.selected .sheet-quote-check {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.sheet-quote-check svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+}
+
+.sheet-quote-item.selected .sheet-quote-check svg {
+  opacity: 1;
+}
+
+/* 删除按钮 */
+.sheet-quote-delete {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-hint);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sheet-quote-delete:active {
+  color: #e88;
+}
+
+.sheet-quote-delete svg {
+  width: 15px;
+  height: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================
+     页面主体 Main Page
+     ============================================ -->
+<div class="page" id="homePage">
+
+  <!-- 顶部导航栏 -->
+  <div class="top-nav">
+    <div class="nav-left"></div>
+    <button class="nav-right" onclick="toggleDrawer()" aria-label="打开菜单">
+      <div class="hamburger-icon">
+        <span></span><span></span><span></span>
+      </div>
+    </button>
+  </div>
+
+  <!-- 实时时钟卡片 -->
+  <div class="clock-section">
+    <div class="clock-card">
+      <div class="clock-date" id="clockDate"></div>
+      <div class="clock-day" id="clockDay"></div>
+      <div class="clock-time" id="clockTime"></div>
+      <div class="clock-greeting" id="clockGreeting"></div>
+    </div>
+  </div>
+
+  <!-- 12功能宫格区域 -->
+  <div class="grid-section">
+    <div class="section-title">
+      <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+      </svg>
+      今日打卡
+    </div>
+    <div class="grid-container" id="gridContainer">
+      <!-- JS动态渲染 -->
+    </div>
+  </div>
+
+  <!-- 每日语录卡片 -->
+  <div class="quote-section">
+    <div class="quote-card">
+      <div class="quote-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/></svg>
+        今日语录
+      </div>
+      <div class="quote-text" id="quoteText"></div>
+      <button class="quote-refresh" id="customizeQuoteBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        自定义
+      </button>
+    </div>
+  </div>
+
+  <!-- 自定义语录底部面板 -->
+  <div class="sheet-overlay" id="quoteSheetOverlay"></div>
+  <div class="sheet" id="quoteSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title">自定义语录</div>
+      <button class="sheet-close" id="quoteSheetClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-input-row">
+      <input type="text" class="sheet-input" id="quoteInput" placeholder="输入你喜欢的语录..." maxlength="60">
+      <button class="sheet-add-btn" id="quoteAddBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        添加
+      </button>
+    </div>
+    <div class="sheet-list">
+      <div class="sheet-list-title">
+        <span>我的语录库</span>
+        <span id="quoteListCount" style="font-weight:400;color:var(--color-text-hint)"></span>
+      </div>
+      <div id="quoteListContainer"></div>
+    </div>
+  </div>
+
+  <!-- 全局数据统计卡片 2×2 -->
+  <div class="stats-section">
+    <div class="section-title">
+      <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>
+      </svg>
+      今日打卡概况
+    </div>
+    <div class="stats-grid">
+      <!-- 今日完成 -->
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="stat-number" id="statToday">0<span style="font-size:16px;color:var(--color-text-hint)">/12</span></div>
+        <div class="stat-label">今日完成</div>
+      </div>
+      <!-- 随时随地 记录灵感 -->
+      <div class="inspiration-card" id="inspirationCard">
+        <div class="inspiration-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="inspiration-title">随时随地</div>
+        <div class="inspiration-subtitle">记录灵感 ✨</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部留白 -->
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- ============================================
+     右侧滑出抽屉 Right Side Drawer
+     ============================================ -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <div class="drawer-avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+    </div>
+    <div class="drawer-title">每日打卡工作台</div>
+    <div class="drawer-subtitle">每天进步一点点 ✨</div>
+  </div>
+  <div class="drawer-menu" id="drawerMenu">
+    <!-- JS动态渲染 -->
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-reset-btn" onclick="resetToday()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+      每日重置
+    </button>
+  </div>
+</div>
+
+<!-- ============================================
+     JavaScript 逻辑
+     ============================================ -->
+<script>
+// ============================================
+// 数据模型 Data Model（模拟后台统一存储）
+// ============================================
+const APP_DATA = {
+  checkedItems: new Set(),       // 当日已完成打卡项ID集合
+  streakDays: 0,                 // 连续打卡天数
+  totalRecords: 0,               // 累计记录数
+  usedDays: 1,                   // 使用天数
+  lastCheckDate: null            // 上次打卡日期
+};
+
+// ============================================
+// 12个功能入口定义
+// ============================================
+const GRID_ITEMS = [
+  { id: 1,  name: '每日阅读', page: 'detail-reading.html' },
+  { id: 2,  name: '好好吃饭', page: 'detail-eating.html' },
+  { id: 3,  name: '体重管理', page: 'detail-weight.html' },
+  { id: 4,  name: '锻炼身体', page: 'detail-exercise.html' },
+  { id: 5,  name: '烘焙学习', page: 'detail-baking.html' },
+  { id: 6,  name: '穿搭美妆', page: 'detail-fashion.html' },
+  { id: 7,  name: '自媒体计划', page: 'detail-media.html' },
+  { id: 8,  name: '摄影剪辑', page: 'detail-photo.html' },
+  { id: 9,  name: '每日播客', page: 'detail-podcast.html' },
+  { id: 10, name: '新闻热点', page: 'detail-news.html' },
+  { id: 11, name: '理财知识', page: 'detail-finance.html' },
+  { id: 12, name: '每日复盘', page: 'detail-review.html' }
+];
+
+// 简约线性图标SVG（24×24 viewBox，统一stroke风格）
+// 飞书emoji风格图标（每个功能配贴合主题的彩色表情）
+const ICONS = {
+  '每日阅读': '📖',
+  '好好吃饭': '🍱',
+  '体重管理': '🧍‍♀️',
+  '锻炼身体': '🏃',
+  '烘焙学习': '🧁',
+  '穿搭美妆': '👗',
+  '自媒体计划': '📱',
+  '摄影剪辑': '📷',
+  '每日播客': '🎧',
+  '新闻热点': '📰',
+  '理财知识': '💰',
+  '每日复盘': '🌙'
+};
+
+// ============================================
+// 语录数据（自定义语录库）
+// ============================================
+const DEFAULT_QUOTES = [
+  '做难事必有所得，走远路必有所归。',
+  '温柔且坚定地，做好每一件小事。',
+  '慢慢来，比较快。',
+  '每一次坚持，都是未来的伏笔。',
+  '今天比昨天好一点点，就够了。',
+  '不急不躁，自有光芒。',
+  '把每一天当作新的开始。',
+  '自律即自由，行动即答案。',
+  '星光不问赶路人，时光不负有心人。',
+  '你只管努力，时间会给你答案。'
+];
+// 自定义语录库 = 默认语录 + 用户添加
+let customQuotes = [...DEFAULT_QUOTES];
+let selectedQuoteIndex = 0;
+
+// 应用语录到首页卡片
+function applyQuote(index) {
+  selectedQuoteIndex = index;
+  const el = document.getElementById('quoteText');
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(8px)';
+  el.style.transition = 'all 0.3s ease';
+  setTimeout(() => {
+    el.textContent = `「${customQuotes[index]}」`;
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, 200);
+}
+
+// 打开自定义语录面板
+function openQuoteSheet() {
+  document.getElementById('quoteSheetOverlay').classList.add('open');
+  document.getElementById('quoteSheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderQuoteList();
+}
+
+// 关闭自定义语录面板
+function closeQuoteSheet() {
+  document.getElementById('quoteSheetOverlay').classList.remove('open');
+  document.getElementById('quoteSheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// 渲染语录库列表
+function renderQuoteList() {
+  const container = document.getElementById('quoteListContainer');
+  document.getElementById('quoteListCount').textContent = `共 ${customQuotes.length} 条`;
+  container.innerHTML = '';
+  customQuotes.forEach((quote, index) => {
+    const isSelected = index === selectedQuoteIndex;
+    const isCustom = index >= DEFAULT_QUOTES.length;
+    const div = document.createElement('div');
+    div.className = `sheet-quote-item ${isSelected ? 'selected' : ''}`;
+    div.innerHTML = `
+      <div class="sheet-quote-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="sheet-quote-text">${escapeQuoteHtml(quote)}</div>
+      ${isCustom ? `<button class="sheet-quote-delete" data-index="${index}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      </button>` : ''}
+    `;
+    // 点击选中
+    div.addEventListener('click', function(e) {
+      if (e.target.closest('.sheet-quote-delete')) return;
+      applyQuote(index);
+      renderQuoteList();
+    });
+    // 删除按钮
+    const delBtn = div.querySelector('.sheet-quote-delete');
+    if (delBtn) {
+      delBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        customQuotes.splice(index, 1);
+        if (selectedQuoteIndex >= customQuotes.length) {
+          selectedQuoteIndex = 0;
+        }
+        applyQuote(selectedQuoteIndex);
+        renderQuoteList();
+        showToast('已删除该语录 🗑️');
+      });
+    }
+    container.appendChild(div);
+  });
+}
+
+function escapeQuoteHtml(str) {
+  return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+// ============================================
+// 实时时钟 Real-time Clock
+// ============================================
+const WEEKDAYS = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+
+function updateClock() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const weekday = WEEKDAYS[now.getDay()];
+  const h = String(now.getHours()).padStart(2,'0');
+  const min = String(now.getMinutes()).padStart(2,'0');
+  const sec = String(now.getSeconds()).padStart(2,'0');
+
+  document.getElementById('clockDate').textContent = `${y}年${m}月${d}日`;
+  document.getElementById('clockDay').textContent = weekday;
+  document.getElementById('clockTime').innerHTML = `${h}<span class="colon">:</span>${min}<span class="colon">:</span>${sec}`;
+
+  // 根据时段显示问候语
+  const hour = now.getHours();
+  let greeting = '';
+  if (hour < 6) greeting = '🌙 夜深了，早点休息';
+  else if (hour < 9) greeting = '🌅 早上好，新的一天开始了';
+  else if (hour < 12) greeting = '☀️ 上午好，元气满满';
+  else if (hour < 14) greeting = '🌞 中午好，记得好好吃饭';
+  else if (hour < 18) greeting = '🌤 下午好，继续加油';
+  else if (hour < 22) greeting = '🌆 晚上好，别忘了复盘';
+  else greeting = '🌙 夜深了，辛苦了';
+  document.getElementById('clockGreeting').textContent = greeting;
+}
+
+// ============================================
+// 渲染12功能宫格 Render 12-Item Grid
+// ============================================
+function renderGrid() {
+  const container = document.getElementById('gridContainer');
+  container.innerHTML = '';
+
+  GRID_ITEMS.forEach(item => {
+    const a = document.createElement('a');
+    a.className = 'grid-item';
+    a.href = item.page;
+    a.innerHTML = `
+      <div class="grid-icon">${ICONS[item.name]}</div>
+      <div class="grid-label">${item.name}</div>
+    `;
+    container.appendChild(a);
+  });
+}
+
+// ============================================
+// 渲染抽屉菜单 Render Drawer Menu
+// ============================================
+function renderDrawerMenu() {
+  const menu = document.getElementById('drawerMenu');
+  menu.innerHTML = '';
+
+  GRID_ITEMS.forEach(item => {
+    const a = document.createElement('a');
+    a.className = 'drawer-menu-item';
+    a.href = item.page;
+    a.innerHTML = `
+      <div class="menu-icon">${ICONS[item.name]}</div>
+      <span>${item.name}</span>
+    `;
+    menu.appendChild(a);
+  });
+}
+
+// ============================================
+// 打卡台账（localStorage 模拟后台统一存储）
+// ============================================
+const CHECKIN_KEY = 'checkin_records';
+
+// 读取当日打卡台账
+function getCheckinRecords() {
+  try {
+    const data = JSON.parse(localStorage.getItem(CHECKIN_KEY) || '{}');
+    const today = getTodayKey();
+    return data[today] || [];
+  } catch(e) {
+    return [];
+  }
+}
+
+// 获取今日日期键
+function getTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+}
+
+// 更新今日完成统计
+function refreshTodayCount() {
+  const todayCount = getCheckinRecords().length;
+  animateNumber('statToday', todayCount, '/12');
+}
+
+// 数字滚动动画
+function animateNumber(elId, target, suffix) {
+  const el = document.getElementById(elId);
+  const current = parseInt(el.textContent) || 0;
+  if (current === target) return;
+
+  const suffixHTML = suffix ? `<span style="font-size:16px;color:var(--color-text-hint)">${suffix}</span>` : '';
+  const duration = 400;
+  const startTime = performance.now();
+  el.classList.add('animate');
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = Math.round(current + (target - current) * eased);
+    el.innerHTML = value + suffixHTML;
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.classList.remove('animate');
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// ============================================
+// 语录面板事件绑定（初始化时调用）
+// ============================================
+function initQuoteSheetEvents() {
+  // 自定义按钮
+  document.getElementById('customizeQuoteBtn').addEventListener('click', openQuoteSheet);
+  // 关闭按钮
+  document.getElementById('quoteSheetClose').addEventListener('click', closeQuoteSheet);
+  // 遮罩点击关闭
+  document.getElementById('quoteSheetOverlay').addEventListener('click', closeQuoteSheet);
+  // 添加按钮
+  document.getElementById('quoteAddBtn').addEventListener('click', addCustomQuote);
+  // 回车添加
+  document.getElementById('quoteInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') addCustomQuote();
+  });
+}
+
+// 添加自定义语录
+function addCustomQuote() {
+  const input = document.getElementById('quoteInput');
+  const text = input.value.trim();
+  if (!text) {
+    showToast('请输入语录内容 🌿');
+    return;
+  }
+  customQuotes.push(text);
+  input.value = '';
+  applyQuote(customQuotes.length - 1);
+  renderQuoteList();
+  showToast('语录已添加 ✨');
+}
+
+// ============================================
+// 抽屉开关 Drawer Toggle
+// ============================================
+function toggleDrawer() {
+  const overlay = document.getElementById('drawerOverlay');
+  const drawer = document.getElementById('drawer');
+  const isOpen = drawer.classList.contains('open');
+  if (isOpen) {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// ============================================
+// 每日重置 Daily Reset
+// ============================================
+function resetToday() {
+  // 清空今日打卡台账
+  const data = JSON.parse(localStorage.getItem(CHECKIN_KEY) || '{}');
+  data[getTodayKey()] = [];
+  localStorage.setItem(CHECKIN_KEY, JSON.stringify(data));
+  refreshTodayCount();
+  toggleDrawer();
+  showToast('今日打卡已重置 🌿');
+}
+window.resetToday = resetToday;
+
+// ============================================
+// 灵感记录 Inspiration
+// ============================================
+function openInspiration() {
+  showToast('📝 灵感记录入口，敬请期待', 1400);
+}
+window.openInspiration = openInspiration;
+
+// 通用轻提示
+function showToast(message, duration) {
+  // 移除已有 toast
+  const existed = document.getElementById('appToast');
+  if (existed) existed.remove();
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.id = 'appToast';
+  toast.innerHTML = message;
+  document.body.appendChild(toast);
+
+  // 触发显示
+  requestAnimationFrame(() => toast.classList.add('show'));
+
+  // 自动消失
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  }, duration || 1200);
+}
+window.showToast = showToast;
+
+// ============================================
+// 初始化 Init
+// ============================================
+(function init() {
+  // 启动时钟
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // 渲染宫格
+  renderGrid();
+
+  // 渲染抽屉菜单
+  renderDrawerMenu();
+
+  // 初始化语录
+  applyQuote(selectedQuoteIndex);
+  // 初始化语录面板事件
+  initQuoteSheetEvents();
+
+  // 初始化统计（从台账读取今日打卡数）
+  refreshTodayCount();
+
+  // 灵感记录卡点击绑定
+  const inspirationEl = document.getElementById('inspirationCard');
+  if (inspirationEl) {
+    inspirationEl.addEventListener('click', function() {
+      window.location.href = 'inspiration.html';
+    });
+  }
+
+  // 页面重新可见时（从二级页返回）自动刷新今日完成数
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+      refreshTodayCount();
+    }
+  });
+  window.addEventListener('pageshow', function() {
+    refreshTodayCount();
+  });
+})();
+</script>
+
+<!-- Service Worker 注册（PWA 离线支持） -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').then(function(reg) {
+      console.log('[PWA] Service Worker 注册成功');
+    }).catch(function(err) {
+      console.log('[PWA] Service Worker 注册失败:', err);
+    });
+  });
+}
+</script>
+
+</body>
+</html>

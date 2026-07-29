@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>记录灵感 · 每日打卡工作台</title>
+<style>
+:root {
+  --color-primary: #8FBCA8;
+  --color-primary-light: #E6F2ED;
+  --color-primary-dark: #5A8C78;
+  --gradient-primary: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%);
+  --gradient-card: linear-gradient(135deg, #E6F2ED 0%, #F0F8F4 100%);
+  --color-white: #FFFFFF;
+  --color-bg: #F5FAF7;
+  --color-text-primary: #2D3436;
+  --color-text-secondary: #7B8D8E;
+  --color-text-hint: #B0C4C0;
+  --color-border: #E0EBE6;
+  --color-card-shadow: rgba(143, 188, 168, 0.12);
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 50%;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-xxl: 24px;
+  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', 'Helvetica Neue', sans-serif;
+  --font-size-hero: 28px;
+  --font-size-title: 18px;
+  --font-size-body: 15px;
+  --font-size-caption: 13px;
+  --font-size-small: 11px;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --shadow-card: 0 2px 12px var(--color-card-shadow);
+  --shadow-float: 0 4px 20px rgba(143, 188, 168, 0.18);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 90px;
+}
+
+/* ============================================
+   顶部固定标题栏（二级页统一骨架）
+   ============================================ */
+.detail-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-xl);
+  height: 56px;
+}
+
+.back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+}
+
+.back-btn:active {
+  transform: scale(0.92);
+}
+
+.back-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.detail-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.drawer-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-float);
+  flex-shrink: 0;
+}
+
+.drawer-btn:active {
+  transform: scale(0.92);
+}
+
+.drawer-btn .hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.drawer-btn .hamburger-icon span {
+  display: block;
+  width: 14px;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 1px;
+}
+
+/* ============================================
+   主体内容区
+   ============================================ */
+.detail-body {
+  padding: var(--space-lg) var(--space-xl);
+}
+
+/* 灵感输入区 */
+.inspiration-input-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-lg);
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-md);
+}
+
+.input-label svg {
+  width: 18px;
+  height: 18px;
+}
+
+.inspiration-textarea {
+  width: 100%;
+  min-height: 100px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  font-size: var(--font-size-body);
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  transition: border 0.2s;
+}
+
+.inspiration-textarea:focus {
+  border-color: var(--color-primary);
+  background: var(--color-white);
+}
+
+.inspiration-textarea::placeholder {
+  color: var(--color-text-hint);
+}
+
+/* 标签选择 */
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.tag-chip {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: 20px;
+  font-size: var(--font-size-small);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-secondary);
+  background: var(--color-white);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tag-chip.selected {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-medium);
+}
+
+/* 灵感列表标题 */
+.list-title {
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: var(--space-xl) 0 var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-title .count-badge {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-hint);
+}
+
+/* 灵感列表项 */
+.inspiration-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.inspiration-item {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.inspiration-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.inspiration-item-time {
+  font-size: var(--font-size-small);
+  color: var(--color-text-hint);
+}
+
+.inspiration-item-tag {
+  font-size: var(--font-size-small);
+  padding: 2px var(--space-sm);
+  border-radius: 10px;
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-medium);
+}
+
+.inspiration-item-content {
+  font-size: var(--font-size-body);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+.inspiration-item-footer {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.icon-action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-small);
+  color: var(--color-text-hint);
+  cursor: pointer;
+}
+
+.icon-action svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xxl) 0;
+  color: var(--color-text-hint);
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-md);
+  opacity: 0.4;
+}
+
+.empty-state-text {
+  font-size: var(--font-size-caption);
+}
+
+/* ============================================
+   底部固定操作区（二级页统一骨架）
+   ============================================ */
+.detail-footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: var(--color-white);
+  padding: var(--space-md) var(--space-xl);
+  padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 20px));
+  display: flex;
+  gap: var(--space-md);
+  box-shadow: 0 -2px 12px rgba(143, 188, 168, 0.1);
+  z-index: 50;
+}
+
+.btn-primary {
+  flex: 2;
+  padding: var(--space-md) 0;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-primary);
+  border: none;
+  color: var(--color-white);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  transition: transform 0.2s;
+  box-shadow: var(--shadow-card);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-primary svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: var(--space-md) 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  transition: all 0.2s;
+}
+
+.btn-secondary:active {
+  background: var(--color-primary-light);
+}
+
+.btn-secondary svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 轻提示 */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(45, 52, 54, 0.88);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-caption);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+  max-width: 240px;
+  line-height: 1.5;
+  backdrop-filter: blur(8px);
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+</style>
+<meta name="theme-color" content="#C9985A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+</head>
+<body>
+
+<!-- 顶部固定标题栏 -->
+<div class="detail-header">
+  <button class="back-btn" onclick="history.back()" aria-label="返回">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="detail-title">记录灵感</div>
+  <button class="drawer-btn" aria-label="菜单">
+    <div class="hamburger-icon"><span></span><span></span><span></span></div>
+  </button>
+</div>
+
+<!-- 主体内容区 -->
+<div class="detail-body">
+  <!-- 灵感输入区 -->
+  <div class="inspiration-input-card">
+    <div class="input-label">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      速记一条灵感
+    </div>
+    <textarea class="inspiration-textarea" id="inspirationInput" placeholder="此刻想到了什么？随手记下来吧..."></textarea>
+    <div class="tag-row" id="tagRow">
+      <span class="tag-chip selected" data-tag="想法">💡 想法</span>
+      <span class="tag-chip" data-tag="待办">📌 待办</span>
+      <span class="tag-chip" data-tag="灵感">✨ 灵感</span>
+      <span class="tag-chip" data-tag="感悟">🌿 感悟</span>
+      <span class="tag-chip" data-tag="其他">📝 其他</span>
+    </div>
+  </div>
+
+  <!-- 灵感列表 -->
+  <div class="list-title">
+    灵感记录
+    <span class="count-badge" id="listCount">共 0 条</span>
+  </div>
+  <div class="inspiration-list" id="inspirationList">
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <div class="empty-state-text">还没有灵感记录，开始记录第一条吧 ✨</div>
+    </div>
+  </div>
+</div>
+
+<!-- 底部固定操作区 -->
+<div class="detail-footer">
+  <button class="btn-secondary" onclick="clearInput()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+    清空
+  </button>
+  <button class="btn-primary" onclick="saveInspiration()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+    保存灵感
+  </button>
+</div>
+
+<!-- 轻提示 -->
+<div class="toast" id="toast"></div>
+
+<script>
+// 灵感数据
+let inspirations = [];
+let selectedTag = '想法';
+
+// 标签选择
+document.querySelectorAll('.tag-chip').forEach(chip => {
+  chip.addEventListener('click', function() {
+    document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('selected'));
+    this.classList.add('selected');
+    selectedTag = this.dataset.tag;
+  });
+});
+
+// 保存灵感
+function saveInspiration() {
+  const input = document.getElementById('inspirationInput');
+  const content = input.value.trim();
+  if (!content) {
+    showToast('请先输入灵感内容 🌿');
+    return;
+  }
+  const now = new Date();
+  const time = `${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  inspirations.unshift({
+    id: Date.now(),
+    content: content,
+    tag: selectedTag,
+    time: time
+  });
+  input.value = '';
+  renderList();
+  showToast('灵感已保存 ✨');
+}
+
+// 清空输入
+function clearInput() {
+  document.getElementById('inspirationInput').value = '';
+}
+
+// 删除灵感
+function deleteInspiration(id) {
+  inspirations = inspirations.filter(i => i.id !== id);
+  renderList();
+  showToast('已删除 🗑️');
+}
+
+// 渲染列表
+function renderList() {
+  const list = document.getElementById('inspirationList');
+  const empty = document.getElementById('emptyState');
+  document.getElementById('listCount').textContent = `共 ${inspirations.length} 条`;
+
+  if (inspirations.length === 0) {
+    empty.style.display = 'block';
+    // 清除其他项
+    list.querySelectorAll('.inspiration-item').forEach(el => el.remove());
+    return;
+  }
+  empty.style.display = 'none';
+
+  // 清除已有项
+  list.querySelectorAll('.inspiration-item').forEach(el => el.remove());
+
+  inspirations.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'inspiration-item';
+    div.innerHTML = `
+      <div class="inspiration-item-header">
+        <span class="inspiration-item-time">${item.time}</span>
+        <span class="inspiration-item-tag">${item.tag}</span>
+      </div>
+      <div class="inspiration-item-content">${escapeHtml(item.content)}</div>
+      <div class="inspiration-item-footer">
+        <span class="icon-action" onclick="deleteInspiration(${item.id})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+          删除
+        </span>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+// 轻提示
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1500);
+}
+</script>
+
+
+<!-- Service Worker 注册（PWA 离线支持） -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
