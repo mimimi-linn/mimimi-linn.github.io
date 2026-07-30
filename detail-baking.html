@@ -363,9 +363,13 @@ document.addEventListener('DOMContentLoaded',function(){
   if(checkinBtn)checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(5)});
   if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存')});
 
-  /* 小红书跳转按钮 - 已配置真实链接 */
+  /* 小红书跳转 - 显式跳转避免移动端拦截 */
+  var xhsUrl='https://xhslink.cn/m/6hJOHOEckM2';
   var xhsBtn=document.getElementById('xhsJumpBtn');
-  if(xhsBtn)xhsBtn.addEventListener('click',function(e){e.stopPropagation();showToast('正在打开小红书...')});
+  var xhsLink=document.getElementById('xhsLink');
+  function goXHS(e){e.preventDefault();e.stopPropagation();window.location.href=xhsUrl;}
+  if(xhsBtn)xhsBtn.addEventListener('click',goXHS);
+  if(xhsLink)xhsLink.addEventListener('click',goXHS);
 });
 updateCheckinButton(5,isChecked(5));
 </script>
