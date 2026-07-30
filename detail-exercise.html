@@ -4,241 +4,791 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>锻炼身体</title>
-<style>
-
-:root {
-  --color-primary: #8FBCA8;
-  --color-primary-light: #E6F2ED;
-  --color-primary-dark: #5A8C78;
-  --gradient-primary: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%);
-  --color-white: #FFFFFF;
-  --color-bg: #F5FAF7;
-  --color-text-primary: #2D3436;
-  --color-text-secondary: #7B8D8E;
-  --color-text-hint: #B0C4C0;
-  --color-border: #E0EBE6;
-  --color-card-shadow: rgba(143, 188, 168, 0.12);
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 20px;
-  --radius-xl: 24px;
-  --radius-full: 50%;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 20px;
-  --space-xxl: 24px;
-  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', 'Helvetica Neue', sans-serif;
-  --font-size-hero: 28px;
-  --font-size-title: 18px;
-  --font-size-body: 15px;
-  --font-size-caption: 13px;
-  --font-size-small: 11px;
-  --font-weight-bold: 700;
-  --font-weight-semibold: 600;
-  --font-weight-medium: 500;
-  --font-weight-regular: 400;
-  --shadow-card: 0 2px 12px var(--color-card-shadow);
-  --shadow-float: 0 4px 20px rgba(143, 188, 168, 0.18);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-family); background-color: var(--color-bg); color: var(--color-text-primary); min-height: 100vh; max-width: 430px; margin: 0 auto; position: relative; padding-bottom: 90px; -webkit-font-smoothing: antialiased; }
-.detail-header { position: sticky; top: 0; z-index: 100; background: var(--color-bg); display: flex; align-items: center; justify-content: space-between; padding: var(--space-lg) var(--space-xl); height: 56px; }
-.back-btn { width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--color-white); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-card); color: var(--color-text-primary); flex-shrink: 0; text-decoration: none; }
-.back-btn:active { transform: scale(0.92); }
-.back-btn svg { width: 20px; height: 20px; }
-.detail-title { font-size: var(--font-size-title); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
-.drawer-btn { width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--gradient-primary); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-float); flex-shrink: 0; }
-.drawer-btn:active { transform: scale(0.92); }
-.drawer-btn .hamburger-icon { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.drawer-btn .hamburger-icon span { display: block; width: 14px; height: 2px; background: var(--color-white); border-radius: 1px; }
-.detail-body { padding: var(--space-lg) var(--space-xl); }
-.module-title { font-size: var(--font-size-title); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm); }
-.module-title .title-emoji { font-size: 22px; }
-.card { background: var(--color-white); border-radius: var(--radius-lg); padding: var(--space-xl); box-shadow: var(--shadow-card); margin-bottom: var(--space-lg); }
-.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
-.card-label { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); color: var(--color-primary-dark); }
-.card-label svg { width: 18px; height: 18px; }
-.stat-row { display: flex; align-items: baseline; gap: var(--space-sm); }
-.stat-big { font-size: var(--font-size-hero); font-weight: var(--font-weight-bold); color: var(--color-primary-dark); font-variant-numeric: tabular-nums; line-height: 1; }
-.stat-small { font-size: var(--font-size-caption); color: var(--color-text-hint); }
-.list-item { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
-.list-item:last-child { border-bottom: none; }
-.list-item-icon { width: 36px; height: 36px; border-radius: var(--space-xs); background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.list-item-content { flex: 1; }
-.list-item-title { font-size: var(--font-size-body); font-weight: var(--font-weight-medium); color: var(--color-text-primary); margin-bottom: 2px; }
-.list-item-sub { font-size: var(--font-size-small); color: var(--color-text-hint); }
-.list-item-meta { font-size: var(--font-size-small); color: var(--color-text-hint); flex-shrink: 0; }
-.note-textarea { width: 100%; min-height: 80px; border: 1.5px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-md); font-size: var(--font-size-body); font-family: var(--font-family); color: var(--color-text-primary); background: var(--color-bg); resize: none; outline: none; line-height: 1.6; transition: border 0.2s; }
-.note-textarea:focus { border-color: var(--color-primary); background: var(--color-white); }
-.note-textarea::placeholder { color: var(--color-text-hint); }
-.log-item { display: flex; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
-.log-item:last-child { border-bottom: none; }
-.log-time { font-size: var(--font-size-small); color: var(--color-text-hint); flex-shrink: 0; width: 50px; padding-top: 2px; }
-.log-content { flex: 1; }
-.todo-item { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
-.todo-item:last-child { border-bottom: none; }
-.todo-check { width: 22px; height: 22px; border-radius: var(--space-xs); border: 1.5px solid var(--color-border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.todo-check.done { background: var(--color-primary); border-color: var(--color-primary); }
-.todo-check.done svg { display: block; }
-.todo-check svg { display: none; width: 14px; height: 14px; }
-.todo-text { flex: 1; font-size: var(--font-size-body); color: var(--color-text-primary); }
-.todo-item.done .todo-text { text-decoration: line-through; color: var(--color-text-hint); }
-.progress-ring-wrap { display: flex; align-items: center; justify-content: center; padding: var(--space-md) 0; }
-.progress-ring { position: relative; width: 120px; height: 120px; }
-.progress-ring svg { transform: rotate(-90deg); }
-.progress-ring .ring-bg { fill: none; stroke: var(--color-border); stroke-width: 8; }
-.progress-ring .ring-fg { fill: none; stroke: var(--color-primary); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
-.progress-ring .ring-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-.progress-ring .ring-percent { font-size: var(--font-size-hero); font-weight: var(--font-weight-bold); color: var(--color-primary-dark); }
-.progress-ring .ring-label { font-size: var(--font-size-small); color: var(--color-text-hint); }
-.chart-container { width: 100%; height: 140px; position: relative; }
-.chart-container svg { width: 100%; height: 100%; }
-.detail-footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: var(--color-white); padding: var(--space-md) var(--space-xl); padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 20px)); display: flex; gap: var(--space-md); box-shadow: 0 -2px 12px rgba(143, 188, 168, 0.1); z-index: 50; }
-.btn-primary { flex: 2; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--gradient-primary); border: none; color: var(--color-white); font-size: var(--font-size-body); font-weight: var(--font-weight-semibold); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: transform 0.2s; box-shadow: var(--shadow-card); }
-.btn-primary:active { transform: scale(0.97); }
-.btn-primary svg { width: 18px; height: 18px; }
-.btn-primary.checked { background: var(--color-primary-light); color: var(--color-primary-dark); border: 1.5px solid var(--color-primary); }
-.btn-secondary { flex: 1; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--color-white); border: 1.5px solid var(--color-primary); color: var(--color-primary-dark); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: all 0.2s; }
-.btn-secondary:active { background: var(--color-primary-light); }
-.btn-secondary svg { width: 16px; height: 16px; }
-.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); background: rgba(45, 52, 54, 0.88); color: #fff; padding: 14px 22px; border-radius: var(--radius-sm); font-size: var(--font-size-caption); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: center; max-width: 240px; line-height: 1.5; backdrop-filter: blur(8px); }
-.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-
-
-/* 右侧滑出抽屉 */
-.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-.drawer-overlay.open { opacity: 1; visibility: visible; }
-.drawer { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #FFFFFF; z-index: 301; transition: right 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.08); }
-.drawer.open { right: 0; }
-.drawer-header { padding: 24px 20px 16px; border-bottom: 1px solid #E0EBE6; }
-.drawer-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 28px; }
-.drawer-title { font-size: 18px; font-weight: 700; color: #5A8C78; margin-bottom: 4px; }
-.drawer-subtitle { font-size: 13px; color: #B0C4C0; }
-.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
-.drawer-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #2D3436; font-size: 15px; }
-.drawer-menu-item:active { background: #E6F2ED; }
-.drawer-menu-item.active { background: #E6F2ED; color: #5A8C78; font-weight: 600; }
-.drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
-.drawer-menu-item.home-link { border-bottom: 1px solid #E0EBE6; margin-bottom: 8px; color: #5A8C78; font-weight: 600; }
-.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid #E0EBE6; }
-.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #E6F2ED; border: 1.5px solid #8FBCA8; color: #5A8C78; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
-.drawer-reset-btn:active { background: #8FBCA8; color: #fff; }
-
-</style>
-<meta name="theme-color" content="#C9985A">
+<meta name="theme-color" content="#7DD3C0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icons/favicon-32.png">
+<style>
+/* ============================================
+   锻炼身体页 - 薄荷绿 × 天空蓝
+   ============================================ */
+:root {
+  --mint: #7DD3C0;
+  --mint-light: #E8F5F1;
+  --mint-lighter: #F5FBF9;
+  --choco: #5D4037;
+  --choco-light: #8D7B68;
+  --choco-hint: #B5A99A;
+  --blue: #5B9BD5;
+  --blue-light: #EBF3FA;
+  --blue-soft: #F0F7FF;
+  --border: #D4E8E0;
+  --white: #FFFFFF;
+  --shadow: 0 2px 12px rgba(125, 211, 192, 0.12);
+  --shadow-float: 0 4px 20px rgba(91, 155, 213, 0.15);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  background: #F5FAFC;
+  color: var(--choco);
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px;
+}
+
+/* --- 顶部导航栏 --- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.header-back {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint-light); display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--choco); font-size: 18px; flex-shrink: 0;
+}
+.header-back:active { transform: scale(0.92); }
+.header-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--choco); }
+.header-drawer {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.header-drawer:active { transform: scale(0.92); }
+.header-drawer span { display: block; width: 14px; height: 2px; background: var(--white); border-radius: 1px; margin: 1.5px 0; }
+
+/* --- 主体内容 --- */
+.main { padding: 16px 16px 0; }
+
+/* ============================================
+   第1块：进度统计大卡片
+   ============================================ */
+.progress-card {
+  background: linear-gradient(135deg, #6CB4F5 0%, #8EC9F9 100%);
+  border-radius: 20px;
+  padding: 24px 20px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-float);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.progress-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.progress-num {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+.progress-num-label {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+.progress-right {
+  flex: 1;
+  min-width: 0;
+}
+.progress-right-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  opacity: 0.95;
+}
+.progress-bar-wrap {
+  height: 6px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--white);
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.progress-ratio {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  opacity: 0.9;
+}
+
+/* 数字滚动动画 */
+@keyframes countUp {
+  from { transform: translateY(40%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.progress-num.animate { animation: countUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* ============================================
+   第2块：晨间仪式打卡清单
+   ============================================ */
+.section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.section-title .emoji { font-size: 18px; }
+
+.morning-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.morning-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.morning-header-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  display: flex; align-items: center; gap: 8px;
+}
+.morning-header-count {
+  font-size: 13px; color: var(--mint);
+  font-weight: 600;
+}
+
+.morning-item {
+  display: flex; align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.morning-item:last-child { border-bottom: none; }
+.morning-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--blue-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.morning-body { flex: 1; min-width: 0; }
+.morning-name { font-size: 14px; font-weight: 600; color: var(--choco); margin-bottom: 2px; }
+.morning-desc { font-size: 11px; color: var(--choco-hint); }
+.morning-action { flex-shrink: 0; }
+.morning-time-input {
+  width: 70px; height: 32px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 13px; font-weight: 600;
+  color: var(--choco);
+  background: var(--white);
+  font-family: inherit;
+  outline: none;
+}
+.morning-time-input:focus { border-color: var(--mint); }
+.morning-check {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--mint);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.25s ease;
+  font-size: 13px; color: transparent;
+}
+.morning-check:active { transform: scale(0.9); }
+.morning-check.done {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--white);
+}
+
+/* ============================================
+   第3块：今日有氧打卡三宫格
+   ============================================ */
+.workout-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.workout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.workout-item {
+  background: var(--mint-lighter);
+  border-radius: 16px;
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1.5px solid transparent;
+}
+.workout-item:active { transform: scale(0.96); }
+.workout-item.done {
+  background: var(--mint-light);
+  border-color: var(--mint);
+}
+.workout-item-icon {
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.workout-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--choco);
+  margin-bottom: 4px;
+}
+.workout-item-tags {
+  font-size: 9px;
+  color: var(--choco-hint);
+  line-height: 1.4;
+  margin-bottom: 8px;
+  min-height: 24px;
+}
+.workout-item-btn {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--choco-light);
+  font-weight: 500;
+}
+.workout-item.done .workout-item-btn {
+  background: var(--mint);
+  color: var(--white);
+  border-color: var(--mint);
+}
+
+/* ============================================
+   第4块：第三方APP快捷跳转
+   ============================================ */
+.app-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.app-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-decoration: none;
+}
+.app-item:active { transform: scale(0.92); }
+.app-icon {
+  width: 52px; height: 52px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.app-icon.keep { background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%); }
+.app-icon.sport { background: linear-gradient(135deg, #FFB347 0%, #FFCC33 100%); }
+.app-icon.ant { background: linear-gradient(135deg, #1677FF 0%, #69B1FF 100%); }
+.app-icon.posture { background: linear-gradient(135deg, #A78BFA 0%, #C4B5FD 100%); }
+.app-name {
+  font-size: 11px;
+  color: var(--choco-light);
+  font-weight: 500;
+}
+
+/* ============================================
+   第5块：体态改善视频学习入口
+   ============================================ */
+.video-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.video-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: var(--mint-lighter);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.video-item:active { transform: scale(0.98); }
+.video-thumb {
+  width: 80px; height: 56px; border-radius: 10px;
+  background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(91, 155, 213, 0.2);
+}
+.video-info { flex: 1; min-width: 0; }
+.video-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--choco);
+  margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.video-tag {
+  font-size: 10px;
+  color: var(--choco-hint);
+  background: var(--white);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.video-arrow {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.video-arrow svg { width: 12px; height: 12px; color: var(--choco-light); }
+
+/* --- 底部操作栏 --- */
+.footer {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  display: flex; gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  z-index: 50;
+}
+.btn-primary {
+  flex: 2; height: 48px; border: none; border-radius: 14px;
+  background: var(--mint); color: var(--white);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: transform 0.15s;
+}
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary.checked { background: var(--mint-light); color: var(--choco); border: 1.5px solid var(--mint); }
+.btn-secondary {
+  flex: 1; height: 48px; border: 1.5px solid var(--mint); border-radius: 14px;
+  background: var(--white); color: var(--choco);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s;
+}
+.btn-secondary:active { background: var(--mint-light); transform: scale(0.97); }
+
+/* --- Toast --- */
+.toast {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(93, 64, 55, 0.9); color: #fff;
+  padding: 14px 22px; border-radius: 14px;
+  font-size: 13px; font-weight: 500;
+  z-index: 999; opacity: 0; visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+/* --- 右侧抽屉 --- */
+.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.drawer-overlay.open { opacity: 1; visibility: visible; }
+.drawer { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: var(--white); z-index: 301; transition: right 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.08); }
+.drawer.open { right: 0; }
+.drawer-header { padding: 24px 20px 16px; border-bottom: 1px solid var(--border); }
+.drawer-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--mint); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 28px; }
+.drawer-title { font-size: 18px; font-weight: 700; color: var(--choco); margin-bottom: 4px; }
+.drawer-subtitle { font-size: 13px; color: var(--choco-hint); }
+.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
+.drawer-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--choco); font-size: 15px; }
+.drawer-menu-item:active { background: var(--mint-light); }
+.drawer-menu-item.active { background: var(--mint-light); color: var(--mint); font-weight: 600; }
+.drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+.drawer-menu-item.home-link { border-bottom: 1px solid var(--border); margin-bottom: 8px; color: var(--mint); font-weight: 600; }
+.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid var(--border); }
+.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: var(--mint-light); border: 1.5px solid var(--mint); color: var(--choco); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.drawer-reset-btn:active { background: var(--mint); color: #fff; }
+</style>
 </head>
 <body>
+
 <!-- 右侧滑出抽屉 -->
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="drawer" id="sideDrawer">
   <div class="drawer-header">
-    <div class="drawer-avatar">🌿</div>
+    <div class="drawer-avatar">🏃</div>
     <div class="drawer-title">每日打卡工作台</div>
     <div class="drawer-subtitle">每天进步一点点 ✨</div>
   </div>
   <div class="drawer-menu">
-    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a><a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a><a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a><a class="drawer-menu-item" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a><a class="drawer-menu-item active" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a><a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a><a class="drawer-menu-item" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a><a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a><a class="drawer-menu-item" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a><a class="drawer-menu-item" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a><a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a><a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a><a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
+    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a>
+    <a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a>
+    <a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a>
+    <a class="drawer-menu-item" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a>
+    <a class="drawer-menu-item active" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a>
+    <a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a>
+    <a class="drawer-menu-item" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a>
+    <a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a>
+    <a class="drawer-menu-item" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a>
+    <a class="drawer-menu-item" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a>
+    <a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a>
+    <a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a>
+    <a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
   </div>
   <div class="drawer-footer">
     <button class="drawer-reset-btn" id="resetBtn">🔄 每日重置</button>
   </div>
 </div>
 
-<!-- 顶部固定标题栏 -->
-<div class="detail-header">
-  <a class="back-btn" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
-  <span class="detail-title">🏃 锻炼身体</span>
-  <button type="button" class="drawer-btn" id="drawerBtn"><div class="hamburger-icon"><span></span><span></span><span></span></div></button>
+<!-- 顶部导航栏 -->
+<div class="header">
+  <a class="header-back" href="index.html">←</a>
+  <span class="header-title">🏃 锻炼身体</span>
+  <button type="button" class="header-drawer" id="drawerBtn">
+    <span></span><span></span><span></span>
+  </button>
 </div>
 
-<!-- 主体内容区 -->
-<div class="detail-body">
-  <div class="module-title"><span class="title-emoji">🏃</span><span>锻炼身体</span></div>
+<!-- 主体内容 -->
+<div class="main">
 
-  <!-- 运动项目打卡卡 -->
-  <div class="card">
-    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>运动项目打卡</div></div>
-    <div class="todo-item done" onclick="toggleTodo(this)">
-      <div class="todo-check done"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="todo-text">晨跑3公里</div>
+  <!-- 第1块：进度统计大卡片 -->
+  <div class="progress-card">
+    <div class="progress-left">
+      <div class="progress-num" id="streakNum">0</div>
+      <div class="progress-num-label">连续天数</div>
     </div>
-    <div class="todo-item done" onclick="toggleTodo(this)">
-      <div class="todo-check done"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="todo-text">俯卧撑30个</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="todo-text">瑜伽20分钟</div>
+    <div class="progress-right">
+      <div class="progress-right-title">今日进度</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+      </div>
+      <div class="progress-ratio" id="progressRatio">0/3</div>
     </div>
   </div>
 
-  <!-- 运动时长统计卡 -->
-  <div class="card">
-    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>运动时长</div></div>
-    <div style="display:flex; gap:24px; align-items:baseline;">
-      <div><div class="stat-big">50</div><div class="stat-small">今日（分钟）</div></div>
-      <div><div class="stat-big">210</div><div class="stat-small">本周（分钟）</div></div>
+  <!-- 第2块：晨间仪式 -->
+  <div class="section-title"><span class="emoji">🌅</span>晨间仪式</div>
+  <div class="morning-card">
+    <div class="morning-header">
+      <div class="morning-header-title">🌅 晨间仪式</div>
+      <div class="morning-header-count" id="morningCount">0/3</div>
     </div>
-  </div>
-
-  <!-- 周训练进度环卡 -->
-  <div class="card">
-    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 16"/></svg>周训练进度</div></div>
-    <div class="progress-ring-wrap">
-      <div class="progress-ring">
-        <svg width="120" height="120" viewBox="0 0 120 120">
-          <circle class="ring-bg" cx="60" cy="60" r="52"/>
-          <circle class="ring-fg" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="94.83"/>
-        </svg>
-        <div class="ring-text"><div class="ring-percent">71%</div><div class="ring-label">本周5/7天已练</div></div>
+    <div class="morning-item">
+      <div class="morning-icon">⏰</div>
+      <div class="morning-body">
+        <div class="morning-name">起床时间</div>
+        <div class="morning-desc">养成早起好习惯</div>
+      </div>
+      <div class="morning-action">
+        <input type="time" class="morning-time-input" id="wakeTime" value="07:00">
+      </div>
+    </div>
+    <div class="morning-item">
+      <div class="morning-icon">⚖️</div>
+      <div class="morning-body">
+        <div class="morning-name">早上体重</div>
+        <div class="morning-desc">空腹记录更准确</div>
+      </div>
+      <div class="morning-action">
+        <button class="morning-check" id="weightCheck" type="button">✓</button>
+      </div>
+    </div>
+    <div class="morning-item">
+      <div class="morning-icon">💧</div>
+      <div class="morning-body">
+        <div class="morning-name">一杯温水</div>
+        <div class="morning-desc">唤醒身体代谢</div>
+      </div>
+      <div class="morning-action">
+        <button class="morning-check" id="waterCheck" type="button">✓</button>
       </div>
     </div>
   </div>
+
+  <!-- 第3块：今日有氧打卡 -->
+  <div class="section-title"><span class="emoji">🏋️</span>今日有氧打卡</div>
+  <div class="workout-card">
+    <div class="workout-grid">
+      <div class="workout-item" id="cardioItem" data-type="cardio">
+        <div class="workout-item-icon">🏃</div>
+        <div class="workout-item-name">有氧</div>
+        <div class="workout-item-tags">跑步、椭圆机、跳绳、游泳</div>
+        <div class="workout-item-btn">点击打卡</div>
+      </div>
+      <div class="workout-item" id="strengthItem" data-type="strength">
+        <div class="workout-item-icon">💪</div>
+        <div class="workout-item-name">无氧</div>
+        <div class="workout-item-tags">力量训练、器械、自重训练</div>
+        <div class="workout-item-btn">点击打卡</div>
+      </div>
+      <div class="workout-item" id="hiitItem" data-type="hiit">
+        <div class="workout-item-icon">🔥</div>
+        <div class="workout-item-name">混氧HIIT</div>
+        <div class="workout-item-tags">高强度间歇、波比跳、战绳</div>
+        <div class="workout-item-btn">点击打卡</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第4块：第三方运动工具直达 -->
+  <div class="section-title"><span class="emoji">🛠️</span>第三方运动工具直达</div>
+  <div class="app-card">
+    <div class="app-grid">
+      <div class="app-item" id="appKeep">
+        <div class="app-icon keep">🏃</div>
+        <div class="app-name">Keep</div>
+      </div>
+      <div class="app-item" id="appSport">
+        <div class="app-icon sport">🏅</div>
+        <div class="app-name">运动</div>
+      </div>
+      <div class="app-item" id="appAnt">
+        <div class="app-icon ant">🐜</div>
+        <div class="app-name">蚂蚁阿福</div>
+      </div>
+      <div class="app-item" id="appPosture">
+        <div class="app-icon posture">🧘</div>
+        <div class="app-name">体态APP</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第5块：体态矫正专属课程 -->
+  <div class="section-title"><span class="emoji">🎬</span>体态矫正专属课程</div>
+  <div class="video-card">
+    <div class="video-list">
+      <div class="video-item" id="video1">
+        <div class="video-thumb">🎥</div>
+        <div class="video-info">
+          <div class="video-title">改善圆肩驼背训练</div>
+          <span class="video-tag">体态矫正</span>
+        </div>
+        <div class="video-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+      <div class="video-item" id="video2">
+        <div class="video-thumb">🎥</div>
+        <div class="video-info">
+          <div class="video-title">骨盆前倾矫正课程</div>
+          <span class="video-tag">体态矫正</span>
+        </div>
+        <div class="video-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+      <div class="video-item" id="video3">
+        <div class="video-thumb">🎥</div>
+        <div class="video-info">
+          <div class="video-title">颈部拉伸放松训练</div>
+          <span class="video-tag">体态矫正</span>
+        </div>
+        <div class="video-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- 底部固定操作区 -->
-<div class="detail-footer">
-  <button class="btn-primary" id="checkinBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交</button>
+<!-- 底部操作栏 -->
+<div class="footer">
+  <button class="btn-primary" id="checkinBtn">打卡提交</button>
   <button class="btn-secondary" id="saveBtn">记录保存</button>
 </div>
 
 <script>
+/* ===== 工具函数 ===== */
 function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
 function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
 function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
-function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
-function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
-function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}showToast('打卡成功 🏃')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}showToast('已撤销打卡')}
 function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
-function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
-function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
-function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');if(!o||!d)return;var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
-function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 🌿')}
-function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
-function initDrawerEvents(){
+
+/* Toast */
+function showToast(msg){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1500)}
+
+/* 抽屉 */
+function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
+function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 🏃')}
+
+/* ===== 进度统计 ===== */
+function updateProgress(){
+  var records=getCheckinRecords();
+  var total=3; // 3个运动类型
+  var done=0;
+  if(records.indexOf('cardio')!==-1)done++;
+  if(records.indexOf('strength')!==-1)done++;
+  if(records.indexOf('hiit')!==-1)done++;
+  var pct=Math.round(done/total*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressRatio').textContent=done+'/'+total;
+  document.getElementById('morningCount').textContent=done+'/'+total;
+}
+
+/* 连续天数（简化计算：有打卡记录的天数） */
+function getStreakDays(){
+  try{
+    var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');
+    var keys=Object.keys(d).filter(function(k){return d[k]&&d[k].length>0});
+    return keys.length;
+  }catch(e){return 0}
+}
+function animateNum(el,target){
+  var current=0;
+  var step=Math.max(1,Math.floor(target/20));
+  function tick(){
+    current+=step;
+    if(current>=target){current=target;el.textContent=current;return}
+    el.textContent=current;
+    requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+/* ===== 晨间仪式 ===== */
+function toggleMorningCheck(el){
+  el.classList.toggle('done');
+  updateProgress();
+}
+
+/* ===== 运动打卡 ===== */
+function toggleWorkout(el,type){
+  el.classList.toggle('done');
+  var btn=el.querySelector('.workout-item-btn');
+  if(el.classList.contains('done')){
+    if(btn)btn.textContent='已完成';
+    submitCheckin(type);
+  }else{
+    if(btn)btn.textContent='点击打卡';
+    undoCheckin(type);
+  }
+  updateProgress();
+  updateFooterBtn();
+}
+function initWorkoutState(){
+  var types=['cardio','strength','hiit'];
+  types.forEach(function(t){
+    var el=document.getElementById(t+'Item');
+    if(!el)return;
+    if(isChecked(t)){
+      el.classList.add('done');
+      var btn=el.querySelector('.workout-item-btn');
+      if(btn)btn.textContent='已完成';
+    }
+  });
+  updateProgress();
+}
+
+/* 底部按钮状态 */
+function updateFooterBtn(){
+  var btn=document.getElementById('checkinBtn');
+  if(!btn)return;
+  var hasAny=isChecked('cardio')||isChecked('strength')||isChecked('hiit');
+  if(hasAny){
+    btn.classList.add('checked');
+    btn.textContent='✓ 已完成打卡';
+  }else{
+    btn.classList.remove('checked');
+    btn.textContent='打卡提交';
+  }
+}
+
+/* ===== 事件绑定 ===== */
+document.addEventListener('DOMContentLoaded',function(){
+  /* 抽屉 */
   var btn=document.getElementById('drawerBtn');
   var overlay=document.getElementById('drawerOverlay');
   var resetBtn=document.getElementById('resetBtn');
+  if(btn)btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});
+  if(overlay)overlay.addEventListener('click',function(e){toggleDrawer()});
+  if(resetBtn)resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});
+
+  /* 底部按钮 */
   var checkinBtn=document.getElementById('checkinBtn');
   var saveBtn=document.getElementById('saveBtn');
-  if(btn){btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});}
-  if(overlay){overlay.addEventListener('click',function(e){toggleDrawer()});}
-  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
-  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(4)});}
-  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
-}
-document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
-initCheckinState(4);
+  if(checkinBtn)checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(4)});
+  if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存')});
+
+  /* 晨间仪式勾选 */
+  var weightCheck=document.getElementById('weightCheck');
+  var waterCheck=document.getElementById('waterCheck');
+  if(weightCheck)weightCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this)});
+  if(waterCheck)waterCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this)});
+
+  /* 运动打卡 */
+  var cardio=document.getElementById('cardioItem');
+  var strength=document.getElementById('strengthItem');
+  var hiit=document.getElementById('hiitItem');
+  if(cardio)cardio.addEventListener('click',function(e){e.stopPropagation();toggleWorkout(this,'cardio')});
+  if(strength)strength.addEventListener('click',function(e){e.stopPropagation();toggleWorkout(this,'strength')});
+  if(hiit)hiit.addEventListener('click',function(e){e.stopPropagation();toggleWorkout(this,'hiit')});
+
+  /* 第三方APP跳转 */
+  var apps=[
+    {id:'appKeep',url:'https://www.gotokeep.com'},
+    {id:'appSport',url:'https://www.apple.com/ios/health/'},
+    {id:'appAnt',url:'https://www.alipay.com'},
+    {id:'appPosture',url:'https://www.xiaohongshu.com'}
+  ];
+  apps.forEach(function(a){
+    var el=document.getElementById(a.id);
+    if(el)el.addEventListener('click',function(e){e.stopPropagation();window.location.href=a.url});
+  });
+
+  /* 视频跳转 */
+  var videos=[
+    {id:'video1',url:'https://www.bilibili.com/video/BV1S54y1G7C2'},
+    {id:'video2',url:'https://www.bilibili.com/video/BV1S54y1G7C2'},
+    {id:'video3',url:'https://www.bilibili.com/video/BV1S54y1G7C2'}
+  ];
+  videos.forEach(function(v){
+    var el=document.getElementById(v.id);
+    if(el)el.addEventListener('click',function(e){e.stopPropagation();window.location.href=v.url});
+  });
+
+  /* 初始化 */
+  var streak=getStreakDays();
+  animateNum(document.getElementById('streakNum'),streak);
+  initWorkoutState();
+  updateFooterBtn();
+});
 </script>
 
-<!-- Service Worker 注册（PWA 离线支持） -->
+<!-- Service Worker 注册 -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
