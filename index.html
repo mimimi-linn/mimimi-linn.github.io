@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- PWA 核心配置 -->
-<meta name="theme-color" content="#7DD3C0">
+<meta name="theme-color" content="#6B9AC4">
 <meta name="application-name" content="每日打卡">
 <meta name="description" content="治愈系自律打卡工具，记录每天的成长与进步">
 <link rel="manifest" href="manifest.json">
@@ -28,28 +28,29 @@
    全局设计规范 Design System
    ============================================ */
 :root {
-  /* 主色体系 - 薄荷绿 × 巧克力棕 */
-  --color-primary: #7DD3C0;        /* 薄荷绿：按钮、选中态、完成标识、高亮文字、进度条 */
-  --color-primary-light: #E8F5F1;  /* 淡薄荷：卡片背景、输入框选中底色、页面大面积铺垫 */
-  --color-primary-dark: #5D4037;   /* 巧克力棕：小标题强调、图标描边、分割线 */
+  /* 主色体系 - 奶油白 × 柔和蓝灰 × 砖红点缀（手绘温馨风） */
+  --color-primary: #6B9AC4;        /* 柔和蓝灰：按钮、选中态、完成标识、高亮文字、进度条 */
+  --color-primary-light: #EBF2F8;  /* 淡蓝灰：卡片背景、输入框选中底色、页面大面积铺垫 */
+  --color-primary-dark: #3D3D3D;   /* 炭灰：小标题强调、图标描边、分割线 */
+  --color-accent: #D45555;         /* 砖红：点缀色、打卡完成、装饰强调 */
 
   /* 主色渐变 */
-  --gradient-primary: linear-gradient(135deg, #7DD3C0 0%, #98D8C8 100%);
-  --gradient-card: linear-gradient(135deg, #E8F5F1 0%, #F5FBF9 100%);
+  --gradient-primary: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%);
+  --gradient-card: linear-gradient(135deg, #EBF2F8 0%, #FAFAFA 100%);
 
   /* 中性色系 */
   --color-white: #FFFFFF;
-  --color-bg: #F5FBF9;             /* 页面全局薄荷底 */
-  --color-text-primary: #5D4037;   /* 巧克力棕主文字 */
-  --color-text-secondary: #8D7B68;  /* 浅棕辅文字 */
-  --color-text-hint: #B5A99A;      /* 提示文字 */
-  --color-border: #D4E8E0;         /* 纤细分割线 */
-  --color-card-shadow: rgba(125, 211, 192, 0.15);
+  --color-bg: #FAFAFA;             /* 页面全局奶油白底 */
+  --color-text-primary: #3D3D3D;   /* 炭灰主文字 */
+  --color-text-secondary: #8A8A8A;  /* 灰色辅文字 */
+  --color-text-hint: #B0B0B0;      /* 提示文字 */
+  --color-border: #E8E8E8;         /* 纤细分割线 */
+  --color-card-shadow: rgba(107, 154, 196, 0.10);
 
   /* 状态色 */
-  --color-checked-bg: #E8F5F1;     /* 已打卡卡片底色 */
-  --color-checked-accent: #7DD3C0; /* 已打卡点缀色 */
-  --color-unchecked-bg: #FAFEFC;   /* 未打卡卡片底色 */
+  --color-checked-bg: #EBF2F8;     /* 已打卡卡片底色 */
+  --color-checked-accent: #6B9AC4; /* 已打卡点缀色 */
+  --color-unchecked-bg: #FCFCFC;   /* 未打卡卡片底色 */
 
   /* 圆角规范 */
   --radius-xs: 8px;
@@ -83,7 +84,7 @@
 
   /* 阴影 */
   --shadow-card: 0 2px 12px var(--color-card-shadow);
-  --shadow-float: 0 4px 20px rgba(125, 211, 192, 0.20);
+  --shadow-float: 0 4px 20px rgba(107, 154, 196, 0.15);
 }
 
 /* ============================================
@@ -181,7 +182,7 @@ body {
 }
 
 .clock-card {
-  background: #7DD3C0;
+  background: #6B9AC4;
   border-radius: var(--radius-xl);
   padding: var(--space-xxl) var(--space-xl);
   text-align: center;
@@ -191,21 +192,22 @@ body {
 .clock-date {
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-medium);
-  color: #5D4037;
+  color: #FFFFFF;
   margin-bottom: var(--space-xs);
 }
 
 .clock-day {
   font-size: var(--font-size-caption);
-  color: #5D4037;
+  color: #FFFFFF;
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-md);
+  opacity: 0.9;
 }
 
 .clock-time {
   font-size: var(--font-size-clock);
   font-weight: var(--font-weight-bold);
-  color: #5D4037;
+  color: #FFFFFF;
   letter-spacing: 2px;
   line-height: 1;
   margin-bottom: var(--space-lg);
@@ -224,7 +226,8 @@ body {
 
 .clock-greeting {
   font-size: var(--font-size-caption);
-  color: #5D4037;
+  color: #FFFFFF;
+  opacity: 0.9;
 }
 
 /* ============================================
