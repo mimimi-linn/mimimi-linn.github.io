@@ -1,653 +1,605 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>穿搭美妆</title>
-  <style>
-/* ============================================
-   detail-common.css - H5二级详情页共享样式
-   薄荷绿色调 | 375px移动端 | 极简治愈风格
-   ============================================ */
-
-/* --- Reset & Base --- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  width: 100%;
-  min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
-  color: #2d3436;
-  background: #f0faf5;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* --- Top Fixed Header --- */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-  padding: 0 16px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.header-back {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #e8f8f0;
-  border-radius: 12px;
-  font-size: 18px;
-  color: #00b894;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.header-back:hover {
-  background: #d0f0e0;
-}
-
-.header-title {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #2d3436;
-  letter-spacing: 0.5px;
-}
-
-.header-drawer {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #e8f8f0;
-  border-radius: 12px;
-  font-size: 16px;
-  color: #00b894;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.header-drawer:hover {
-  background: #d0f0e0;
-}
-
-/* --- Main Content Area --- */
-.main {
-  padding: 72px 16px 120px;
-  max-width: 375px;
-  margin: 0 auto;
-}
-
-/* --- Card --- */
-.card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 12px rgba(0, 184, 148, 0.08);
-}
-
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #2d3436;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.card-title .emoji {
-  font-size: 18px;
-}
-
-/* --- List Item --- */
-.list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  background: #f7fdfb;
-  border-radius: 14px;
-  margin-bottom: 8px;
-  transition: background 0.2s;
-}
-
-.list-item:last-child {
-  margin-bottom: 0;
-}
-
-.list-item-label {
-  font-size: 13px;
-  color: #2d3436;
-  font-weight: 500;
-}
-
-.list-item-value {
-  font-size: 12px;
-  color: #999;
-}
-
-/* --- Stat Row --- */
-.stat-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 12px;
-  padding: 8px 0;
-}
-
-.stat-item {
-  text-align: center;
-  flex: 1;
-}
-
-.stat-num {
-  font-size: 28px;
-  font-weight: 700;
-  color: #00b894;
-  line-height: 1.2;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: #999;
-  margin-top: 4px;
-}
-
-/* --- Note Textarea --- */
-.note-textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 14px;
-  border: 2px solid #e8f8f0;
-  border-radius: 14px;
-  font-size: 14px;
-  color: #2d3436;
-  background: #fafffe;
-  resize: vertical;
-  outline: none;
-  transition: border-color 0.2s;
-  font-family: inherit;
-  line-height: 1.6;
-}
-
-.note-textarea::placeholder {
-  color: #b2bec3;
-}
-
-.note-textarea:focus {
-  border-color: #00b894;
-}
-
-/* --- Info Card (News) --- */
-.info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px;
-  background: #f7fdfb;
-  border-radius: 14px;
-  margin-bottom: 10px;
-  transition: transform 0.2s;
-}
-
-.info-card:last-child {
-  margin-bottom: 0;
-}
-
-.info-card:active {
-  transform: scale(0.98);
-}
-
-.info-card-img {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e8f8f0;
-  border-radius: 14px;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.info-card-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.info-card-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #2d3436;
-  line-height: 1.4;
-  margin-bottom: 4px;
-}
-
-.info-card-source {
-  font-size: 11px;
-  color: #b2bec3;
-}
-
-/* --- Progress Ring --- */
-.progress-ring-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
-}
-
-.progress-ring {
-  transform: rotate(-90deg);
-}
-
-.progress-ring-bg {
-  fill: none;
-  stroke: #e8f8f0;
-  stroke-width: 8;
-}
-
-.progress-ring-fg {
-  fill: none;
-  stroke: #00b894;
-  stroke-width: 8;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1s ease-in-out;
-}
-
-.ring-label {
-  font-size: 13px;
-  color: #999;
-  margin-top: 12px;
-  text-align: center;
-}
-
-/* --- Todo Item --- */
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: #f7fdfb;
-  border-radius: 14px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.todo-item:last-child {
-  margin-bottom: 0;
-}
-
-.todo-item:active {
-  background: #e8f8f0;
-}
-
-.todo-checkbox {
-  width: 22px;
-  height: 22px;
-  border: 2px solid #d0e8dc;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 12px;
-  color: transparent;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.todo-item.done .todo-checkbox {
-  background: #00b894;
-  border-color: #00b894;
-  color: #fff;
-}
-
-.todo-text {
-  font-size: 13px;
-  color: #2d3436;
-  line-height: 1.4;
-  transition: color 0.2s;
-}
-
-.todo-item.done .todo-text {
-  color: #b2bec3;
-  text-decoration: line-through;
-}
-
-/* --- Emoji Mood Selector --- */
-.mood-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 10px;
-  padding: 10px 0;
-}
-
-.mood-item {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  background: #f7fdfb;
-  cursor: pointer;
-  transition: all 0.25s;
-  user-select: none;
-}
-
-.mood-item.active {
-  border-color: #00b894;
-  background: #d0f0e0;
-  transform: scale(1.1);
-}
-
-/* --- Bottom Fixed Action Bar --- */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-width: 375px;
-  margin: 0 auto;
-}
-
-.btn-primary {
-  flex: 1.2;
-  height: 48px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #00b894, #00cec9);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: opacity 0.2s, transform 0.15s;
-  letter-spacing: 1px;
-}
-
-.btn-primary:active {
-  opacity: 0.85;
-  transform: scale(0.97);
-}
-
-.btn-primary.checked {
-  background: linear-gradient(135deg, #b2bec3, #dfe6e9);
-  color: #fff;
-}
-
-.btn-secondary {
-  flex: 0.8;
-  height: 48px;
-  border: 2px solid #00b894;
-  border-radius: 16px;
-  background: #fff;
-  color: #00b894;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s;
-  letter-spacing: 1px;
-}
-
-.btn-secondary:active {
-  background: #f0faf5;
-  transform: scale(0.97);
-}
-
-/* --- Toast --- */
-.toast {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  padding: 10px 24px;
-  background: rgba(0, 184, 148, 0.92);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.35s ease;
-  white-space: nowrap;
-  backdrop-filter: blur(8px);
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* --- Income / Expense Stat --- */
-.stat-income {
-  font-size: 28px;
-  font-weight: 700;
-  color: #00b894;
-}
-
-.stat-expense {
-  font-size: 28px;
-  font-weight: 700;
-  color: #e17055;
-}
-
-
-/* 右侧滑出抽屉 */
-.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-.drawer-overlay.open { opacity: 1; visibility: visible; }
-.drawer { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: #FFFFFF; z-index: 301; transition: right 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.08); }
-.drawer.open { right: 0; }
-.drawer-header { padding: 24px 20px 16px; border-bottom: 1px solid #E0EBE6; }
-.drawer-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #8FBCA8 0%, #A8D4BC 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 28px; }
-.drawer-title { font-size: 18px; font-weight: 700; color: #5A8C78; margin-bottom: 4px; }
-.drawer-subtitle { font-size: 13px; color: #B0C4C0; }
-.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
-.drawer-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #2D3436; font-size: 15px; }
-.drawer-menu-item:active { background: #E6F2ED; }
-.drawer-menu-item.active { background: #E6F2ED; color: #5A8C78; font-weight: 600; }
-.drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
-.drawer-menu-item.home-link { border-bottom: 1px solid #E0EBE6; margin-bottom: 8px; color: #5A8C78; font-weight: 600; }
-.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid #E0EBE6; }
-.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #E6F2ED; border: 1.5px solid #8FBCA8; color: #5A8C78; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
-.drawer-reset-btn:active { background: #8FBCA8; color: #fff; }
-
-</style>
-<meta name="theme-color" content="#C9985A">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>穿搭美妆</title>
+<meta name="theme-color" content="#7DD3C0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" href="icons/favicon-32.png">
+<style>
+/* ============================================
+   穿搭美妆页 - 薄荷绿 × 巧克力棕
+   ============================================ */
+:root {
+  --mint: #7DD3C0;
+  --mint-light: #E8F5F1;
+  --mint-lighter: #F5FBF9;
+  --choco: #5D4037;
+  --choco-light: #8D7B68;
+  --choco-hint: #B5A99A;
+  --pink: #FF6B9D;
+  --pink-light: #FFF0F5;
+  --blue: #5B9BD5;
+  --blue-light: #EBF3FA;
+  --border: #D4E8E0;
+  --white: #FFFFFF;
+  --shadow: 0 2px 12px rgba(125, 211, 192, 0.12);
+  --shadow-float: 0 4px 20px rgba(125, 211, 192, 0.18);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  background: var(--mint-lighter);
+  color: var(--choco);
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px;
+}
+
+/* --- 顶部导航栏 --- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.header-back {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint-light); display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--choco); font-size: 18px; flex-shrink: 0;
+}
+.header-back:active { transform: scale(0.92); }
+.header-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--choco); }
+.header-drawer {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.header-drawer:active { transform: scale(0.92); }
+.header-drawer span { display: block; width: 14px; height: 2px; background: var(--white); border-radius: 1px; margin: 1.5px 0; }
+
+/* --- 主体内容 --- */
+.main { padding: 16px 16px 0; }
+
+/* --- 通用标题 --- */
+.section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.section-title .emoji { font-size: 18px; }
+
+/* ============================================
+   第1块：审美博主关注更新
+   ============================================ */
+.blogger-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.blogger-list {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 14px;
+}
+.blogger-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px;
+  background: var(--mint-lighter);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.blogger-item:active { transform: scale(0.98); }
+.blogger-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.blogger-avatar.a1 { background: #FFE0EC; }
+.blogger-avatar.a2 { background: #E0F0FF; }
+.blogger-avatar.a3 { background: #FFF0E0; }
+.blogger-body { flex: 1; min-width: 0; }
+.blogger-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 3px;
+}
+.blogger-name {
+  font-size: 14px; font-weight: 600; color: var(--choco);
+  display: flex; align-items: center; gap: 5px;
+}
+.blogger-tag {
+  font-size: 9px; font-weight: 500;
+  background: var(--mint-light); color: var(--mint);
+  padding: 2px 6px; border-radius: 4px;
+}
+.blogger-jump {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; cursor: pointer; transition: all 0.2s;
+}
+.blogger-jump:active { background: var(--mint-light); transform: scale(0.9); }
+.blogger-jump svg { width: 12px; height: 12px; color: var(--choco-light); }
+.blogger-desc {
+  font-size: 11px; color: var(--choco-hint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.blogger-latest {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  background: var(--white);
+  border-radius: 8px;
+  font-size: 11px; color: var(--choco-light);
+  margin-top: 4px;
+}
+.blogger-latest .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--mint); flex-shrink: 0;
+}
+
+/* 小红书搜索框 */
+.xhs-search-box {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  background: var(--white);
+  border: 1.5px solid #FF2442;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+}
+.xhs-search-box:active { transform: scale(0.98); }
+.xhs-search-logo {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.xhs-search-logo img { width: 36px; height: 36px; object-fit: contain; }
+.xhs-search-body { flex: 1; }
+.xhs-search-title {
+  font-size: 14px; font-weight: 600; color: #FF2442;
+  margin-bottom: 2px;
+}
+.xhs-search-desc {
+  font-size: 11px; color: var(--choco-hint);
+}
+.xhs-search-arrow {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #FFF0F2;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.xhs-search-arrow svg { width: 12px; height: 12px; color: #FF2442; }
+
+/* ============================================
+   第2块：收藏夹 + 灵感记录（合并双栏）
+   ============================================ */
+.merge-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.merge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0;
+}
+.merge-divider {
+  background: var(--border);
+  margin: 4px 0;
+}
+.merge-col {
+  display: flex; flex-direction: column;
+  padding: 0 10px;
+}
+.merge-col-title {
+  font-size: 13px; font-weight: 700; color: var(--choco);
+  text-align: center; margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.merge-col-title .emoji { font-size: 15px; }
+.merge-item {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  padding: 14px 6px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+.merge-item:last-child { margin-bottom: 0; }
+.merge-item:active { transform: scale(0.95); }
+.merge-item.beauty { background: linear-gradient(135deg, #FFE0EC 0%, #FFF0F5 100%); }
+.merge-item.fashion { background: linear-gradient(135deg, #E0F0FF 0%, #F0F7FF 100%); }
+.merge-item.outfit { background: linear-gradient(135deg, #E8F5F1 0%, #F5FBF9 100%); border: 1.5px solid var(--mint); }
+.merge-item.makeup { background: linear-gradient(135deg, #FFF0F5 0%, #FFFAFB 100%); border: 1.5px solid var(--pink); }
+.merge-item-icon { font-size: 26px; line-height: 1; }
+.merge-item-name { font-size: 13px; font-weight: 600; color: var(--choco); }
+.merge-item-sub { font-size: 9px; color: var(--choco-hint); }
+
+/* ============================================
+   第3块：我的衣柜
+   ============================================ */
+.wardrobe-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.wardrobe-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, #F0F7FF 0%, #F5FBF9 100%);
+  border-radius: 16px;
+  border: 1px solid #DDE8F5;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wardrobe-item:active { transform: scale(0.98); }
+.wardrobe-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(91, 155, 213, 0.2);
+}
+.wardrobe-body { flex: 1; min-width: 0; }
+.wardrobe-name {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 3px;
+}
+.wardrobe-desc {
+  font-size: 12px; color: var(--choco-hint);
+}
+.wardrobe-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.wardrobe-arrow svg { width: 14px; height: 14px; color: var(--choco-light); }
+
+/* --- 底部操作栏 --- */
+.footer {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  display: flex; gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  z-index: 50;
+}
+.btn-primary {
+  flex: 2; height: 48px; border: none; border-radius: 14px;
+  background: var(--mint); color: var(--white);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: transform 0.15s;
+}
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary.checked { background: var(--mint-light); color: var(--choco); border: 1.5px solid var(--mint); }
+.btn-secondary {
+  flex: 1; height: 48px; border: 1.5px solid var(--mint); border-radius: 14px;
+  background: var(--white); color: var(--choco);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s;
+}
+.btn-secondary:active { background: var(--mint-light); transform: scale(0.97); }
+
+/* --- Toast --- */
+.toast {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(93, 64, 55, 0.9); color: #fff;
+  padding: 14px 22px; border-radius: 14px;
+  font-size: 13px; font-weight: 500;
+  z-index: 999; opacity: 0; visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+/* --- 右侧抽屉 --- */
+.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+.drawer-overlay.open { opacity: 1; visibility: visible; }
+.drawer { position: fixed; top: 0; right: -300px; width: 280px; height: 100%; background: var(--white); z-index: 301; transition: right 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0,0,0,0.08); }
+.drawer.open { right: 0; }
+.drawer-header { padding: 24px 20px 16px; border-bottom: 1px solid var(--border); }
+.drawer-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--mint); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 28px; }
+.drawer-title { font-size: 18px; font-weight: 700; color: var(--choco); margin-bottom: 4px; }
+.drawer-subtitle { font-size: 13px; color: var(--choco-hint); }
+.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
+.drawer-menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: var(--choco); font-size: 15px; }
+.drawer-menu-item:active { background: var(--mint-light); }
+.drawer-menu-item.active { background: var(--mint-light); color: var(--mint); font-weight: 600; }
+.drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
+.drawer-menu-item.home-link { border-bottom: 1px solid var(--border); margin-bottom: 8px; color: var(--mint); font-weight: 600; }
+.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid var(--border); }
+.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: var(--mint-light); border: 1.5px solid var(--mint); color: var(--choco); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.drawer-reset-btn:active { background: var(--mint); color: #fff; }
+</style>
 </head>
 <body>
 <!-- 右侧滑出抽屉 -->
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="drawer" id="sideDrawer">
   <div class="drawer-header">
-    <div class="drawer-avatar">🌿</div>
+    <div class="drawer-avatar">👗</div>
     <div class="drawer-title">每日打卡工作台</div>
     <div class="drawer-subtitle">每天进步一点点 ✨</div>
   </div>
   <div class="drawer-menu">
-    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a><a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a><a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a><a class="drawer-menu-item" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a><a class="drawer-menu-item" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a><a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a><a class="drawer-menu-item active" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a><a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a><a class="drawer-menu-item" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a><a class="drawer-menu-item" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a><a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a><a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a><a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
+    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a>
+    <a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a>
+    <a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a>
+    <a class="drawer-menu-item" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a>
+    <a class="drawer-menu-item" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a>
+    <a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a>
+    <a class="drawer-menu-item active" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a>
+    <a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a>
+    <a class="drawer-menu-item" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a>
+    <a class="drawer-menu-item" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a>
+    <a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a>
+    <a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a>
+    <a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
   </div>
   <div class="drawer-footer">
     <button class="drawer-reset-btn" id="resetBtn">🔄 每日重置</button>
   </div>
 </div>
 
-  <!-- 顶部固定标题栏 -->
-  <div class="header">
-    <a class="header-back" href="index.html">&#8592;</a>
-    <span class="header-title">穿搭美妆</span>
-    <button type="button" class="header-drawer" id="drawerBtn" style="cursor:pointer;border:none;background:#e8f8f0">&#9776;</button>
+<!-- 顶部导航栏 -->
+<div class="header">
+  <a class="header-back" href="index.html">←</a>
+  <span class="header-title">👗 穿搭美妆</span>
+  <button type="button" class="header-drawer" id="drawerBtn">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<!-- 主体内容 -->
+<div class="main">
+
+  <!-- 小红书搜索（置顶） -->
+  <div class="xhs-search-box" id="xhsSearch">
+    <div class="xhs-search-logo">
+      <img src="icons/xhs-logo.png" alt="小红书" />
+    </div>
+    <div class="xhs-search-body">
+      <div class="xhs-search-title">小红书搜索</div>
+      <div class="xhs-search-desc">搜索穿搭美妆灵感、教程</div>
+    </div>
+    <div class="xhs-search-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
   </div>
 
-  <!-- 中间主体内容区 -->
-  <div class="main">
-
-    <!-- 日常穿搭留存卡 -->
-    <div class="card">
-      <div class="card-title"><span class="emoji">&#128087;</span> 日常穿搭留存</div>
-      <div class="list-item">
-        <div class="item-left">
-          <div class="item-name">2026-07-28</div>
-          <div class="item-meta">白色衬衫 + 牛仔阔腿裤 + 帆布鞋</div>
-        </div>
-        <div class="item-right">
-          <span class="tag">休闲</span>
-        </div>
-      </div>
-      <div class="list-item">
-        <div class="item-left">
-          <div class="item-name">2026-07-26</div>
-          <div class="item-meta">碎花连衣裙 + 编织凉鞋 + 草编包</div>
-        </div>
-        <div class="item-right">
-          <span class="tag">甜美</span>
+  <!-- 第1块：关注博主更新 -->
+  <div class="section-title"><span class="emoji">🎀</span>关注博主更新</div>
+  <div class="blogger-card">
+    <div class="blogger-list">
+      <!-- 博主1 -->
+      <div class="blogger-item" data-url="#">
+        <div class="blogger-avatar a1">🌸</div>
+        <div class="blogger-body">
+          <div class="blogger-top">
+            <div class="blogger-name">穿搭小个子 <span class="blogger-tag">穿搭</span></div>
+            <button class="blogger-jump" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+            </button>
+          </div>
+          <div class="blogger-desc">小个子显高穿搭 / 日常通勤风</div>
+          <div class="blogger-latest">
+            <span class="dot"></span>
+            <span>最新：秋冬显高搭配公式，小个子必看</span>
+          </div>
         </div>
       </div>
-      <div class="list-item">
-        <div class="item-left">
-          <div class="item-name">2026-07-24</div>
-          <div class="item-meta">黑色西装外套 + 白T + 烟管裤</div>
+      <!-- 博主2 -->
+      <div class="blogger-item" data-url="#">
+        <div class="blogger-avatar a2">💄</div>
+        <div class="blogger-body">
+          <div class="blogger-top">
+            <div class="blogger-name">美妆教程君 <span class="blogger-tag">美妆</span></div>
+            <button class="blogger-jump" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+            </button>
+          </div>
+          <div class="blogger-desc">新手化妆教程 / 日常妆容分享</div>
+          <div class="blogger-latest">
+            <span class="dot"></span>
+            <span>最新：5分钟通勤妆，手残党也能学会</span>
+          </div>
         </div>
-        <div class="item-right">
-          <span class="tag">通勤</span>
+      </div>
+      <!-- 博主3 -->
+      <div class="blogger-item" data-url="#">
+        <div class="blogger-avatar a3">👠</div>
+        <div class="blogger-body">
+          <div class="blogger-top">
+            <div class="blogger-name">法式穿搭笔记 <span class="blogger-tag">穿搭</span></div>
+            <button class="blogger-jump" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+            </button>
+          </div>
+          <div class="blogger-desc">法式慵懒风 / 极简衣橱打造</div>
+          <div class="blogger-latest">
+            <span class="dot"></span>
+            <span>最新：一件白衬衫的10种穿法</span>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 美妆护肤打卡卡 -->
-    <div class="card">
-      <div class="card-title"><span class="emoji">&#128132;</span> 美妆护肤打卡</div>
-      <div class="todo-item done" onclick="toggleTodo(this)">
-        <div class="checkbox">&#10003;</div>
-        <span class="todo-text">洁面</span>
-      </div>
-      <div class="todo-item done" onclick="toggleTodo(this)">
-        <div class="checkbox">&#10003;</div>
-        <span class="todo-text">水乳</span>
-      </div>
-      <div class="todo-item" onclick="toggleTodo(this)">
-        <div class="checkbox"></div>
-        <span class="todo-text">防晒</span>
-      </div>
-    </div>
-
-    <!-- 妆容记录相册卡 -->
-    <div class="card">
-      <div class="card-title"><span class="emoji">&#128248;</span> 妆容记录相册</div>
-      <div class="info-card">
-        <div class="info-card-img">&#128564;</div>
-        <div class="info-card-content">
-          <div class="info-name">夏日清新妆</div>
-          <div class="info-desc">轻薄底妆 + 蜜桃色腮红 + 透明唇釉</div>
+  <!-- 第2块：收藏夹 + 灵感记录（合并双栏） -->
+  <div class="section-title"><span class="emoji">📂</span>收藏夹 &amp; 灵感记录</div>
+  <div class="merge-card">
+    <div class="merge-grid">
+      <!-- 左栏：收藏夹 -->
+      <div class="merge-col">
+        <div class="merge-col-title"><span class="emoji">🔖</span>收藏夹</div>
+        <div class="merge-item beauty" id="favBeauty">
+          <div class="merge-item-icon">💄</div>
+          <div class="merge-item-name">美妆收藏</div>
+          <div class="merge-item-sub">小红书 / 抖音</div>
+        </div>
+        <div class="merge-item fashion" id="favFashion">
+          <div class="merge-item-icon">👗</div>
+          <div class="merge-item-name">穿搭收藏</div>
+          <div class="merge-item-sub">小红书 / 抖音</div>
         </div>
       </div>
-      <div class="info-card">
-        <div class="info-card-img">&#127769;</div>
-        <div class="info-card-content">
-          <div class="info-name">职场通勤妆</div>
-          <div class="info-desc">自然底妆 + 大地色眼影 + 豆沙色口红</div>
+      <!-- 分隔线 -->
+      <div class="merge-divider"></div>
+      <!-- 右栏：灵感记录 -->
+      <div class="merge-col">
+        <div class="merge-col-title"><span class="emoji">📝</span>灵感记录</div>
+        <div class="merge-item outfit" id="inspireOutfit">
+          <div class="merge-item-icon">👗</div>
+          <div class="merge-item-name">穿搭灵感</div>
+          <div class="merge-item-sub">点击进入备忘录</div>
         </div>
-      </div>
-      <div class="info-card">
-        <div class="info-card-img">&#127752;</div>
-        <div class="info-card-content">
-          <div class="info-name">晚宴精致妆</div>
-          <div class="info-desc">全脸遮瑕 + 烟熏眼妆 + 红丝绒唇</div>
+        <div class="merge-item makeup" id="inspireMakeup">
+          <div class="merge-item-icon">💄</div>
+          <div class="merge-item-name">妆容灵感</div>
+          <div class="merge-item-sub">点击进入备忘录</div>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- 底部固定操作区 -->
-  <div class="footer">
-    <button class="btn-primary" id="checkinBtn">打卡提交</button>
-    <button class="btn-secondary" id="saveBtn">记录保存</button>
+  <!-- 第3块：我的衣柜 -->
+  <div class="section-title"><span class="emoji">🚪</span>我的衣柜</div>
+  <div class="wardrobe-card">
+    <div class="wardrobe-item" id="wardrobeApp">
+      <div class="wardrobe-icon">👚</div>
+      <div class="wardrobe-body">
+        <div class="wardrobe-name">衣橱管理</div>
+        <div class="wardrobe-desc">点击进入衣橱App，管理你的穿搭</div>
+      </div>
+      <div class="wardrobe-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
   </div>
 
-  <script>
+</div>
+
+<!-- 底部操作栏 -->
+<div class="footer">
+  <button class="btn-primary" id="checkinBtn">打卡提交</button>
+  <button class="btn-secondary" id="saveBtn">记录保存</button>
+</div>
+
+<script>
+/* 打卡逻辑 */
 function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
 function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
 function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
-function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
-function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
-function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(true);showToast('打卡成功 👗')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(false);showToast('已撤销打卡')}
 function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
-function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
-function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
-function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');if(!o||!d)return;var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
-function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 🌿')}
-function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
-function initDrawerEvents(){
+function updateCheckinButton(checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.textContent='✓ 已完成打卡'}else{b.classList.remove('checked');b.textContent='打卡提交'}}
+
+/* Toast */
+function showToast(msg){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1500)}
+
+/* 抽屉 */
+function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
+function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 👗')}
+
+/* 事件绑定 */
+document.addEventListener('DOMContentLoaded',function(){
   var btn=document.getElementById('drawerBtn');
   var overlay=document.getElementById('drawerOverlay');
   var resetBtn=document.getElementById('resetBtn');
   var checkinBtn=document.getElementById('checkinBtn');
   var saveBtn=document.getElementById('saveBtn');
-  if(btn){btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});}
-  if(overlay){overlay.addEventListener('click',function(e){toggleDrawer()});}
-  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
-  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(6)});}
-  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
-}
-document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
-initCheckinState(6);
+  if(btn)btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});
+  if(overlay)overlay.addEventListener('click',function(e){toggleDrawer()});
+  if(resetBtn)resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});
+  if(checkinBtn)checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(6)});
+  if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存')});
+
+  /* 博主跳转 */
+  document.querySelectorAll('.blogger-item').forEach(function(item){
+    item.addEventListener('click',function(e){
+      if(e.target.closest('.blogger-jump')){e.stopPropagation()}
+      var url=this.getAttribute('data-url');
+      if(url&&url!=='#')window.location.href=url;else showToast('请先设置博主链接');
+    });
+  });
+
+  /* 小红书搜索 */
+  var xhsSearch=document.getElementById('xhsSearch');
+  if(xhsSearch)xhsSearch.addEventListener('click',function(e){
+    e.stopPropagation();
+    /* 优先唤起小红书App搜索页，失败则跳网页版 */
+    var scheme='xhsdiscover://search/recommend';
+    var webUrl='https://www.xiaohongshu.com/explore';
+    var ua=navigator.userAgent.toLowerCase();
+    var isIOS=/iphone|ipad|ipod/.test(ua);
+    var start=Date.now();
+    var timer=setTimeout(function(){
+      /* 如果2秒后页面还活着，说明App没唤起，跳网页版 */
+      if(Date.now()-start<2200){window.location.href=webUrl}
+    },2000);
+    /* iOS用iframe唤起，Android直接跳 */
+    if(isIOS){
+      var iframe=document.createElement('iframe');
+      iframe.style.display='none';
+      iframe.src=scheme;
+      document.body.appendChild(iframe);
+      setTimeout(function(){document.body.removeChild(iframe)},300);
+    }else{
+      window.location.href=scheme;
+    }
+    /* 可见性变化说明App已打开，清除兜底 */
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden){clearTimeout(timer)}
+    },{once:true});
+  });
+
+  /* 收藏夹跳转 */
+  var favBeauty=document.getElementById('favBeauty');
+  var favFashion=document.getElementById('favFashion');
+  if(favBeauty)favBeauty.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置美妆收藏夹链接')});
+  if(favFashion)favFashion.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置穿搭收藏夹链接')});
+
+  /* 衣柜App跳转 */
+  var wardrobeApp=document.getElementById('wardrobeApp');
+  if(wardrobeApp)wardrobeApp.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置衣橱App链接')});
+
+  /* 灵感记录跳转备忘录 */
+  var inspireOutfit=document.getElementById('inspireOutfit');
+  var inspireMakeup=document.getElementById('inspireMakeup');
+  if(inspireOutfit)inspireOutfit.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置备忘录链接')});
+  if(inspireMakeup)inspireMakeup.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置备忘录链接')});
+
+  /* 初始化 */
+  updateCheckinButton(isChecked(6));
+});
 </script>
 
-<!-- Service Worker 注册（PWA 离线支持） -->
+<!-- Service Worker 注册 -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
