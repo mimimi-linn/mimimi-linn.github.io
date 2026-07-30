@@ -295,10 +295,13 @@ body {
 .recipe-doc:active { transform: scale(0.98); }
 .recipe-doc-icon {
   width: 44px; height: 44px; border-radius: 12px;
-  background: linear-gradient(135deg, #3370FF 0%, #5089FF 100%);
+  background: transparent;
   display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(51, 112, 255, 0.25);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.recipe-doc-icon img {
+  width: 100%; height: 100%; object-fit: contain;
 }
 .recipe-doc-body { flex: 1; min-width: 0; }
 .recipe-doc-name {
@@ -531,7 +534,7 @@ body {
     </div>
     <div class="recipe-card">
       <div class="recipe-doc" id="recipeDoc">
-        <div class="recipe-doc-icon">📄</div>
+        <div class="recipe-doc-icon"><img src="icons/cupcake-icon.jpeg" alt="配方"></div>
         <div class="recipe-doc-body">
           <div class="recipe-doc-name">
             烘焙配方表
