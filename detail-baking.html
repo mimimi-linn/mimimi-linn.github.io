@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🧁 烘焙</title>
-<meta name="theme-color" content="#7DD3C0">
+<meta name="theme-color" content="#6B9AC4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -15,16 +15,16 @@
    烘焙页 - 薄荷绿×巧克力棕
    ============================================ */
 :root {
-  --mint: #7DD3C0;
-  --mint-light: #E8F5F1;
-  --mint-lighter: #F5FBF9;
-  --choco: #5D4037;
-  --choco-light: #8D7B68;
-  --choco-hint: #B5A99A;
-  --border: #D4E8E0;
+  --mint: #6B9AC4;
+  --mint-light: #EBF2F8;
+  --mint-lighter: #FAFAFA;
+  --choco: #3D3D3D;
+  --choco-light: #8A8A8A;
+  --choco-hint: #B0B0B0;
+  --border: #E8E8E8;
   --white: #FFFFFF;
-  --shadow: 0 2px 12px rgba(125, 211, 192, 0.15);
-  --shadow-float: 0 4px 20px rgba(125, 211, 192, 0.20);
+  --shadow: 0 2px 12px rgba(107, 154, 196, 0.12);
+  --shadow-float: 0 4px 20px rgba(107, 154, 196, 0.15);
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -36,7 +36,7 @@ body {
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 140px;
- padding-left: 68px;
+ padding-left: 104px; }
 
 /* --- 顶部导航栏 --- */
 .header {
@@ -83,8 +83,8 @@ body {
    ============================================ */
 .xhs-card {
   background: var(--white);
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 14px;
   margin-bottom: 14px;
   box-shadow: var(--shadow);
   position: relative;
@@ -100,21 +100,21 @@ body {
 .xhs-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 .xhs-avatar {
-  width: 56px; height: 56px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 50%;
   background: var(--mint);
   display: flex; align-items: center; justify-content: center;
-  font-size: 28px; flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(125, 211, 192, 0.3);
+  font-size: 20px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(107, 154, 196, 0.25);
 }
 .xhs-info { flex: 1; min-width: 0; }
 .xhs-name {
-  font-size: 17px; font-weight: 700; color: var(--choco);
-  margin-bottom: 3px;
-  display: flex; align-items: center; gap: 6px;
+  font-size: 15px; font-weight: 700; color: var(--choco);
+  margin-bottom: 2px;
+  display: flex; align-items: center; gap: 5px;
 }
 .xhs-name .xhs-tag {
   font-size: 10px; font-weight: 500;
@@ -137,7 +137,7 @@ body {
 .xhs-stats {
   display: flex;
   gap: 0;
-  padding: 14px 0;
+  padding: 10px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -154,7 +154,7 @@ body {
   background: var(--border);
 }
 .xhs-stat-num {
-  font-size: 24px; font-weight: 700; color: var(--choco);
+  font-size: 18px; font-weight: 700; color: var(--choco);
   line-height: 1.2;
 }
 .xhs-stat-label {
@@ -162,7 +162,7 @@ body {
   margin-top: 4px;
 }
 .xhs-link-row {
-  margin-top: 14px;
+  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,11 +171,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 24px;
-  border-radius: 20px;
+  padding: 6px 20px;
+  border-radius: 18px;
   background: var(--mint);
   color: var(--white);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s;
@@ -286,7 +286,7 @@ body {
 .recipe-doc {
   display: flex; align-items: center; gap: 14px;
   padding: 14px;
-  background: linear-gradient(135deg, #F0F7FF 0%, #F5FBF9 100%);
+  background: linear-gradient(135deg, #F0F7FF 0%, #FAFAFA 100%);
   border-radius: 14px;
   border: 1px solid #DDE8F5;
   cursor: pointer;
@@ -400,7 +400,7 @@ body {
 .todo-input::placeholder { color: var(--choco-hint); }
 .todo-input.done {
   background: #F5F5F5;
-  color: #B5A99A;
+  color: #B0B0B0;
   text-decoration: line-through;
 }
 .checkin-date {
@@ -414,6 +414,23 @@ body {
   padding: 16px;
   box-shadow: var(--shadow);
 }
+.memo-jump-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; height: 42px;
+  border: 1.5px solid var(--mint); border-radius: 12px;
+  background: var(--mint-light); color: var(--mint);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+.memo-jump-btn:active { background: var(--mint); color: var(--white); transform: scale(0.97); }
+.memo-divider {
+  display: flex; align-items: center; gap: 8px;
+  margin: 10px 0;
+}
+.memo-divider-line { flex: 1; height: 1px; background: var(--border); }
+.memo-divider-text { font-size: 11px; color: var(--choco-hint); }
 .inspiration-input-row {
   display: flex; gap: 8px; margin-bottom: 12px;
 }
@@ -481,8 +498,7 @@ body {
 
 /* --- 底部操作栏 --- */
 .footer {
-  position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 430px;
+  position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px);
   display: flex; gap: 12px;
   padding: 12px 16px;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
@@ -542,7 +558,7 @@ body {
 .drawer-reset-btn:active { background: var(--mint); color: #fff; }
 
 /* ===== 底部导航栏 ===== */
-.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
+.bottom-nav { position: fixed; bottom: 0; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
 .nav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 8px 0 10px; cursor: pointer; background: none; border: none; transition: all 0.2s; font-family: inherit; }
 .nav-tab:active { transform: scale(0.92); }
 .nav-tab svg { width: 24px; height: 24px; color: #B0B0B0; transition: color 0.2s; }
@@ -551,17 +567,17 @@ body {
 .nav-tab.active .nav-tab-label { color: #6B9AC4; font-weight: 600; }
 
 /* ===== 左侧固定侧边栏 ===== */
-.sidebar { position: fixed; top: 0; left: 0; width: 68px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
-.sidebar-header { padding: 16px 0 12px; text-align: center; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
-.sidebar-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.sidebar-name { font-size: 11px; font-weight: 700; color: #3D3D3D; line-height: 1.2; }
-.sidebar-menu { flex: 1; overflow-y: auto; padding: 8px 0; -webkit-overflow-scrolling: touch; }
+.sidebar { position: fixed; top: 0; left: 0; width: 104px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
+.sidebar-header { padding: 14px 10px 10px; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
+.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.sidebar-name { font-size: 16px; font-weight: 700; color: #3D3D3D; line-height: 1.3; text-align: center; }
+.sidebar-menu { flex: 1; overflow-y: auto; padding: 6px 0; -webkit-overflow-scrolling: touch; }
 .sidebar-menu::-webkit-scrollbar { display: none; }
-.sidebar-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 10px 4px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 12px; }
-.sidebar-item:active { transform: scale(0.92); }
-.sidebar-item .sb-icon { font-size: 18px; line-height: 1; }
-.sidebar-item .sb-label { font-size: 10px; font-weight: 500; line-height: 1.2; }
-.sidebar-item.active { background: rgba(107, 154, 196, 0.12); color: #6B9AC4; }
+.sidebar-item { display: flex; flex-direction: row; align-items: center; gap: 8px; padding: 9px 10px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 10px; }
+.sidebar-item:active { transform: scale(0.95); }
+.sidebar-item .sb-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
+.sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
 </head>
@@ -569,8 +585,8 @@ body {
 <!-- ===== 左侧固定侧边栏 ===== -->
 <div class="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-avatar">🌸</div>
-    <div class="sidebar-name">小美<br>工作台</div>
+    <div class="sidebar-avatar">🧸</div>
+    <div class="sidebar-name">工作台</div>
   </div>
   <div class="sidebar-menu">
     <a class="sidebar-item" href="index.html"><span class="sb-icon">🏠</span><span class="sb-label">首页</span></a>
@@ -588,8 +604,39 @@ body {
     <a class="sidebar-item" href="detail-review.html"><span class="sb-icon">🌙</span><span class="sb-label">复盘</span></a>
   </div>
 </div>
+</div>
 
-
+<!-- ===== 主体内容 ===== -->
+<div class="main">
+  <!-- 第1步：小红书账号卡片 -->
+  <div class="xhs-card">
+    <div class="xhs-header">
+      <div class="xhs-avatar">🍞</div>
+      <div class="xhs-info">
+        <div class="xhs-name">
+          面包快长大
+          <span class="xhs-tag">美食</span>
+        </div>
+        <div class="xhs-id">点击查看主页内容</div>
+      </div>
+      <button class="xhs-jump-btn" id="xhsJumpBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+      </button>
+    </div>
+    <div class="xhs-stats">
+      <div class="xhs-stat-item">
+        <div class="xhs-stat-num">285</div>
+        <div class="xhs-stat-label">粉丝</div>
+      </div>
+      <div class="xhs-stat-item">
+        <div class="xhs-stat-num">3.8K</div>
+        <div class="xhs-stat-label">获赞与收藏</div>
+      </div>
+      <div class="xhs-stat-item">
+        <div class="xhs-stat-num">25</div>
+        <div class="xhs-stat-label">笔记</div>
+      </div>
+    </div>
     <div class="xhs-link-row">
       <a class="xhs-link" id="xhsLink" href="https://xhslink.cn/m/6hJOHOEckM2" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
@@ -658,19 +705,12 @@ body {
       <div class="recipe-doc" id="recipeDoc">
         <div class="recipe-doc-icon"><img src="icons/cupcake-icon-sm.png" alt="配方"></div>
         <div class="recipe-doc-body">
-          <div class="recipe-doc-name">
-            烘焙配方表
-            <span class="recipe-doc-tag">飞书文档</span>
-          </div>
+          <div class="recipe-doc-name">烘焙配方表</div>
           <div class="recipe-doc-desc">收藏整理的烘焙配方，点击查看</div>
         </div>
         <div class="recipe-doc-arrow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
         </div>
-      </div>
-      <div class="recipe-notice">
-        <span class="lock-icon">🔒</span>
-        <span>该文档仅自己可见，需登录飞书账号查看，未授权无法分享给他人</span>
       </div>
     </div>
   </div>
@@ -697,6 +737,15 @@ body {
 
     <!-- 灵感记录区 -->
     <div class="inspiration-box">
+      <button class="memo-jump-btn" id="memoJumpBtn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        跳转手机备忘录
+      </button>
+      <div class="memo-divider">
+        <div class="memo-divider-line"></div>
+        <span class="memo-divider-text">或在下方直接记录</span>
+        <div class="memo-divider-line"></div>
+      </div>
       <div class="inspiration-input-row">
         <input type="text" class="inspiration-input" id="inspirationInput" placeholder="记录烘焙灵感、配方想法..." maxlength="200">
         <button class="inspiration-save-btn" id="inspirationSaveBtn" type="button">✓</button>
@@ -844,6 +893,22 @@ document.addEventListener('DOMContentLoaded',function(){
   if(recipeDoc)recipeDoc.addEventListener('click',function(e){
     e.preventDefault();e.stopPropagation();
     window.location.href='https://bg2633jeoj.feishu.cn/wiki/Xt3bwQ8ZqiCbPxkt0x5c9tXunQe?sheet=397db3';
+  });
+
+  /* 跳转手机备忘录 */
+  var memoBtn=document.getElementById('memoJumpBtn');
+  if(memoBtn)memoBtn.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    /* iOS 备忘录 URL scheme，需添加到主屏幕后生效 */
+    var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+    if(isIOS){
+      window.location.href='mobilenotes://';
+      setTimeout(function(){showToast('若未跳转，请将页面"添加到主屏幕"后重试')},500);
+    }else{
+      /* Android 尝试打开备忘录 */
+      window.location.href='content://com.android.notes/';
+      setTimeout(function(){showToast('若未跳转，可在下方直接记录灵感')},500);
+    }
   });
 
   /* 初始化打卡状态和灵感列表 */

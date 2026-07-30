@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🏃 运动</title>
-<meta name="theme-color" content="#7DD3C0">
+<meta name="theme-color" content="#6B9AC4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -15,18 +15,18 @@
    运动页 - 薄荷绿 × 天空蓝
    ============================================ */
 :root {
-  --mint: #7DD3C0;
-  --mint-light: #E8F5F1;
-  --mint-lighter: #F5FBF9;
-  --choco: #5D4037;
-  --choco-light: #8D7B68;
-  --choco-hint: #B5A99A;
-  --blue: #5B9BD5;
-  --blue-light: #EBF3FA;
-  --blue-soft: #F0F7FF;
-  --border: #D4E8E0;
+  --mint: #6B9AC4;
+  --mint-light: #EBF2F8;
+  --mint-lighter: #FAFAFA;
+  --choco: #3D3D3D;
+  --choco-light: #8A8A8A;
+  --choco-hint: #B0B0B0;
+  --blue: #6B9AC4;
+  --blue-light: #EBF2F8;
+  --blue-soft: #EBF2F8;
+  --border: #E8E8E8;
   --white: #FFFFFF;
-  --shadow: 0 2px 12px rgba(125, 211, 192, 0.12);
+  --shadow: 0 2px 12px rgba(107, 154, 196, 0.10);
   --shadow-float: 0 4px 20px rgba(91, 155, 213, 0.15);
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,7 +39,7 @@ body {
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 140px;
- padding-left: 68px;
+ padding-left: 104px; }
 
 /* --- 顶部导航栏 --- */
 .header {
@@ -71,7 +71,7 @@ body {
    第1块：进度统计大卡片
    ============================================ */
 .progress-card {
-  background: linear-gradient(135deg, #7DD3C0 0%, #6CB4F5 100%);
+  background: linear-gradient(135deg, #6B9AC4 0%, #6CB4F5 100%);
   border-radius: 20px;
   padding: 24px 20px;
   margin-bottom: 14px;
@@ -331,8 +331,8 @@ body {
 }
 .app-jump-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 .app-jump-item {
   display: flex;
@@ -352,7 +352,7 @@ body {
   font-size: 22px; flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-.app-jump-icon.keep { background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%); }
+.app-jump-icon.keep { background: linear-gradient(135deg, #6B9AC4 0%, #6B9AC4 100%); }
 .app-jump-icon.ant { background: linear-gradient(135deg, #1677FF 0%, #69B1FF 100%); }
 .app-jump-body { flex: 1; min-width: 0; }
 .app-jump-name {
@@ -372,8 +372,7 @@ body {
 
 /* --- 底部操作栏 --- */
 .footer {
-  position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 430px;
+  position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px);
   display: flex; gap: 12px;
   padding: 12px 16px;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
@@ -433,7 +432,7 @@ body {
 .drawer-reset-btn:active { background: var(--mint); color: #fff; }
 
 /* ===== 底部导航栏 ===== */
-.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
+.bottom-nav { position: fixed; bottom: 0; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
 .nav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 8px 0 10px; cursor: pointer; background: none; border: none; transition: all 0.2s; font-family: inherit; }
 .nav-tab:active { transform: scale(0.92); }
 .nav-tab svg { width: 24px; height: 24px; color: #B0B0B0; transition: color 0.2s; }
@@ -442,17 +441,17 @@ body {
 .nav-tab.active .nav-tab-label { color: #6B9AC4; font-weight: 600; }
 
 /* ===== 左侧固定侧边栏 ===== */
-.sidebar { position: fixed; top: 0; left: 0; width: 68px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
-.sidebar-header { padding: 16px 0 12px; text-align: center; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
-.sidebar-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.sidebar-name { font-size: 11px; font-weight: 700; color: #3D3D3D; line-height: 1.2; }
-.sidebar-menu { flex: 1; overflow-y: auto; padding: 8px 0; -webkit-overflow-scrolling: touch; }
+.sidebar { position: fixed; top: 0; left: 0; width: 104px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
+.sidebar-header { padding: 14px 10px 10px; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
+.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.sidebar-name { font-size: 16px; font-weight: 700; color: #3D3D3D; line-height: 1.3; text-align: center; }
+.sidebar-menu { flex: 1; overflow-y: auto; padding: 6px 0; -webkit-overflow-scrolling: touch; }
 .sidebar-menu::-webkit-scrollbar { display: none; }
-.sidebar-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 10px 4px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 12px; }
-.sidebar-item:active { transform: scale(0.92); }
-.sidebar-item .sb-icon { font-size: 18px; line-height: 1; }
-.sidebar-item .sb-label { font-size: 10px; font-weight: 500; line-height: 1.2; }
-.sidebar-item.active { background: rgba(107, 154, 196, 0.12); color: #6B9AC4; }
+.sidebar-item { display: flex; flex-direction: row; align-items: center; gap: 8px; padding: 9px 10px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 10px; }
+.sidebar-item:active { transform: scale(0.95); }
+.sidebar-item .sb-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
+.sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
 </head>
@@ -460,8 +459,8 @@ body {
 <!-- ===== 左侧固定侧边栏 ===== -->
 <div class="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-avatar">🌸</div>
-    <div class="sidebar-name">小美<br>工作台</div>
+    <div class="sidebar-avatar">🧸</div>
+    <div class="sidebar-name">工作台</div>
   </div>
   <div class="sidebar-menu">
     <a class="sidebar-item" href="index.html"><span class="sb-icon">🏠</span><span class="sb-label">首页</span></a>
@@ -480,16 +479,26 @@ body {
   </div>
 </div>
 
-
-
+<!-- ===== 主体内容 ===== -->
+<div class="main">
+  <!-- 第1块：进度统计大卡片 -->
+  <div class="progress-card">
+    <div class="progress-left">
+      <div class="progress-num" id="streakNum">0</div>
+      <div class="progress-num-label">连续打卡(天)</div>
+    </div>
+    <div class="progress-right">
+      <div class="progress-right-title">今日完成进度</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+      </div>
+      <div class="progress-ratio" id="progressRatio">0/0</div>
+    </div>
+  </div>
 
   <!-- 第2块：晨间仪式 -->
   <div class="section-title"><span class="emoji">🌅</span>晨间仪式</div>
   <div class="morning-card">
-    <div class="morning-header">
-      <div class="morning-header-title">🌅 晨间仪式</div>
-      <div class="morning-header-count" id="morningCount">0/3</div>
-    </div>
     <div class="morning-item">
       <div class="morning-icon">⏰</div>
       <div class="morning-body">
@@ -541,6 +550,12 @@ body {
     </div>
     <!-- 课程打卡列表 -->
     <div class="course-list" id="courseList"></div>
+  </div>
+
+  <!-- 打卡记录历史 -->
+  <div class="section-title"><span class="emoji">📋</span>打卡记录</div>
+  <div class="exercise-card">
+    <div id="historyList"></div>
   </div>
 
   <!-- 第4块：第三方APP快捷跳转 -->
@@ -596,16 +611,13 @@ function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify(
 
 /* ===== 进度统计 ===== */
 function updateProgress(){
-  var records=getCheckinRecords();
-  var total=3; // 3个运动类型
-  var done=0;
-  if(records.indexOf('cardio')!==-1)done++;
-  if(records.indexOf('strength')!==-1)done++;
-  if(records.indexOf('hiit')!==-1)done++;
+  var done=Object.values(courseCheckins).filter(function(v){return v}).length;
+  var total=Object.keys(courseCheckins).length||1;
   var pct=Math.round(done/total*100);
-  document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressRatio').textContent=done+'/'+total;
-  document.getElementById('morningCount').textContent=done+'/'+total;
+  var pb=document.getElementById('progressBar');
+  var pr=document.getElementById('progressRatio');
+  if(pb)pb.style.width=pct+'%';
+  if(pr)pr.textContent=done+'/'+total;
 }
 
 /* 连续天数（简化计算：有打卡记录的天数） */
@@ -617,6 +629,7 @@ function getStreakDays(){
   }catch(e){return 0}
 }
 function animateNum(el,target){
+  if(!el)return;
   var current=0;
   var step=Math.max(1,Math.floor(target/20));
   function tick(){
@@ -628,10 +641,35 @@ function animateNum(el,target){
   tick();
 }
 
-/* ===== 晨间仪式 ===== */
+/* ===== 晨间仪式（按日期持久化） ===== */
+function getMorningData(){
+  try{
+    var d=JSON.parse(localStorage.getItem('exercise_morning')||'{}');
+    return d[getTodayKey()]||{weight:false,water:false,wakeTime:'07:00'};
+  }catch(e){return {weight:false,water:false,wakeTime:'07:00'}}
+}
+function saveMorningData(data){
+  try{
+    var d=JSON.parse(localStorage.getItem('exercise_morning')||'{}');
+    d[getTodayKey()]=data;
+    localStorage.setItem('exercise_morning',JSON.stringify(d));
+  }catch(e){}
+}
 function toggleMorningCheck(el){
-  el.classList.toggle('done');
+  var data=getMorningData();
+  if(el.id==='weightCheck'){data.weight=!data.weight;el.classList.toggle('done',data.weight)}
+  if(el.id==='waterCheck'){data.water=!data.water;el.classList.toggle('done',data.water)}
+  saveMorningData(data);
   updateProgress();
+}
+function loadMorningState(){
+  var data=getMorningData();
+  var wc=document.getElementById('weightCheck');
+  var wac=document.getElementById('waterCheck');
+  var wt=document.getElementById('wakeTime');
+  if(wc&&data.weight)wc.classList.add('done');
+  if(wac&&data.water)wac.classList.add('done');
+  if(wt&&data.wakeTime)wt.value=data.wakeTime;
 }
 
 /* ===== 运动打卡 - 两级标签 ===== */
@@ -706,14 +744,25 @@ var coursesData={
   ]}
 };
 
-function loadCheckins(){try{var d=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');courseCheckins=d}catch(e){courseCheckins={}}}
-function saveCheckins(){localStorage.setItem('exercise_course_checkins',JSON.stringify(courseCheckins))}
+function loadCheckins(){
+  try{
+    var d=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');
+    courseCheckins=d[getTodayKey()]||{};
+  }catch(e){courseCheckins={}}
+}
+function saveCheckins(){
+  try{
+    var d=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');
+    d[getTodayKey()]=courseCheckins;
+    localStorage.setItem('exercise_course_checkins',JSON.stringify(d));
+  }catch(e){}
+}
 function toggleCourseCheckin(cid){
   courseCheckins[cid]=!courseCheckins[cid];
   saveCheckins();
   renderCourses();
   updateProgress();
-  updateFooterBtn();
+  renderHistory();
 }
 
 function renderCourses(){
@@ -761,28 +810,98 @@ function switchL2(l2){
   renderCourses();
 }
 
-/* 更新进度（基于课程打卡） */
+/* 更新进度（基于课程打卡 + 晨间仪式） */
 function updateProgress(){
-  var done=Object.values(courseCheckins).filter(function(v){return v}).length;
-  var total=Object.keys(courseCheckins).length||1;
-  var pct=Math.round(done/total*100);
-  document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressRatio').textContent=done+'/'+total;
-  document.getElementById('morningCount').textContent=done+'/'+total;
+  var courseDone=Object.values(courseCheckins).filter(function(v){return v}).length;
+  var morning=getMorningData();
+  var morningDone=(morning.weight?1:0)+(morning.water?1:0);
+  var done=courseDone+morningDone;
+  var total=(Object.keys(courseCheckins).length||0)+2;
+  var pct=total>0?Math.round(done/total*100):0;
+  var pb=document.getElementById('progressBar');
+  var pr=document.getElementById('progressRatio');
+  if(pb)pb.style.width=pct+'%';
+  if(pr)pr.textContent=done+'/'+total;
+  updateFooterBtn();
 }
 
 /* 底部按钮状态 */
 function updateFooterBtn(){
   var btn=document.getElementById('checkinBtn');
   if(!btn)return;
-  var hasAny=Object.values(courseCheckins).some(function(v){return v});
-  if(hasAny){
+  var courseAny=Object.values(courseCheckins).some(function(v){return v});
+  var morning=getMorningData();
+  var morningAny=morning.weight||morning.water;
+  if(courseAny||morningAny){
     btn.classList.add('checked');
-    btn.textContent='✓ 已完成打卡';
+    btn.textContent='✓ 今日已打卡';
   }else{
     btn.classList.remove('checked');
     btn.textContent='打卡提交';
   }
+}
+
+/* ===== 打卡记录历史 ===== */
+function getHistoryRecords(){
+  var records=[];
+  try{
+    var courseData=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');
+    var morningData=JSON.parse(localStorage.getItem('exercise_morning')||'{}');
+    var dates=Object.keys({}).concat(Object.keys(courseData),Object.keys(morningData));
+    var uniqueDates=[...new Set(dates)].sort().reverse().slice(0,7);
+    uniqueDates.forEach(function(date){
+      var courses=courseData[date]||{};
+      var courseList=Object.keys(courses).filter(function(k){return courses[k]});
+      var morning=morningData[date]||{};
+      var morningList=[];
+      if(morning.weight)morningList.push('体重');
+      if(morning.water)morningList.push('温水');
+      var allItems=morningList.concat(courseList);
+      if(allItems.length>0){
+        records.push({date:date,items:allItems,morning:morning,courses:courseList});
+      }
+    });
+  }catch(e){}
+  return records;
+}
+
+function getCourseNameById(id){
+  for(var l1 in coursesData){
+    for(var l2 in coursesData[l1]){
+      for(var i=0;i<coursesData[l1][l2].length;i++){
+        if(coursesData[l1][l2][i].id===id)return coursesData[l1][l2][i].title;
+      }
+    }
+  }
+  return id;
+}
+
+function formatDate(dateStr){
+  var parts=dateStr.split('-');
+  return parts[1]+'-'+parts[2];
+}
+
+function renderHistory(){
+  var container=document.getElementById('historyList');
+  if(!container)return;
+  var records=getHistoryRecords();
+  if(records.length===0){
+    container.innerHTML='<div style="text-align:center;padding:20px 0;color:var(--choco-hint);font-size:13px;">暂无打卡记录，开始你的第一次打卡吧 💪</div>';
+    return;
+  }
+  container.innerHTML=records.map(function(r){
+    var itemTags=r.items.map(function(item){
+      var display=item==='体重'?'⚖️ 体重':item==='温水'?'💧 温水':getCourseNameById(item);
+      return '<span style="display:inline-block;padding:3px 10px;background:var(--mint-light);color:var(--mint);border-radius:8px;font-size:11px;font-weight:600;margin:2px;">'+display+'</span>';
+    }).join('');
+    return '<div style="padding:12px 0;border-bottom:1px solid var(--border);">'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">'+
+        '<span style="font-size:13px;font-weight:600;color:var(--choco);">'+formatDate(r.date)+'</span>'+
+        '<span style="font-size:11px;color:var(--mint);font-weight:600;">'+r.items.length+'项</span>'+
+      '</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:2px;">'+itemTags+'</div>'+
+    '</div>';
+  }).join('');
 }
 
 /* ===== 事件绑定 ===== */
@@ -791,17 +910,23 @@ document.addEventListener('DOMContentLoaded',function(){
   var resetBtn=document.getElementById('resetBtn');
   if(resetBtn)resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});
 
-  /* 底部按钮 */
+  /* 底部按钮 - 保存今日打卡 */
   var checkinBtn=document.getElementById('checkinBtn');
   var saveBtn=document.getElementById('saveBtn');
   if(checkinBtn)checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(4)});
-  if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存')});
+  if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存 ✓');renderHistory()});
 
   /* 晨间仪式勾选 */
   var weightCheck=document.getElementById('weightCheck');
   var waterCheck=document.getElementById('waterCheck');
-  if(weightCheck)weightCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this)});
-  if(waterCheck)waterCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this)});
+  if(weightCheck)weightCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this);renderHistory()});
+  if(waterCheck)waterCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this);renderHistory()});
+
+  /* 起床时间保存 */
+  var wakeTime=document.getElementById('wakeTime');
+  if(wakeTime)wakeTime.addEventListener('change',function(e){
+    var data=getMorningData();data.wakeTime=this.value;saveMorningData(data);
+  });
 
   /* 两级标签切换 */
   document.querySelectorAll('.tag-l1').forEach(function(t){
@@ -814,16 +939,17 @@ document.addEventListener('DOMContentLoaded',function(){
   /* 第三方APP跳转 */
   var appKeep=document.getElementById('appKeep');
   var appAnt=document.getElementById('appAnt');
-  if(appKeep)appKeep.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://m.gotokeep.com/fd-page/shareSportRecord?shareid=6a6b095a1d85d700014c0f47&title_type=group_a&utm_source=wechat'});
+  if(appKeep)appKeep.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://m.gotokeep.com/fd-page/shareSportRecord?shareid=6a6b698ee1540a00010d37e3&title_type=group_a&utm_source=wechat'});
   if(appAnt)appAnt.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://u.antaq.com/?scheme=aijk%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D20002184%26ijk_source%3Dmain_chat_share'});
 
-  /* 初始化 */
+  /* 初始化：加载数据 → 恢复状态 → 渲染 */
   loadCheckins();
+  loadMorningState();
   var streak=getStreakDays();
   animateNum(document.getElementById('streakNum'),streak);
   renderCourses();
   updateProgress();
-  updateFooterBtn();
+  renderHistory();
 });
 </script>
 

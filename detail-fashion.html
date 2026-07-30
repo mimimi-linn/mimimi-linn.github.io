@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>👗 穿搭</title>
-<meta name="theme-color" content="#7DD3C0">
+<meta name="theme-color" content="#6B9AC4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -15,20 +15,20 @@
    穿搭页 - 薄荷绿 × 巧克力棕
    ============================================ */
 :root {
-  --mint: #7DD3C0;
-  --mint-light: #E8F5F1;
-  --mint-lighter: #F5FBF9;
-  --choco: #5D4037;
-  --choco-light: #8D7B68;
-  --choco-hint: #B5A99A;
-  --pink: #FF6B9D;
-  --pink-light: #FFF0F5;
-  --blue: #5B9BD5;
-  --blue-light: #EBF3FA;
-  --border: #D4E8E0;
+  --mint: #6B9AC4;
+  --mint-light: #EBF2F8;
+  --mint-lighter: #FAFAFA;
+  --choco: #3D3D3D;
+  --choco-light: #8A8A8A;
+  --choco-hint: #B0B0B0;
+  --pink: #D45555;
+  --pink-light: #FAEBEB;
+  --blue: #6B9AC4;
+  --blue-light: #EBF2F8;
+  --border: #E8E8E8;
   --white: #FFFFFF;
-  --shadow: 0 2px 12px rgba(125, 211, 192, 0.12);
-  --shadow-float: 0 4px 20px rgba(125, 211, 192, 0.18);
+  --shadow: 0 2px 12px rgba(107, 154, 196, 0.10);
+  --shadow-float: 0 4px 20px rgba(107, 154, 196, 0.15);
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -40,7 +40,7 @@ body {
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 140px;
- padding-left: 68px;
+ padding-left: 104px; }
 
 /* --- 顶部导航栏 --- */
 .header {
@@ -221,10 +221,10 @@ body {
 }
 .merge-item:last-child { margin-bottom: 0; }
 .merge-item:active { transform: scale(0.95); }
-.merge-item.beauty { background: linear-gradient(135deg, #FFE0EC 0%, #FFF0F5 100%); }
-.merge-item.fashion { background: linear-gradient(135deg, #E0F0FF 0%, #F0F7FF 100%); }
-.merge-item.outfit { background: linear-gradient(135deg, #E8F5F1 0%, #F5FBF9 100%); border: 1.5px solid var(--mint); }
-.merge-item.makeup { background: linear-gradient(135deg, #FFF0F5 0%, #FFFAFB 100%); border: 1.5px solid var(--pink); }
+.merge-item.beauty { background: linear-gradient(135deg, #FFE0EC 0%, #FAEBEB 100%); }
+.merge-item.fashion { background: linear-gradient(135deg, #E0F0FF 0%, #EBF2F8 100%); }
+.merge-item.outfit { background: linear-gradient(135deg, #EBF2F8 0%, #FAFAFA 100%); border: 1.5px solid var(--mint); }
+.merge-item.makeup { background: linear-gradient(135deg, #FAEBEB 0%, #FFFAFB 100%); border: 1.5px solid var(--pink); }
 .merge-item-icon { font-size: 26px; line-height: 1; }
 .merge-item-name { font-size: 13px; font-weight: 600; color: var(--choco); }
 .merge-item-sub { font-size: 9px; color: var(--choco-hint); }
@@ -242,7 +242,7 @@ body {
 .wardrobe-item {
   display: flex; align-items: center; gap: 14px;
   padding: 16px;
-  background: linear-gradient(135deg, #F0F7FF 0%, #F5FBF9 100%);
+  background: linear-gradient(135deg, #EBF2F8 0%, #FAFAFA 100%);
   border-radius: 16px;
   border: 1px solid #DDE8F5;
   cursor: pointer;
@@ -251,7 +251,7 @@ body {
 .wardrobe-item:active { transform: scale(0.98); }
 .wardrobe-icon {
   width: 48px; height: 48px; border-radius: 14px;
-  background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%);
+  background: linear-gradient(135deg, #6B9AC4 0%, #6B9AC4 100%);
   display: flex; align-items: center; justify-content: center;
   font-size: 24px; flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(91, 155, 213, 0.2);
@@ -275,8 +275,7 @@ body {
 
 /* --- 底部操作栏 --- */
 .footer {
-  position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 430px;
+  position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px);
   display: flex; gap: 12px;
   padding: 12px 16px;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
@@ -336,7 +335,7 @@ body {
 .drawer-reset-btn:active { background: var(--mint); color: #fff; }
 
 /* ===== 底部导航栏 ===== */
-.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
+.bottom-nav { position: fixed; bottom: 0; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
 .nav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 8px 0 10px; cursor: pointer; background: none; border: none; transition: all 0.2s; font-family: inherit; }
 .nav-tab:active { transform: scale(0.92); }
 .nav-tab svg { width: 24px; height: 24px; color: #B0B0B0; transition: color 0.2s; }
@@ -345,17 +344,17 @@ body {
 .nav-tab.active .nav-tab-label { color: #6B9AC4; font-weight: 600; }
 
 /* ===== 左侧固定侧边栏 ===== */
-.sidebar { position: fixed; top: 0; left: 0; width: 68px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
-.sidebar-header { padding: 16px 0 12px; text-align: center; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
-.sidebar-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.sidebar-name { font-size: 11px; font-weight: 700; color: #3D3D3D; line-height: 1.2; }
-.sidebar-menu { flex: 1; overflow-y: auto; padding: 8px 0; -webkit-overflow-scrolling: touch; }
+.sidebar { position: fixed; top: 0; left: 0; width: 104px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
+.sidebar-header { padding: 14px 10px 10px; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
+.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.sidebar-name { font-size: 16px; font-weight: 700; color: #3D3D3D; line-height: 1.3; text-align: center; }
+.sidebar-menu { flex: 1; overflow-y: auto; padding: 6px 0; -webkit-overflow-scrolling: touch; }
 .sidebar-menu::-webkit-scrollbar { display: none; }
-.sidebar-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 10px 4px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 12px; }
-.sidebar-item:active { transform: scale(0.92); }
-.sidebar-item .sb-icon { font-size: 18px; line-height: 1; }
-.sidebar-item .sb-label { font-size: 10px; font-weight: 500; line-height: 1.2; }
-.sidebar-item.active { background: rgba(107, 154, 196, 0.12); color: #6B9AC4; }
+.sidebar-item { display: flex; flex-direction: row; align-items: center; gap: 8px; padding: 9px 10px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 10px; }
+.sidebar-item:active { transform: scale(0.95); }
+.sidebar-item .sb-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
+.sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
 </head>
@@ -363,8 +362,8 @@ body {
 <!-- ===== 左侧固定侧边栏 ===== -->
 <div class="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-avatar">🌸</div>
-    <div class="sidebar-name">小美<br>工作台</div>
+    <div class="sidebar-avatar">🧸</div>
+    <div class="sidebar-name">工作台</div>
   </div>
   <div class="sidebar-menu">
     <a class="sidebar-item" href="index.html"><span class="sb-icon">🏠</span><span class="sb-label">首页</span></a>

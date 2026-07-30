@@ -70,7 +70,7 @@
 
   /* 字体规范 */
   --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', 'Helvetica Neue', sans-serif;
-  --font-size-clock: 60px;
+  --font-size-clock: 46px;
   --font-size-hero: 28px;
   --font-size-title: 18px;
   --font-size-body: 15px;
@@ -111,7 +111,7 @@ body {
   max-width: 430px;
   margin: 0 auto;
   position: relative;
-  padding-left: 68px;
+  padding-left: 104px;
 }
 
 /* ============================================
@@ -209,10 +209,11 @@ body {
   font-size: var(--font-size-clock);
   font-weight: var(--font-weight-bold);
   color: #FFFFFF;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   line-height: 1;
   margin-bottom: var(--space-lg);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .clock-time .colon {
@@ -623,9 +624,8 @@ body {
    ============================================ */
 .bottom-nav {
   position: fixed;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100%; max-width: 430px;
+  bottom: 0; left: 104px; right: 0;
+  width: auto; max-width: calc(430px - 104px);
   display: flex; align-items: stretch;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
@@ -678,7 +678,7 @@ body {
 .sidebar {
   position: fixed;
   top: 0; left: 0;
-  width: 68px;
+  width: 104px;
   height: 100vh;
   background: #F5F5F7;
   z-index: 250;
@@ -687,50 +687,49 @@ body {
   border-right: 1px solid #E8E8E8;
 }
 .sidebar-header {
-  padding: 16px 0 12px;
-  text-align: center;
+  padding: 14px 10px 10px;
   border-bottom: 1px solid #ECECEC;
   flex-shrink: 0;
 }
 .sidebar-avatar {
-  width: 36px; height: 36px;
+  width: 32px; height: 32px;
   border-radius: 50%;
   background: var(--gradient-primary);
   margin: 0 auto 6px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
 }
 .sidebar-name {
-  font-size: 11px; font-weight: 700;
+  font-size: 16px; font-weight: 700;
   color: var(--color-text-primary);
-  line-height: 1.2;
+  line-height: 1.3;
+  text-align: center;
 }
 .sidebar-menu {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 0;
+  padding: 6px 0;
   -webkit-overflow-scrolling: touch;
 }
 .sidebar-menu::-webkit-scrollbar { display: none; }
 .sidebar-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 2px;
-  padding: 10px 4px;
+  gap: 8px;
+  padding: 9px 10px;
   cursor: pointer;
   text-decoration: none;
   color: var(--color-text-secondary);
   transition: all 0.2s;
   margin: 2px 6px;
-  border-radius: 12px;
+  border-radius: 10px;
 }
-.sidebar-item:active { transform: scale(0.92); }
-.sidebar-item .sb-icon { font-size: 18px; line-height: 1; }
-.sidebar-item .sb-label { font-size: 10px; font-weight: 500; line-height: 1.2; }
+.sidebar-item:active { transform: scale(0.95); }
+.sidebar-item .sb-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
 .sidebar-item.active {
-  background: rgba(107, 154, 196, 0.12);
+  background: rgba(107, 154, 196, 0.15);
   color: var(--color-primary);
 }
 .sidebar-item.active .sb-label { font-weight: 700; }
@@ -1014,8 +1013,8 @@ body {
 <!-- ===== 左侧固定侧边栏 ===== -->
 <div class="sidebar">
   <div class="sidebar-header">
-    <div class="sidebar-avatar">🌸</div>
-    <div class="sidebar-name">小美<br>工作台</div>
+    <div class="sidebar-avatar">🧸</div>
+    <div class="sidebar-name">工作台</div>
   </div>
   <div class="sidebar-menu">
     <a class="sidebar-item active" href="index.html"><span class="sb-icon">🏠</span><span class="sb-label">首页</span></a>
@@ -1055,22 +1054,6 @@ body {
       <div class="clock-day" id="clockDay"></div>
       <div class="clock-time" id="clockTime"></div>
       <div class="clock-greeting" id="clockGreeting"></div>
-    </div>
-  </div>
-
-  <!-- 12功能宫格区域 -->
-  <div class="grid-section">
-    <div class="section-title">
-      <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-      </svg>
-      今日打卡
-    </div>
-    <div class="grid-container" id="gridContainer">
-      <!-- JS动态渲染 -->
     </div>
   </div>
 
@@ -1224,18 +1207,18 @@ const GRID_ITEMS = [
 // 简约线性图标SVG（24×24 viewBox，统一stroke风格）
 // 飞书emoji风格图标（每个功能配贴合主题的彩色表情）
 const ICONS = {
-  '每日阅读': '📖',
-  '好好吃饭': '🍱',
-  '体重管理': '🧍‍♀️',
-  '锻炼身体': '🏃',
-  '烘焙学习': '🧁',
-  '穿搭美妆': '👗',
-  '自媒体计划': '📱',
-  '摄影剪辑': '📷',
-  '每日播客': '🎧',
-  '新闻热点': '📰',
-  '理财知识': '💰',
-  '每日复盘': '🌙'
+  '阅读': '📖',
+  '饮食': '🍱',
+  '待办': '📋',
+  '运动': '🏃',
+  '烘焙': '🧁',
+  '穿搭': '👗',
+  '自媒体': '📱',
+  '摄影': '📷',
+  '播客': '🎧',
+  '新闻': '📰',
+  '理财': '💰',
+  '复盘': '🌙'
 };
 
 // ============================================
@@ -1370,6 +1353,7 @@ function updateClock() {
 // ============================================
 function renderGrid() {
   const container = document.getElementById('gridContainer');
+  if (!container) return;
   container.innerHTML = '';
 
   GRID_ITEMS.forEach(item => {
@@ -1389,6 +1373,7 @@ function renderGrid() {
 // ============================================
 function renderDrawerMenu() {
   const menu = document.getElementById('drawerMenu');
+  if (!menu) return;
   menu.innerHTML = '';
 
   GRID_ITEMS.forEach(item => {
