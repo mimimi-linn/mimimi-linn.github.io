@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>每日播客</title>
+  <title>🎧 播客</title>
   <style>
 /* ============================================
    detail-common.css - H5二级详情页共享样式
@@ -26,7 +26,7 @@ html, body {
   color: #2d3436;
   background: #f0faf5;
   -webkit-font-smoothing: antialiased;
-}
+ padding-left: 68px;
 
 /* --- Top Fixed Header --- */
 .header {
@@ -509,6 +509,20 @@ html, body {
 .nav-tab .nav-tab-label { font-size: 11px; color: #B0B0B0; font-weight: 500; transition: color 0.2s; }
 .nav-tab.active svg { color: #6B9AC4; }
 .nav-tab.active .nav-tab-label { color: #6B9AC4; font-weight: 600; }
+
+/* ===== 左侧固定侧边栏 ===== */
+.sidebar { position: fixed; top: 0; left: 0; width: 68px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
+.sidebar-header { padding: 16px 0 12px; text-align: center; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
+.sidebar-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.sidebar-name { font-size: 11px; font-weight: 700; color: #3D3D3D; line-height: 1.2; }
+.sidebar-menu { flex: 1; overflow-y: auto; padding: 8px 0; -webkit-overflow-scrolling: touch; }
+.sidebar-menu::-webkit-scrollbar { display: none; }
+.sidebar-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 10px 4px; cursor: pointer; text-decoration: none; color: #8A8A8A; transition: all 0.2s; margin: 2px 6px; border-radius: 12px; }
+.sidebar-item:active { transform: scale(0.92); }
+.sidebar-item .sb-icon { font-size: 18px; line-height: 1; }
+.sidebar-item .sb-label { font-size: 10px; font-weight: 500; line-height: 1.2; }
+.sidebar-item.active { background: rgba(107, 154, 196, 0.12); color: #6B9AC4; }
+.sidebar-item.active .sb-label { font-weight: 700; }
 </style>
 <meta name="theme-color" content="#C9985A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -518,62 +532,30 @@ html, body {
 <link rel="icon" type="image/png" href="icons/favicon-32.png">
 </head>
 <body>
-<!-- 右侧滑出抽屉 -->
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<div class="drawer" id="sideDrawer">
-  <div class="drawer-header">
-    <div class="drawer-avatar">🌿</div>
-    <div class="drawer-title">每日打卡工作台</div>
-    <div class="drawer-subtitle">每天进步一点点 ✨</div>
+<!-- ===== 左侧固定侧边栏 ===== -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-avatar">🌸</div>
+    <div class="sidebar-name">小美<br>工作台</div>
   </div>
-  <div class="drawer-menu">
-    <a class="drawer-menu-item home-link" href="index.html"><span class="menu-emoji">🏠</span>返回首页</a><a class="drawer-menu-item" href="detail-reading.html"><span class="menu-emoji">📖</span>每日阅读</a><a class="drawer-menu-item" href="detail-eating.html"><span class="menu-emoji">🍱</span>好好吃饭</a><a class="drawer-menu-item" href="detail-weight.html"><span class="menu-emoji">🧍‍♀️</span>体重管理</a><a class="drawer-menu-item" href="detail-exercise.html"><span class="menu-emoji">🏃</span>锻炼身体</a><a class="drawer-menu-item" href="detail-baking.html"><span class="menu-emoji">🧁</span>烘焙学习</a><a class="drawer-menu-item" href="detail-fashion.html"><span class="menu-emoji">👗</span>穿搭美妆</a><a class="drawer-menu-item" href="detail-media.html"><span class="menu-emoji">📱</span>自媒体计划</a><a class="drawer-menu-item" href="detail-photo.html"><span class="menu-emoji">📷</span>摄影剪辑</a><a class="drawer-menu-item active" href="detail-podcast.html"><span class="menu-emoji">🎧</span>每日播客</a><a class="drawer-menu-item" href="detail-news.html"><span class="menu-emoji">📰</span>新闻热点</a><a class="drawer-menu-item" href="detail-finance.html"><span class="menu-emoji">💰</span>理财知识</a><a class="drawer-menu-item" href="detail-review.html"><span class="menu-emoji">🌙</span>每日复盘</a>
-  </div>
-  <div class="drawer-footer">
-    <button class="drawer-reset-btn" id="resetBtn">🔄 每日重置</button>
+  <div class="sidebar-menu">
+    <a class="sidebar-item" href="index.html"><span class="sb-icon">🏠</span><span class="sb-label">首页</span></a>
+    <a class="sidebar-item" href="detail-reading.html"><span class="sb-icon">📖</span><span class="sb-label">阅读</span></a>
+    <a class="sidebar-item" href="detail-eating.html"><span class="sb-icon">🍱</span><span class="sb-label">饮食</span></a>
+    <a class="sidebar-item" href="detail-weight.html"><span class="sb-icon">📋</span><span class="sb-label">待办</span></a>
+    <a class="sidebar-item" href="detail-exercise.html"><span class="sb-icon">🏃</span><span class="sb-label">运动</span></a>
+    <a class="sidebar-item" href="detail-baking.html"><span class="sb-icon">🧁</span><span class="sb-label">烘焙</span></a>
+    <a class="sidebar-item" href="detail-fashion.html"><span class="sb-icon">👗</span><span class="sb-label">穿搭</span></a>
+    <a class="sidebar-item" href="detail-media.html"><span class="sb-icon">📱</span><span class="sb-label">自媒体</span></a>
+    <a class="sidebar-item" href="detail-photo.html"><span class="sb-icon">📷</span><span class="sb-label">摄影</span></a>
+    <a class="sidebar-item active" href="detail-podcast.html"><span class="sb-icon">🎧</span><span class="sb-label">播客</span></a>
+    <a class="sidebar-item" href="detail-news.html"><span class="sb-icon">📰</span><span class="sb-label">新闻</span></a>
+    <a class="sidebar-item" href="detail-finance.html"><span class="sb-icon">💰</span><span class="sb-label">理财</span></a>
+    <a class="sidebar-item" href="detail-review.html"><span class="sb-icon">🌙</span><span class="sb-label">复盘</span></a>
   </div>
 </div>
 
-  <!-- 顶部固定标题栏 -->
-  <div class="header">
-    <a class="header-back" href="index.html">&#8592;</a>
-    <div class="header-title">🎧 每日播客</div>
-    
-  </div>
 
-  <!-- 中间主体内容区 -->
-  <div class="main">
-
-    <!-- 播客收听记录卡 -->
-    <div class="card">
-      <div class="card-title"><span class="emoji">🎧</span> 播客收听记录</div>
-      <div class="list-item">
-        <span class="list-item-label">商业就是这样</span>
-        <span class="list-item-value">32分钟</span>
-      </div>
-      <div class="list-item">
-        <span class="list-item-label">日谈公园</span>
-        <span class="list-item-value">45分钟</span>
-      </div>
-      <div class="list-item">
-        <span class="list-item-label">故事FM</span>
-        <span class="list-item-value">28分钟</span>
-      </div>
-    </div>
-
-    <!-- 收听时长统计卡 -->
-    <div class="card">
-      <div class="card-title"><span class="emoji">⏱</span> 收听时长统计</div>
-      <div class="stat-row">
-        <div class="stat-item">
-          <div class="stat-num">45</div>
-          <div class="stat-label">今日 / 分钟</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">3.5</div>
-          <div class="stat-label">本周 / 小时</div>
-        </div>
-      </div>
     </div>
 
     <!-- 心得打卡卡 -->
@@ -600,17 +582,13 @@ function updateCheckinButton(id,checked){var b=document.getElementById('checkinB
 function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
 function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
 function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
-function toggleDrawer(){var o=document.getElementById('drawerOverlay'),d=document.getElementById('sideDrawer');if(!o||!d)return;var isOpen=d.classList.contains('open');if(isOpen){d.classList.remove('open');o.classList.remove('open');document.body.style.overflow=''}else{d.classList.add('open');o.classList.add('open');document.body.style.overflow='hidden'}}
-function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}toggleDrawer();showToast('今日打卡已重置 🌿')}
+/* 抽屉已移除，使用侧边栏导航 */
+function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}showToast('今日打卡已重置 🌿')}
 function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
 function initDrawerEvents(){
-  var btn=document.getElementById('drawerBtn');
-  var overlay=document.getElementById('drawerOverlay');
   var resetBtn=document.getElementById('resetBtn');
   var checkinBtn=document.getElementById('checkinBtn');
   var saveBtn=document.getElementById('saveBtn');
-  if(btn){btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});}
-  if(overlay){overlay.addEventListener('click',function(e){toggleDrawer()});}
   if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
   if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(9)});}
   if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
@@ -646,7 +624,7 @@ if ('serviceWorker' in navigator) {
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   var h=document.getElementById('navHome'),t=document.getElementById('navTodo'),m=document.getElementById('navMine');
-  if(h)h.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(typeof toggleDrawer==='function'){toggleDrawer()}});
+  if(h)h.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.location.href='index.html'});
   if(t)t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.location.href='index.html#todo'});
   if(m)m.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.location.href='index.html#mine'});
 });
