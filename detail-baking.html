@@ -333,6 +333,122 @@ body {
 }
 .recipe-notice .lock-icon { flex-shrink: 0; margin-top: 1px; }
 
+/* ============================================
+   第4步：成品记录打卡 + 灵感记录
+   ============================================ */
+.record-section { margin-bottom: 14px; }
+.record-section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.record-section-title .emoji { font-size: 18px; }
+
+/* 打卡区 */
+.checkin-row {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+}
+.checkin-btn-large {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 3px solid var(--mint);
+  background: var(--white);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.25s ease;
+  gap: 2px;
+}
+.checkin-btn-large:active { transform: scale(0.92); }
+.checkin-btn-large .check-icon { font-size: 24px; line-height: 1; }
+.checkin-btn-large .check-text { font-size: 9px; color: var(--choco-light); font-weight: 600; }
+.checkin-btn-large.done {
+  background: var(--mint);
+  border-color: var(--mint);
+}
+.checkin-btn-large.done .check-icon { color: var(--white); }
+.checkin-btn-large.done .check-text { color: var(--white); }
+.checkin-info { flex: 1; min-width: 0; }
+.checkin-info-title { font-size: 15px; font-weight: 600; color: var(--choco); margin-bottom: 3px; }
+.checkin-info-desc { font-size: 12px; color: var(--choco-hint); line-height: 1.4; }
+.checkin-info-date { font-size: 11px; color: var(--mint); margin-top: 4px; font-weight: 500; }
+
+/* 灵感记录区 */
+.inspiration-box {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.inspiration-input-row {
+  display: flex; gap: 8px; margin-bottom: 12px;
+}
+.inspiration-input {
+  flex: 1;
+  height: 44px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--choco);
+  background: var(--mint-lighter);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.inspiration-input:focus { border-color: var(--mint); }
+.inspiration-input::placeholder { color: var(--choco-hint); }
+.inspiration-save-btn {
+  width: 44px; height: 44px; border-radius: 12px;
+  border: none;
+  background: var(--mint); color: var(--white);
+  font-size: 18px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s;
+}
+.inspiration-save-btn:active { transform: scale(0.9); }
+
+/* 灵感列表 */
+.inspiration-list-title {
+  font-size: 12px; color: var(--choco-hint);
+  margin-bottom: 8px; font-weight: 500;
+}
+.inspiration-list {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 240px; overflow-y: auto;
+}
+.inspiration-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 12px;
+  background: var(--mint-lighter);
+  border-radius: 12px;
+  border-left: 3px solid var(--mint);
+}
+.inspiration-item-content { flex: 1; min-width: 0; }
+.inspiration-item-text {
+  font-size: 13px; color: var(--choco); line-height: 1.5;
+  word-break: break-word;
+}
+.inspiration-item-time {
+  font-size: 10px; color: var(--choco-hint); margin-top: 4px;
+}
+.inspiration-item-delete {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: none; background: transparent;
+  color: var(--choco-hint); font-size: 14px;
+  cursor: pointer; flex-shrink: 0; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.inspiration-item-delete:active { color: #FF6B6B; }
+.inspiration-empty {
+  text-align: center; padding: 20px 0;
+  color: var(--choco-hint); font-size: 13px;
+}
+
 /* --- 底部操作栏 --- */
 .footer {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -553,10 +669,37 @@ body {
     </div>
   </div>
 
-</div>
-<div class="footer">
-  <button class="btn-primary" id="checkinBtn">打卡提交</button>
-  <button class="btn-secondary" id="saveBtn">记录保存</button>
+  <!-- 第4步：成品记录打卡 + 灵感记录 -->
+  <div class="record-section">
+    <div class="record-section-title">
+      <span class="emoji">✨</span>
+      成品记录 & 灵感
+    </div>
+
+    <!-- 打卡区 -->
+    <div class="checkin-row">
+      <button class="checkin-btn-large" id="bakingCheckinBtn" type="button">
+        <span class="check-icon">🎂</span>
+        <span class="check-text">打卡</span>
+      </button>
+      <div class="checkin-info">
+        <div class="checkin-info-title">今日烘焙成品打卡</div>
+        <div class="checkin-info-desc">完成一次烘焙，点击左侧按钮打卡</div>
+        <div class="checkin-info-date" id="checkinDate"></div>
+      </div>
+    </div>
+
+    <!-- 灵感记录区 -->
+    <div class="inspiration-box">
+      <div class="inspiration-input-row">
+        <input type="text" class="inspiration-input" id="inspirationInput" placeholder="记录烘焙灵感、配方想法..." maxlength="200">
+        <button class="inspiration-save-btn" id="inspirationSaveBtn" type="button">✓</button>
+      </div>
+      <div class="inspiration-list-title" id="inspirationListTitle" style="display:none;">灵感记录</div>
+      <div class="inspiration-list" id="inspirationList"></div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -564,10 +707,74 @@ body {
 function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
 function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
 function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
-function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🧁')}
-function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
-function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.textContent='✓ 已完成打卡'}else{b.classList.remove('checked');b.textContent='打卡提交'}}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateBakingCheckin(true);showToast('打卡成功 🧁 今日烘焙完成！')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateBakingCheckin(false);showToast('已撤销打卡')}
 function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
+
+/* 更新烘焙打卡按钮状态 */
+function updateBakingCheckin(checked){
+  var btn=document.getElementById('bakingCheckinBtn');
+  var dateEl=document.getElementById('checkinDate');
+  if(!btn)return;
+  if(checked){
+    btn.classList.add('done');
+    btn.querySelector('.check-icon').textContent='✓';
+    btn.querySelector('.check-text').textContent='已完成';
+    if(dateEl)dateEl.textContent='✓ '+getTodayKey()+' 已完成打卡';
+  }else{
+    btn.classList.remove('done');
+    btn.querySelector('.check-icon').textContent='🎂';
+    btn.querySelector('.check-text').textContent='打卡';
+    if(dateEl)dateEl.textContent='';
+  }
+}
+
+/* 灵感记录逻辑 */
+function getInspirations(){try{return JSON.parse(localStorage.getItem('baking_inspirations')||'[]')}catch(e){return[]}}
+function saveInspirations(list){localStorage.setItem('baking_inspirations',JSON.stringify(list))}
+function addInspiration(text){
+  var list=getInspirations();
+  var now=new Date();
+  var timeStr=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  list.unshift({id:Date.now(),text:text,time:timeStr});
+  saveInspirations(list);
+  renderInspirations();
+}
+function deleteInspiration(id){
+  var list=getInspirations().filter(function(i){return i.id!==id});
+  saveInspirations(list);
+  renderInspirations();
+}
+function renderInspirations(){
+  var list=getInspirations();
+  var container=document.getElementById('inspirationList');
+  var titleEl=document.getElementById('inspirationListTitle');
+  if(!container)return;
+  if(list.length===0){
+    container.innerHTML='<div class="inspiration-empty">还没有灵感记录，快来记录第一个吧 ✨</div>';
+    if(titleEl)titleEl.style.display='none';
+    return;
+  }
+  if(titleEl)titleEl.style.display='block';
+  container.innerHTML=list.map(function(item){
+    return '<div class="inspiration-item">'+
+      '<div class="inspiration-item-content">'+
+        '<div class="inspiration-item-text">'+item.text+'</div>'+
+        '<div class="inspiration-item-time">'+item.time+'</div>'+
+      '</div>'+
+      '<button class="inspiration-item-delete" data-id="'+item.id+'" type="button">✕</button>'+
+    '</div>';
+  }).join('');
+  /* 绑定删除事件 */
+  container.querySelectorAll('.inspiration-item-delete').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();e.stopPropagation();
+      var id=parseInt(this.getAttribute('data-id'));
+      deleteInspiration(id);
+      showToast('已删除');
+    });
+  });
+}
 
 /* Toast */
 function showToast(msg){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1500)}
@@ -581,13 +788,26 @@ document.addEventListener('DOMContentLoaded',function(){
   var btn=document.getElementById('drawerBtn');
   var overlay=document.getElementById('drawerOverlay');
   var resetBtn=document.getElementById('resetBtn');
-  var checkinBtn=document.getElementById('checkinBtn');
-  var saveBtn=document.getElementById('saveBtn');
   if(btn)btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleDrawer()});
   if(overlay)overlay.addEventListener('click',function(e){toggleDrawer()});
   if(resetBtn)resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});
-  if(checkinBtn)checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(5)});
-  if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存')});
+
+  /* 烘焙打卡按钮 */
+  var bakingBtn=document.getElementById('bakingCheckinBtn');
+  if(bakingBtn)bakingBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(5)});
+
+  /* 灵感记录保存 */
+  var insInput=document.getElementById('inspirationInput');
+  var insSaveBtn=document.getElementById('inspirationSaveBtn');
+  function saveInspiration(){
+    var text=insInput.value.trim();
+    if(!text){showToast('请输入灵感内容');return}
+    addInspiration(text);
+    insInput.value='';
+    showToast('灵感已记录 ✨');
+  }
+  if(insSaveBtn)insSaveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();saveInspiration()});
+  if(insInput)insInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();saveInspiration()}});
 
   /* 小红书跳转 - 显式跳转避免移动端拦截 */
   var xhsUrl='https://xhslink.cn/m/6hJOHOEckM2';
@@ -599,8 +819,8 @@ document.addEventListener('DOMContentLoaded',function(){
 
   /* 关注账号跳转 */
   var followBtns=document.querySelectorAll('.follow-jump');
-  followBtns.forEach(function(btn){
-    btn.addEventListener('click',function(e){
+  followBtns.forEach(function(fbtn){
+    fbtn.addEventListener('click',function(e){
       e.preventDefault();e.stopPropagation();
       var url=this.getAttribute('data-url');
       if(url){window.location.href=url;}
@@ -613,8 +833,11 @@ document.addEventListener('DOMContentLoaded',function(){
     e.preventDefault();e.stopPropagation();
     window.location.href='https://bg2633jeoj.feishu.cn/wiki/Xt3bwQ8ZqiCbPxkt0x5c9tXunQe?sheet=397db3';
   });
+
+  /* 初始化打卡状态和灵感列表 */
+  updateBakingCheckin(isChecked(5));
+  renderInspirations();
 });
-updateCheckinButton(5,isChecked(5));
 </script>
 
 <!-- Service Worker 注册（PWA 离线支持） -->
