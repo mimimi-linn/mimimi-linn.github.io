@@ -346,36 +346,66 @@ body {
 
 /* 打卡区 */
 .checkin-row {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; flex-direction: column; gap: 12px;
   background: var(--white);
   border-radius: 20px;
   padding: 16px;
   margin-bottom: 10px;
   box-shadow: var(--shadow);
 }
-.checkin-btn-large {
-  width: 64px; height: 64px; border-radius: 50%;
-  border: 3px solid var(--mint);
+.checkin-top {
+  display: flex; align-items: center; gap: 10px;
+}
+.checkin-top-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.checkin-top-icon img { width: 100%; height: 100%; object-fit: contain; }
+.checkin-top-title { font-size: 15px; font-weight: 600; color: var(--choco); }
+
+/* 待办输入行 */
+.todo-row {
+  display: flex; align-items: center; gap: 10px;
+}
+.todo-check {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2.5px solid var(--mint);
   background: var(--white);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer; flex-shrink: 0;
   transition: all 0.25s ease;
-  gap: 2px;
+  font-size: 14px; color: transparent;
 }
-.checkin-btn-large:active { transform: scale(0.92); }
-.checkin-btn-large .check-icon { font-size: 24px; line-height: 1; }
-.checkin-btn-large .check-text { font-size: 9px; color: var(--choco-light); font-weight: 600; }
-.checkin-btn-large.done {
-  background: var(--mint);
-  border-color: var(--mint);
+.todo-check:active { transform: scale(0.9); }
+.todo-check.done {
+  background: #C8C8C8;
+  border-color: #C8C8C8;
+  color: var(--white);
 }
-.checkin-btn-large.done .check-icon { color: var(--white); }
-.checkin-btn-large.done .check-text { color: var(--white); }
-.checkin-info { flex: 1; min-width: 0; }
-.checkin-info-title { font-size: 15px; font-weight: 600; color: var(--choco); margin-bottom: 3px; }
-.checkin-info-desc { font-size: 12px; color: var(--choco-hint); line-height: 1.4; }
-.checkin-info-date { font-size: 11px; color: var(--mint); margin-top: 4px; font-weight: 500; }
+.todo-input {
+  flex: 1;
+  height: 40px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--choco);
+  background: var(--mint-lighter);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.todo-input:focus { border-color: var(--mint); }
+.todo-input::placeholder { color: var(--choco-hint); }
+.todo-input.done {
+  background: #F5F5F5;
+  color: #B5A99A;
+  text-decoration: line-through;
+}
+.checkin-date {
+  font-size: 11px; color: var(--mint); font-weight: 500;
+}
 
 /* 灵感记录区 */
 .inspiration-box {
@@ -678,15 +708,15 @@ body {
 
     <!-- 打卡区 -->
     <div class="checkin-row">
-      <button class="checkin-btn-large" id="bakingCheckinBtn" type="button">
-        <span class="check-icon">🎂</span>
-        <span class="check-text">打卡</span>
-      </button>
-      <div class="checkin-info">
-        <div class="checkin-info-title">今日烘焙成品打卡</div>
-        <div class="checkin-info-desc">完成一次烘焙，点击左侧按钮打卡</div>
-        <div class="checkin-info-date" id="checkinDate"></div>
+      <div class="checkin-top">
+        <div class="checkin-top-icon"><img src="icons/ok-icon.png" alt="打卡"></div>
+        <div class="checkin-top-title">烘焙美食打卡</div>
       </div>
+      <div class="todo-row">
+        <button class="todo-check" id="bakingTodoCheck" type="button">✓</button>
+        <input type="text" class="todo-input" id="bakingTodoInput" placeholder="输入今日烘焙内容..." maxlength="100">
+      </div>
+      <div class="checkin-date" id="checkinDate"></div>
     </div>
 
     <!-- 灵感记录区 -->
@@ -713,19 +743,29 @@ function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(
 
 /* 更新烘焙打卡按钮状态 */
 function updateBakingCheckin(checked){
-  var btn=document.getElementById('bakingCheckinBtn');
+  var checkBtn=document.getElementById('bakingTodoCheck');
+  var inputEl=document.getElementById('bakingTodoInput');
   var dateEl=document.getElementById('checkinDate');
-  if(!btn)return;
-  if(checked){
-    btn.classList.add('done');
-    btn.querySelector('.check-icon').textContent='✓';
-    btn.querySelector('.check-text').textContent='已完成';
-    if(dateEl)dateEl.textContent='✓ '+getTodayKey()+' 已完成打卡';
-  }else{
-    btn.classList.remove('done');
-    btn.querySelector('.check-icon').textContent='🎂';
-    btn.querySelector('.check-text').textContent='打卡';
-    if(dateEl)dateEl.textContent='';
+  if(checkBtn){
+    if(checked){
+      checkBtn.classList.add('done');
+    }else{
+      checkBtn.classList.remove('done');
+    }
+  }
+  if(inputEl){
+    if(checked){
+      inputEl.classList.add('done');
+    }else{
+      inputEl.classList.remove('done');
+    }
+  }
+  if(dateEl){
+    if(checked){
+      dateEl.textContent='✓ '+getTodayKey()+' 已完成打卡';
+    }else{
+      dateEl.textContent='';
+    }
   }
 }
 
@@ -792,9 +832,9 @@ document.addEventListener('DOMContentLoaded',function(){
   if(overlay)overlay.addEventListener('click',function(e){toggleDrawer()});
   if(resetBtn)resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});
 
-  /* 烘焙打卡按钮 */
-  var bakingBtn=document.getElementById('bakingCheckinBtn');
-  if(bakingBtn)bakingBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(5)});
+  /* 烘焙打卡 - 圆形待办按钮 */
+  var todoCheck=document.getElementById('bakingTodoCheck');
+  if(todoCheck)todoCheck.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(5)});
 
   /* 灵感记录保存 */
   var insInput=document.getElementById('inspirationInput');
