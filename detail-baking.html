@@ -292,12 +292,12 @@ body {
       <div class="xhs-avatar">🧁</div>
       <div class="xhs-info">
         <div class="xhs-name">
-          我的烘焙日记
+          面包快长大
           <span class="xhs-tag">小红书</span>
         </div>
-        <div class="xhs-id">小红书号：XXXXXXX</div>
+        <div class="xhs-id">小红书号：3898765445</div>
       </div>
-      <a class="xhs-jump-btn" id="xhsJumpBtn" href="#" title="跳转小红书主页">
+      <a class="xhs-jump-btn" id="xhsJumpBtn" href="https://xhslink.cn/m/6hJOHOEckM2" target="_blank" rel="noopener" title="跳转小红书主页">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M7 17l9.2-9.2M17 17V8H8"/>
         </svg>
@@ -305,20 +305,20 @@ body {
     </div>
     <div class="xhs-stats">
       <div class="xhs-stat-item">
-        <div class="xhs-stat-num" id="xhsFollowers">1,234</div>
+        <div class="xhs-stat-num" id="xhsFollowers">10+</div>
         <div class="xhs-stat-label">粉丝</div>
       </div>
       <div class="xhs-stat-item">
-        <div class="xhs-stat-num" id="xhsLikes">5,678</div>
-        <div class="xhs-stat-label">获赞</div>
+        <div class="xhs-stat-num" id="xhsLikes">3,852</div>
+        <div class="xhs-stat-label">获赞与收藏</div>
       </div>
       <div class="xhs-stat-item">
-        <div class="xhs-stat-num" id="xhsVideos">56</div>
+        <div class="xhs-stat-num" id="xhsVideos">25</div>
         <div class="xhs-stat-label">笔记</div>
       </div>
     </div>
     <div class="xhs-link-row">
-      <a class="xhs-link" id="xhsLink" href="#">
+      <a class="xhs-link" id="xhsLink" href="https://xhslink.cn/m/6hJOHOEckM2" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
         前往小红书主页
       </a>
@@ -363,12 +363,9 @@ document.addEventListener('DOMContentLoaded',function(){
   if(checkinBtn)checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(5)});
   if(saveBtn)saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存')});
 
-  /* 小红书跳转按钮 */
+  /* 小红书跳转按钮 - 已配置真实链接 */
   var xhsBtn=document.getElementById('xhsJumpBtn');
-  var xhsLink=document.getElementById('xhsLink');
-  var xhsHandler=function(e){e.preventDefault();showToast('请先设置小红书主页链接')};
-  if(xhsBtn)xhsBtn.addEventListener('click',xhsHandler);
-  if(xhsLink)xhsLink.addEventListener('click',xhsHandler);
+  if(xhsBtn)xhsBtn.addEventListener('click',function(e){e.stopPropagation();showToast('正在打开小红书...')});
 });
 updateCheckinButton(5,isChecked(5));
 </script>
