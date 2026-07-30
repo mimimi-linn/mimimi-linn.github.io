@@ -43,7 +43,7 @@
   --shadow-float: 0 4px 20px rgba(143, 188, 168, 0.18);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-family); background-color: var(--color-bg); color: var(--color-text-primary); min-height: 100vh; max-width: 430px; margin: 0 auto; position: relative; padding-bottom: 90px; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-family); background-color: var(--color-bg); color: var(--color-text-primary); min-height: 100vh; max-width: 430px; margin: 0 auto; position: relative; padding-bottom: 140px; -webkit-font-smoothing: antialiased; }
 .detail-header { position: sticky; top: 0; z-index: 100; background: var(--color-bg); display: flex; align-items: center; justify-content: space-between; padding: var(--space-lg) var(--space-xl); height: 56px; }
 .back-btn { width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--color-white); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-card); color: var(--color-text-primary); flex-shrink: 0; text-decoration: none; }
 .back-btn:active { transform: scale(0.92); }
@@ -95,7 +95,7 @@ body { font-family: var(--font-family); background-color: var(--color-bg); color
 .progress-ring .ring-label { font-size: var(--font-size-small); color: var(--color-text-hint); }
 .chart-container { width: 100%; height: 140px; position: relative; }
 .chart-container svg { width: 100%; height: 100%; }
-.detail-footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: var(--color-white); padding: var(--space-md) var(--space-xl); padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 20px)); display: flex; gap: var(--space-md); box-shadow: 0 -2px 12px rgba(143, 188, 168, 0.1); z-index: 50; }
+.detail-footer { position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; background: var(--color-white); padding: var(--space-md) var(--space-xl); padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 20px)); display: flex; gap: var(--space-md); box-shadow: 0 -2px 12px rgba(143, 188, 168, 0.1); z-index: 50; }
 .btn-primary { flex: 2; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--gradient-primary); border: none; color: var(--color-white); font-size: var(--font-size-body); font-weight: var(--font-weight-semibold); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: transform 0.2s; box-shadow: var(--shadow-card); }
 .btn-primary:active { transform: scale(0.97); }
 .btn-primary svg { width: 18px; height: 18px; }
@@ -122,10 +122,19 @@ body { font-family: var(--font-family); background-color: var(--color-bg); color
 .drawer-menu-item.active { background: #E6F2ED; color: #5A8C78; font-weight: 600; }
 .drawer-menu-item .menu-emoji { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
 .drawer-menu-item.home-link { border-bottom: 1px solid #E0EBE6; margin-bottom: 8px; color: #5A8C78; font-weight: 600; }
-.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); border-top: 1px solid #E0EBE6; }
+.drawer-footer { padding: 16px 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px) + 56px)); border-top: 1px solid #E0EBE6; }
 .drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #E6F2ED; border: 1.5px solid #8FBCA8; color: #5A8C78; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
 .drawer-reset-btn:active { background: #8FBCA8; color: #fff; }
 
+
+/* ===== 底部导航栏 ===== */
+.bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
+.nav-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 8px 0 10px; cursor: pointer; background: none; border: none; transition: all 0.2s; font-family: inherit; }
+.nav-tab:active { transform: scale(0.92); }
+.nav-tab svg { width: 24px; height: 24px; color: #B0B0B0; transition: color 0.2s; }
+.nav-tab .nav-tab-label { font-size: 11px; color: #B0B0B0; font-weight: 500; transition: color 0.2s; }
+.nav-tab.active svg { color: #6B9AC4; }
+.nav-tab.active .nav-tab-label { color: #6B9AC4; font-weight: 600; }
 </style>
 <meta name="theme-color" content="#C9985A">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -155,7 +164,7 @@ body { font-family: var(--font-family); background-color: var(--color-bg); color
 <div class="detail-header">
   <a class="back-btn" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
   <span class="detail-title">🧍‍♀️ 体重管理</span>
-  <button type="button" class="drawer-btn" id="drawerBtn"><div class="hamburger-icon"><span></span><span></span><span></span></div></button>
+  
 </div>
 
 <!-- 主体内容区 -->
@@ -243,5 +252,30 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- ===== 底部导航栏 ===== -->
+<div class="bottom-nav">
+  <button class="nav-tab active" id="navHome" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="nav-tab-label">首页</span>
+  </button>
+  <button class="nav-tab" id="navTodo" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span class="nav-tab-label">待办</span>
+  </button>
+  <button class="nav-tab" id="navMine" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+    <span class="nav-tab-label">我的</span>
+  </button>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var h=document.getElementById('navHome'),t=document.getElementById('navTodo'),m=document.getElementById('navMine');
+  if(h)h.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(typeof toggleDrawer==='function'){toggleDrawer()}});
+  if(t)t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.location.href='index.html#todo'});
+  if(m)m.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.location.href='index.html#mine'});
+});
+</script>
+
 </body>
 </html>
