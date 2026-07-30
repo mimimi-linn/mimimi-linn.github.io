@@ -614,8 +614,62 @@ body {
    底部留白 Bottom Spacer
    ============================================ */
 .bottom-spacer {
-  height: 48px;
+  height: 80px;
 }
+
+/* ============================================
+   底部导航栏 Bottom Tab Bar
+   ============================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  display: flex; align-items: stretch;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--color-border);
+  z-index: 200;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.nav-tab {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  padding: 8px 0 10px;
+  cursor: pointer;
+  background: none; border: none;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.nav-tab:active { transform: scale(0.92); }
+.nav-tab svg { width: 24px; height: 24px; color: var(--color-text-hint); transition: color 0.2s; }
+.nav-tab .nav-tab-label { font-size: 11px; color: var(--color-text-hint); font-weight: 500; transition: color 0.2s; }
+.nav-tab.active svg { color: var(--color-primary); }
+.nav-tab.active .nav-tab-label { color: var(--color-primary); font-weight: 600; }
+
+/* Tab页面容器 */
+.tab-page { display: none; }
+.tab-page.active { display: block; }
+
+/* 待办 & 我的 占位样式 */
+.placeholder-section {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 24px 40px;
+  text-align: center;
+}
+.placeholder-icon {
+  width: 72px; height: 72px; border-radius: 20px;
+  background: var(--color-primary-light);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.placeholder-icon svg { width: 36px; height: 36px; color: var(--color-primary); }
+.placeholder-title { font-size: 18px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 8px; }
+.placeholder-desc { font-size: 14px; color: var(--color-text-hint); line-height: 1.6; max-width: 240px; }
 
 /* ============================================
    通用工具类 Utility
@@ -898,6 +952,9 @@ body {
      ============================================ -->
 <div class="page" id="homePage">
 
+  <!-- ===== Tab: 首页 ===== -->
+  <div class="tab-page active" id="tab-home">
+
   <!-- 顶部导航栏 -->
   <div class="top-nav">
     <div class="nav-left"></div>
@@ -1005,6 +1062,47 @@ body {
 
   <!-- 底部留白 -->
   <div class="bottom-spacer"></div>
+
+  </div><!-- /tab-home -->
+
+  <!-- ===== Tab: 待办 ===== -->
+  <div class="tab-page" id="tab-todo">
+    <div class="placeholder-section">
+      <div class="placeholder-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      </div>
+      <div class="placeholder-title">待办事项</div>
+      <div class="placeholder-desc">这里将展示你的待办任务清单，后续可添加任务管理和提醒功能。</div>
+    </div>
+  </div>
+
+  <!-- ===== Tab: 我的 ===== -->
+  <div class="tab-page" id="tab-mine">
+    <div class="placeholder-section">
+      <div class="placeholder-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+      </div>
+      <div class="placeholder-title">我的</div>
+      <div class="placeholder-desc">这里将展示个人信息、打卡统计、设置等，后续可完善个人中心功能。</div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ===== 底部导航栏 ===== -->
+<div class="bottom-nav">
+  <button class="nav-tab active" data-tab="home" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="nav-tab-label">首页</span>
+  </button>
+  <button class="nav-tab" data-tab="todo" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span class="nav-tab-label">待办</span>
+  </button>
+  <button class="nav-tab" data-tab="mine" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+    <span class="nav-tab-label">我的</span>
+  </button>
 </div>
 
 <!-- ============================================
@@ -1436,7 +1534,34 @@ window.showToast = showToast;
 })();
 </script>
 
-<!-- Service Worker 注册（PWA 离线支持） -->
+<!-- 底部导航栏切换逻辑 -->
+<script>
+/* Tab切换 */
+function switchTab(tabName){
+  /* 隐藏所有tab页 */
+  document.querySelectorAll('.tab-page').forEach(function(p){p.classList.remove('active')});
+  /* 显示目标tab页 */
+  var target=document.getElementById('tab-'+tabName);
+  if(target)target.classList.add('active');
+  /* 更新导航按钮高亮 */
+  document.querySelectorAll('.nav-tab').forEach(function(b){b.classList.remove('active')});
+  var btn=document.querySelector('.nav-tab[data-tab="'+tabName+'"]');
+  if(btn)btn.classList.add('active');
+  /* 滚动到顶部 */
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* 绑定导航按钮点击事件 */
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.nav-tab').forEach(function(tab){
+    tab.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      switchTab(this.getAttribute('data-tab'));
+    });
+  });
+});
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
