@@ -382,38 +382,74 @@ body {
   </div>
 </div>
 
+<!-- ===== 主体内容 ===== -->
+<div class="main">
+  <!-- 小红书搜索（置顶） -->
+  <div class="xhs-search-box" id="xhsSearch">
+    <div class="xhs-search-logo">
+      <img src="icons/xhs-logo.png" alt="小红书" />
+    </div>
+    <div class="xhs-search-body">
+      <div class="xhs-search-title">小红书搜索</div>
+      <div class="xhs-search-desc">搜索穿搭美妆灵感、教程</div>
+    </div>
+    <div class="xhs-search-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
 
-      <!-- 博主2 -->
+  <!-- 第1块：关注博主更新 -->
+  <div class="section-title"><span class="emoji">🎀</span>关注博主更新</div>
+  <div class="blogger-card">
+    <div class="blogger-list">
+      <!-- 博主1 -->
       <div class="blogger-item" data-url="#">
-        <div class="blogger-avatar a2">💄</div>
+        <div class="blogger-avatar a1">🌸</div>
         <div class="blogger-body">
           <div class="blogger-top">
-            <div class="blogger-name">美妆教程君 <span class="blogger-tag">美妆</span></div>
+            <div class="blogger-name">穿搭小个子 <span class="blogger-tag">穿搭</span></div>
             <button class="blogger-jump" type="button">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
             </button>
           </div>
-          <div class="blogger-desc">新手化妆教程 / 日常妆容分享</div>
+          <div class="blogger-desc">小个子显高穿搭 / 日常通勤风</div>
           <div class="blogger-latest">
             <span class="dot"></span>
-            <span>最新：5分钟通勤妆，手残党也能学会</span>
+            <span>最新：秋冬显高搭配公式，小个子必看</span>
           </div>
         </div>
       </div>
-      <!-- 博主3 -->
-      <div class="blogger-item" data-url="#">
-        <div class="blogger-avatar a3">👠</div>
+      <!-- 博主2：其实是一只番茄鸭 -->
+      <div class="blogger-item" data-url="https://xhslink.cn/m/oJNMqYvfSe">
+        <div class="blogger-avatar a2">🍅</div>
         <div class="blogger-body">
           <div class="blogger-top">
-            <div class="blogger-name">法式穿搭笔记 <span class="blogger-tag">穿搭</span></div>
+            <div class="blogger-name">其实是一只番茄鸭 <span class="blogger-tag">小红书</span></div>
             <button class="blogger-jump" type="button">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
             </button>
           </div>
-          <div class="blogger-desc">法式慵懒风 / 极简衣橱打造</div>
+          <div class="blogger-desc">5.2M 赞与收藏 / 美妆 &amp; 穿搭分享</div>
           <div class="blogger-latest">
             <span class="dot"></span>
-            <span>最新：一件白衬衫的10种穿法</span>
+            <span>点击查看最新笔记更新</span>
+          </div>
+        </div>
+      </div>
+      <!-- 博主3：抖音穿搭博主 -->
+      <div class="blogger-item" data-url="https://v.douyin.com/YpcexGGwMdQ/">
+        <div class="blogger-avatar a3">👠</div>
+        <div class="blogger-body">
+          <div class="blogger-top">
+            <div class="blogger-name">抖音穿搭博主 <span class="blogger-tag">抖音</span></div>
+            <button class="blogger-jump" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+            </button>
+          </div>
+          <div class="blogger-desc">点击跳转抖音查看更多作品</div>
+          <div class="blogger-latest">
+            <span class="dot"></span>
+            <span>点击查看最新穿搭视频</span>
           </div>
         </div>
       </div>
@@ -430,12 +466,12 @@ body {
         <div class="merge-item beauty" id="favBeauty">
           <div class="merge-item-icon">💄</div>
           <div class="merge-item-name">美妆收藏</div>
-          <div class="merge-item-sub">小红书 / 抖音</div>
+          <div class="merge-item-sub">点击复制抖音口令</div>
         </div>
         <div class="merge-item fashion" id="favFashion">
           <div class="merge-item-icon">👗</div>
           <div class="merge-item-name">穿搭收藏</div>
-          <div class="merge-item-sub">小红书 / 抖音</div>
+          <div class="merge-item-sub">点击跳转小红书</div>
         </div>
       </div>
       <!-- 分隔线 -->
@@ -548,8 +584,29 @@ document.addEventListener('DOMContentLoaded',function(){
   /* 收藏夹跳转 */
   var favBeauty=document.getElementById('favBeauty');
   var favFashion=document.getElementById('favFashion');
-  if(favBeauty)favBeauty.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置美妆收藏夹链接')});
-  if(favFashion)favFashion.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置穿搭收藏夹链接')});
+  if(favBeauty)favBeauty.addEventListener('click',function(e){
+    e.stopPropagation();
+    /* 抖音口令：复制到剪贴板，提示用户打开抖音 */
+    var douyinCode='9:/ H@V.Ym 05/16 :8pm 【请把芝士加满】长按复制此条消息，打开抖音查看精彩内容##T8y5puNDt89##';
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(douyinCode).then(function(){
+        showToast('口令已复制，请打开抖音查看');
+      }).catch(function(){
+        showToast('请长按复制口令：'+douyinCode);
+      });
+    }else{
+      /* 兼容旧浏览器 */
+      var ta=document.createElement('textarea');
+      ta.value=douyinCode;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');showToast('口令已复制，请打开抖音查看')}catch(err){showToast('请手动复制口令')}
+      document.body.removeChild(ta);
+    }
+  });
+  if(favFashion)favFashion.addEventListener('click',function(e){
+    e.stopPropagation();
+    window.location.href='https://www.xiaohongshu.com/board/65f697990000000018003e56?xhsshare=CopyLink&appuid=58de04265e87e74d9a2887fc&apptime=1785453319&share_id=1578078380234b8daed373f53166382e';
+  });
 
   /* 衣柜App跳转 */
   var wardrobeApp=document.getElementById('wardrobeApp');
