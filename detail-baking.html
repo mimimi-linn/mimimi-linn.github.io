@@ -266,6 +266,70 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* ============================================
+   第3步：配方留存（飞书文档关联）
+   ============================================ */
+.recipe-section { margin-bottom: 14px; }
+.recipe-section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.recipe-section-title .emoji { font-size: 18px; }
+.recipe-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.recipe-doc {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px;
+  background: linear-gradient(135deg, #F0F7FF 0%, #F5FBF9 100%);
+  border-radius: 14px;
+  border: 1px solid #DDE8F5;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.recipe-doc:active { transform: scale(0.98); }
+.recipe-doc-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, #3370FF 0%, #5089FF 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(51, 112, 255, 0.25);
+}
+.recipe-doc-body { flex: 1; min-width: 0; }
+.recipe-doc-name {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 3px;
+  display: flex; align-items: center; gap: 5px;
+}
+.recipe-doc-tag {
+  font-size: 9px; font-weight: 500;
+  background: #3370FF; color: #fff;
+  padding: 2px 5px; border-radius: 4px;
+}
+.recipe-doc-desc {
+  font-size: 12px; color: var(--choco-hint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.recipe-doc-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #3370FF;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.recipe-doc-arrow svg { width: 14px; height: 14px; color: #fff; }
+.recipe-notice {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 11px; color: var(--choco-hint);
+  line-height: 1.6;
+  padding: 0 2px;
+}
+.recipe-notice .lock-icon { flex-shrink: 0; margin-top: 1px; }
+
 /* --- 底部操作栏 --- */
 .footer {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -459,9 +523,34 @@ body {
     </div>
   </div>
 
-</div>
+  <!-- 第3步：配方留存（飞书文档关联） -->
+  <div class="recipe-section">
+    <div class="recipe-section-title">
+      <span class="emoji">📋</span>
+      配方留存
+    </div>
+    <div class="recipe-card">
+      <div class="recipe-doc" id="recipeDoc">
+        <div class="recipe-doc-icon">📄</div>
+        <div class="recipe-doc-body">
+          <div class="recipe-doc-name">
+            烘焙配方表
+            <span class="recipe-doc-tag">飞书文档</span>
+          </div>
+          <div class="recipe-doc-desc">收藏整理的烘焙配方，点击查看</div>
+        </div>
+        <div class="recipe-doc-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+      <div class="recipe-notice">
+        <span class="lock-icon">🔒</span>
+        <span>该文档仅自己可见，需登录飞书账号查看，未授权无法分享给他人</span>
+      </div>
+    </div>
+  </div>
 
-<!-- 底部操作栏 -->
+</div>
 <div class="footer">
   <button class="btn-primary" id="checkinBtn">打卡提交</button>
   <button class="btn-secondary" id="saveBtn">记录保存</button>
@@ -513,6 +602,13 @@ document.addEventListener('DOMContentLoaded',function(){
       var url=this.getAttribute('data-url');
       if(url){window.location.href=url;}
     });
+  });
+
+  /* 飞书配方文档跳转 */
+  var recipeDoc=document.getElementById('recipeDoc');
+  if(recipeDoc)recipeDoc.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    window.location.href='https://bg2633jeoj.feishu.cn/wiki/Xt3bwQ8ZqiCbPxkt0x5c9tXunQe?sheet=397db3';
   });
 });
 updateCheckinButton(5,isChecked(5));
