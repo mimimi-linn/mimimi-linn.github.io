@@ -213,169 +213,111 @@ body {
 }
 
 /* ============================================
-   第3块：今日有氧打卡三宫格
+   第3块：运动内容（两级标签 + 课程打卡）
    ============================================ */
-.workout-card {
+.exercise-card {
   background: var(--white);
   border-radius: 20px;
   padding: 16px;
   margin-bottom: 14px;
   box-shadow: var(--shadow);
 }
-.workout-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+
+/* 一级标签 */
+.tag-row-1 {
+  display: flex; gap: 10px; margin-bottom: 14px;
 }
-.workout-item {
-  background: var(--mint-lighter);
-  border-radius: 16px;
-  padding: 16px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1.5px solid transparent;
+.tag-l1 {
+  flex: 1; text-align: center;
+  padding: 10px 4px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-size: 14px; font-weight: 600; color: var(--choco);
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px;
 }
-.workout-item:active { transform: scale(0.96); }
-.workout-item.done {
+.tag-l1:active { transform: scale(0.96); }
+.tag-l1.active {
   background: var(--mint-light);
   border-color: var(--mint);
-}
-.workout-item-icon {
-  font-size: 28px;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.workout-item-name {
-  font-size: 13px;
-  font-weight: 600;
   color: var(--choco);
-  margin-bottom: 4px;
 }
-.workout-item-tags {
-  font-size: 9px;
-  color: var(--choco-hint);
-  line-height: 1.4;
-  margin-bottom: 8px;
-  min-height: 24px;
+
+/* 二级标签 */
+.tag-row-2 {
+  display: flex; gap: 8px; margin-bottom: 16px;
+  flex-wrap: wrap;
 }
-.workout-item-btn {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 10px;
+.tag-l2 {
+  padding: 7px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
   background: var(--white);
-  border: 1px solid var(--border);
-  font-size: 10px;
-  color: var(--choco-light);
-  font-weight: 500;
+  font-size: 12px; font-weight: 500; color: var(--choco-light);
+  cursor: pointer; transition: all 0.2s;
 }
-.workout-item.done .workout-item-btn {
-  background: var(--mint);
-  color: var(--white);
+.tag-l2:active { transform: scale(0.96); }
+.tag-l2.active {
+  background: var(--mint-light);
   border-color: var(--mint);
+  color: var(--choco);
+  font-weight: 600;
 }
 
-/* ============================================
-   第4块：第三方APP快捷跳转
-   ============================================ */
-.app-card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: var(--shadow);
+/* 课程打卡列表 */
+.course-list {
+  display: flex; flex-direction: column; gap: 10px;
 }
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-.app-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  text-decoration: none;
-}
-.app-item:active { transform: scale(0.92); }
-.app-icon {
-  width: 52px; height: 52px; border-radius: 16px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-.app-icon.keep { background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%); }
-.app-icon.sport { background: linear-gradient(135deg, #FFB347 0%, #FFCC33 100%); }
-.app-icon.ant { background: linear-gradient(135deg, #1677FF 0%, #69B1FF 100%); }
-.app-icon.posture { background: linear-gradient(135deg, #A78BFA 0%, #C4B5FD 100%); }
-.app-name {
-  font-size: 11px;
-  color: var(--choco-light);
-  font-weight: 500;
-}
-
-/* ============================================
-   第5块：体态改善视频学习入口
-   ============================================ */
-.video-card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: var(--shadow);
-}
-.video-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.video-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px;
+.course-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px;
   background: var(--mint-lighter);
   border-radius: 14px;
-  cursor: pointer;
   transition: all 0.2s;
-  text-decoration: none;
 }
-.video-item:active { transform: scale(0.98); }
-.video-thumb {
-  width: 80px; height: 56px; border-radius: 10px;
-  background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(91, 155, 213, 0.2);
-}
-.video-info { flex: 1; min-width: 0; }
-.video-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--choco);
-  margin-bottom: 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.video-tag {
-  font-size: 10px;
-  color: var(--choco-hint);
-  background: var(--white);
-  padding: 2px 6px;
-  border-radius: 4px;
-  display: inline-block;
-}
-.video-arrow {
-  width: 28px; height: 28px; border-radius: 50%;
+.course-check {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid var(--mint);
   background: var(--white);
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.25s ease;
+  font-size: 12px; color: transparent;
 }
-.video-arrow svg { width: 12px; height: 12px; color: var(--choco-light); }
+.course-check:active { transform: scale(0.9); }
+.course-check.done {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--white);
+}
+.course-body { flex: 1; min-width: 0; }
+.course-body.done { text-decoration: line-through; opacity: 0.5; }
+.course-title {
+  font-size: 14px; font-weight: 600; color: var(--choco);
+  margin-bottom: 2px;
+}
+.course-sub {
+  font-size: 11px; color: var(--choco-hint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.course-go-btn {
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--mint);
+  background: var(--white);
+  color: var(--mint);
+  font-size: 12px; font-weight: 600;
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.course-go-btn:active { background: var(--mint); color: var(--white); }
+.course-empty {
+  text-align: center; padding: 20px 0;
+  color: var(--choco-hint); font-size: 13px;
+}
 
 /* --- 底部操作栏 --- */
 .footer {
@@ -536,89 +478,25 @@ body {
     </div>
   </div>
 
-  <!-- 第3块：今日运动打卡 -->
-  <div class="section-title"><span class="emoji">🏋️</span>今日运动打卡</div>
-  <div class="workout-card">
-    <div class="workout-grid">
-      <div class="workout-item" id="cardioItem" data-type="cardio">
-        <div class="workout-item-icon">🏃</div>
-        <div class="workout-item-name">有氧</div>
-        <div class="workout-item-tags">跑步、椭圆机、跳绳、游泳</div>
-        <div class="workout-item-btn">点击打卡</div>
-      </div>
-      <div class="workout-item" id="strengthItem" data-type="strength">
-        <div class="workout-item-icon">💪</div>
-        <div class="workout-item-name">无氧</div>
-        <div class="workout-item-tags">力量训练、器械、自重训练</div>
-        <div class="workout-item-btn">点击打卡</div>
-      </div>
-      <div class="workout-item" id="hiitItem" data-type="hiit">
-        <div class="workout-item-icon">🧘</div>
-        <div class="workout-item-name">体态</div>
-        <div class="workout-item-tags">普拉提、瑜伽、其他体态课程</div>
-        <div class="workout-item-btn">点击打卡</div>
-      </div>
+  <!-- 第3块：运动内容 -->
+  <div class="section-title"><span class="emoji">🏋️</span>运动内容</div>
+  <div class="exercise-card">
+    <!-- 一级标签 -->
+    <div class="tag-row-1" id="tagL1Row">
+      <div class="tag-l1 active" data-l1="strength">💪 力量</div>
+      <div class="tag-l1" data-l1="cardio">🏃 有氧</div>
+      <div class="tag-l1" data-l1="posture">🧘🏻‍♀️ 体态</div>
     </div>
-  </div>
-
-  <!-- 第4块：第三方运动工具直达 -->
-  <div class="section-title"><span class="emoji">🛠️</span>第三方运动工具直达</div>
-  <div class="app-card">
-    <div class="app-grid">
-      <div class="app-item" id="appKeep">
-        <div class="app-icon keep">🏃</div>
-        <div class="app-name">Keep</div>
-      </div>
-      <div class="app-item" id="appSport">
-        <div class="app-icon sport">🏅</div>
-        <div class="app-name">运动</div>
-      </div>
-      <div class="app-item" id="appAnt">
-        <div class="app-icon ant">🐜</div>
-        <div class="app-name">蚂蚁阿福</div>
-      </div>
-      <div class="app-item" id="appPosture">
-        <div class="app-icon posture">🧘</div>
-        <div class="app-name">体态APP</div>
-      </div>
+    <!-- 二级标签 -->
+    <div class="tag-row-2" id="tagL2Row">
+      <div class="tag-l2 active" data-l2="glutes">臀腿</div>
+      <div class="tag-l2" data-l2="back">背部</div>
+      <div class="tag-l2" data-l2="core">核心</div>
+      <div class="tag-l2" data-l2="arms">手臂</div>
+      <div class="tag-l2" data-l2="other">其他</div>
     </div>
-  </div>
-
-  <!-- 第5块：体态矫正专属课程 -->
-  <div class="section-title"><span class="emoji">🎬</span>体态矫正专属课程</div>
-  <div class="video-card">
-    <div class="video-list">
-      <div class="video-item" id="video1">
-        <div class="video-thumb">🎥</div>
-        <div class="video-info">
-          <div class="video-title">改善圆肩驼背训练</div>
-          <span class="video-tag">体态矫正</span>
-        </div>
-        <div class="video-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-      </div>
-      <div class="video-item" id="video2">
-        <div class="video-thumb">🎥</div>
-        <div class="video-info">
-          <div class="video-title">骨盆前倾矫正课程</div>
-          <span class="video-tag">体态矫正</span>
-        </div>
-        <div class="video-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-      </div>
-      <div class="video-item" id="video3">
-        <div class="video-thumb">🎥</div>
-        <div class="video-info">
-          <div class="video-title">颈部拉伸放松训练</div>
-          <span class="video-tag">体态矫正</span>
-        </div>
-        <div class="video-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-      </div>
-    </div>
+    <!-- 课程打卡列表 -->
+    <div class="course-list" id="courseList"></div>
   </div>
 
 </div>
@@ -685,39 +563,148 @@ function toggleMorningCheck(el){
   updateProgress();
 }
 
-/* ===== 运动打卡 ===== */
-function toggleWorkout(el,type){
-  el.classList.toggle('done');
-  var btn=el.querySelector('.workout-item-btn');
-  if(el.classList.contains('done')){
-    if(btn)btn.textContent='已完成';
-    submitCheckin(type);
-  }else{
-    if(btn)btn.textContent='点击打卡';
-    undoCheckin(type);
-  }
+/* ===== 运动打卡 - 两级标签 ===== */
+var currentL1='strength';
+var currentL2='glutes';
+var courseCheckins={}; // {courseId:true/false}
+
+/* 课程数据（自定义，后续可改） */
+var coursesData={
+  strength:{glutes:[
+    {id:'sq1',title:'杠铃深蹲',sub:'4组×12次 / 臀腿王牌动作',url:'#'},
+    {id:'sq2',title:'臀推',sub:'3组×15次 / 臀部孤立训练',url:'#'},
+    {id:'sq3',title:'保加利亚分腿蹲',sub:'3组×10次/边 / 稳定性训练',url:'#'}
+  ],back:[
+    {id:'bk1',title:'引体向上',sub:'4组×8次 / 背部宽度',url:'#'},
+    {id:'bk2',title:'俯身杠铃划船',sub:'4组×12次 / 背部厚度',url:'#'},
+    {id:'bk3',title:'坐姿划船',sub:'3组×15次 / 中背部',url:'#'}
+  ],core:[
+    {id:'cr1',title:'平板支撑',sub:'3组×60秒 / 核心耐力',url:'#'},
+    {id:'cr2',title:'悬垂举腿',sub:'3组×12次 / 下腹部',url:'#'},
+    {id:'cr3',title:'俄罗斯转体',sub:'3组×20次/边 / 侧腹',url:'#'}
+  ],arms:[
+    {id:'am1',title:'杠铃弯举',sub:'4组×12次 / 肱二头肌',url:'#'},
+    {id:'am2',title:'窄距卧推',sub:'4组×10次 / 肱三头肌',url:'#'},
+    {id:'am3',title:'锤式弯举',sub:'3组×15次 / 肱肌',url:'#'}
+  ],other:[
+    {id:'ot1',title:'农夫行走',sub:'3组×30米 / 握力+全身',url:'#'},
+    {id:'ot2',title:'面拉',sub:'3组×15次 / 肩袖肌群',url:'#'},
+    {id:'ot3',title:'山羊挺身',sub:'3组×12次 / 下背部',url:'#'}
+  ]},
+  cardio:{glutes:[
+    {id:'cg1',title:'慢跑',sub:'5公里 / 配速6:00-7:00',url:'#'},
+    {id:'cg2',title:'椭圆机',sub:'30分钟 / 阻力8-10',url:'#'},
+    {id:'cg3',title:'跳绳',sub:'4组×200次 / 间歇30秒',url:'#'}
+  ],back:[
+    {id:'cb1',title:'游泳',sub:'30分钟 / 自由泳',url:'#'},
+    {id:'cb2',title:'划船机',sub:'20分钟 / 配速2:00',url:'#'},
+    {id:'cb3',title:'爬楼梯',sub:'15分钟 / 匀速',url:'#'}
+  ],core:[
+    {id:'cc1',title:'波比跳',sub:'4组×15次 / 全身燃脂',url:'#'},
+    {id:'cc2',title:'登山跑',sub:'3组×40秒 / 核心+有氧',url:'#'},
+    {id:'cc3',title:'开合跳',sub:'4组×50次 / 心肺',url:'#'}
+  ],arms:[
+    {id:'ca1',title:'战绳',sub:'4组×30秒 / 上肢爆发力',url:'#'},
+    {id:'ca2',title:'拳击空击',sub:'3组×3分钟 / 协调性',url:'#'},
+    {id:'ca3',title:'药球砸墙',sub:'3组×12次 / 上肢力量',url:'#'}
+  ],other:[
+    {id:'co1',title:'HIIT全身',sub:'20分钟 / 间歇训练',url:'#'},
+    {id:'co2',title:'跳舞',sub:'30分钟 / 自由舞动',url:'#'},
+    {id:'co3',title:'骑行',sub:'40分钟 / 户外',url:'#'}
+  ]},
+  posture:{glutes:[
+    {id:'pg1',title:'普拉提臀桥',sub:'3组×15次 / 臀部激活',url:'#'},
+    {id:'pg2',title:'蚌式开合',sub:'3组×20次/边 / 臀中肌',url:'#'},
+    {id:'pg3',title:'猫牛式',sub:'3组×10次 / 脊柱灵活性',url:'#'}
+  ],back:[
+    {id:'pb1',title:'蝗虫式',sub:'3组×30秒 / 背部力量',url:'#'},
+    {id:'pb2',title:'瑜伽下犬式',sub:'保持5次呼吸×3组',url:'#'},
+    {id:'pb3',title:'婴儿式放松',sub:'保持60秒 / 背部拉伸',url:'#'}
+  ],core:[
+    {id:'pc1',title:'死虫式',sub:'3组×12次/边 / 深层核心',url:'#'},
+    {id:'pc2',title:'百次拍击',sub:'3组×100次 / 普拉提经典',url:'#'},
+    {id:'pc3',title:'侧板支撑',sub:'3组×30秒/边 / 侧腹',url:'#'}
+  ],arms:[
+    {id:'pa1',title:'瑜伽流',sub:'20分钟 / 全身流动',url:'#'},
+    {id:'pa2',title:'肩部拉伸',sub:'5分钟 / 肩颈放松',url:'#'},
+    {id:'pa3',title:'手臂平衡',sub:'3组×尝试 / 核心+手臂',url:'#'}
+  ],other:[
+    {id:'po1',title:'阴瑜伽',sub:'30分钟 / 深度拉伸',url:'#'},
+    {id:'po2',title:'冥想呼吸',sub:'10分钟 / 放松恢复',url:'#'},
+    {id:'po3',title:'泡沫轴放松',sub:'15分钟 / 全身按摩',url:'#'}
+  ]}
+};
+
+function loadCheckins(){try{var d=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');courseCheckins=d}catch(e){courseCheckins={}}}
+function saveCheckins(){localStorage.setItem('exercise_course_checkins',JSON.stringify(courseCheckins))}
+function toggleCourseCheckin(cid){
+  courseCheckins[cid]=!courseCheckins[cid];
+  saveCheckins();
+  renderCourses();
   updateProgress();
   updateFooterBtn();
 }
-function initWorkoutState(){
-  var types=['cardio','strength','hiit'];
-  types.forEach(function(t){
-    var el=document.getElementById(t+'Item');
-    if(!el)return;
-    if(isChecked(t)){
-      el.classList.add('done');
-      var btn=el.querySelector('.workout-item-btn');
-      if(btn)btn.textContent='已完成';
-    }
+
+function renderCourses(){
+  var courses=coursesData[currentL1]&&coursesData[currentL1][currentL2]||[];
+  var container=document.getElementById('courseList');
+  if(!container)return;
+  if(courses.length===0){container.innerHTML='<div class="course-empty">暂未添加课程，后续可自定义</div>';return}
+  container.innerHTML=courses.map(function(c){
+    var done=courseCheckins[c.id];
+    return '<div class="course-item">'+
+      '<button class="course-check'+(done?' done':'')+'" data-cid="'+c.id+'" type="button">✓</button>'+
+      '<div class="course-body'+(done?' done':'')+'">'+
+        '<div class="course-title">'+c.title+'</div>'+
+        '<div class="course-sub">'+c.sub+'</div>'+
+      '</div>'+
+      '<button class="course-go-btn" data-url="'+c.url+'" type="button">跟练</button>'+
+    '</div>';
+  }).join('');
+  /* 绑定勾选事件 */
+  container.querySelectorAll('.course-check').forEach(function(btn){
+    btn.addEventListener('click',function(e){e.stopPropagation();toggleCourseCheckin(this.getAttribute('data-cid'))});
   });
-  updateProgress();
+  /* 绑定跟练跳转 */
+  container.querySelectorAll('.course-go-btn').forEach(function(btn){
+    btn.addEventListener('click',function(e){e.stopPropagation();
+      var url=this.getAttribute('data-url');
+      if(url&&url!=='#')window.location.href=url;else showToast('请先设置课程链接');
+    });
+  });
+}
+
+function switchL1(l1){
+  currentL1=l1;currentL2='glutes';
+  document.querySelectorAll('.tag-l1').forEach(function(t){t.classList.remove('active')});
+  document.querySelector('.tag-l1[data-l1="'+l1+'"]').classList.add('active');
+  document.querySelectorAll('.tag-l2').forEach(function(t){t.classList.remove('active')});
+  document.querySelector('.tag-l2[data-l2="glutes"]').classList.add('active');
+  renderCourses();
+}
+
+function switchL2(l2){
+  currentL2=l2;
+  document.querySelectorAll('.tag-l2').forEach(function(t){t.classList.remove('active')});
+  document.querySelector('.tag-l2[data-l2="'+l2+'"]').classList.add('active');
+  renderCourses();
+}
+
+/* 更新进度（基于课程打卡） */
+function updateProgress(){
+  var done=Object.values(courseCheckins).filter(function(v){return v}).length;
+  var total=Object.keys(courseCheckins).length||1;
+  var pct=Math.round(done/total*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressRatio').textContent=done+'/'+total;
+  document.getElementById('morningCount').textContent=done+'/'+total;
 }
 
 /* 底部按钮状态 */
 function updateFooterBtn(){
   var btn=document.getElementById('checkinBtn');
   if(!btn)return;
-  var hasAny=isChecked('cardio')||isChecked('strength')||isChecked('hiit');
+  var hasAny=Object.values(courseCheckins).some(function(v){return v});
   if(hasAny){
     btn.classList.add('checked');
     btn.textContent='✓ 已完成打卡';
@@ -749,41 +736,20 @@ document.addEventListener('DOMContentLoaded',function(){
   if(weightCheck)weightCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this)});
   if(waterCheck)waterCheck.addEventListener('click',function(e){e.stopPropagation();toggleMorningCheck(this)});
 
-  /* 运动打卡 */
-  var cardio=document.getElementById('cardioItem');
-  var strength=document.getElementById('strengthItem');
-  var hiit=document.getElementById('hiitItem');
-  if(cardio)cardio.addEventListener('click',function(e){e.stopPropagation();toggleWorkout(this,'cardio')});
-  if(strength)strength.addEventListener('click',function(e){e.stopPropagation();toggleWorkout(this,'strength')});
-  if(hiit)hiit.addEventListener('click',function(e){e.stopPropagation();toggleWorkout(this,'hiit')});
-
-  /* 第三方APP跳转 */
-  var apps=[
-    {id:'appKeep',url:'https://www.gotokeep.com'},
-    {id:'appSport',url:'https://www.apple.com/ios/health/'},
-    {id:'appAnt',url:'https://www.alipay.com'},
-    {id:'appPosture',url:'https://www.xiaohongshu.com'}
-  ];
-  apps.forEach(function(a){
-    var el=document.getElementById(a.id);
-    if(el)el.addEventListener('click',function(e){e.stopPropagation();window.location.href=a.url});
+  /* 两级标签切换 */
+  document.querySelectorAll('.tag-l1').forEach(function(t){
+    t.addEventListener('click',function(e){e.stopPropagation();switchL1(this.getAttribute('data-l1'))});
   });
-
-  /* 视频跳转 */
-  var videos=[
-    {id:'video1',url:'https://www.bilibili.com/video/BV1S54y1G7C2'},
-    {id:'video2',url:'https://www.bilibili.com/video/BV1S54y1G7C2'},
-    {id:'video3',url:'https://www.bilibili.com/video/BV1S54y1G7C2'}
-  ];
-  videos.forEach(function(v){
-    var el=document.getElementById(v.id);
-    if(el)el.addEventListener('click',function(e){e.stopPropagation();window.location.href=v.url});
+  document.querySelectorAll('.tag-l2').forEach(function(t){
+    t.addEventListener('click',function(e){e.stopPropagation();switchL2(this.getAttribute('data-l2'))});
   });
 
   /* 初始化 */
+  loadCheckins();
   var streak=getStreakDays();
   animateNum(document.getElementById('streakNum'),streak);
-  initWorkoutState();
+  renderCourses();
+  updateProgress();
   updateFooterBtn();
 });
 </script>
