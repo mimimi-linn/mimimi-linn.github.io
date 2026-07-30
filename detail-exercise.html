@@ -319,6 +319,57 @@ body {
   color: var(--choco-hint); font-size: 13px;
 }
 
+/* ============================================
+   第4块：第三方APP快捷跳转
+   ============================================ */
+.app-jump-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.app-jump-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.app-jump-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  background: var(--mint-lighter);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.app-jump-item:active { transform: scale(0.96); }
+.app-jump-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.app-jump-icon.keep { background: linear-gradient(135deg, #7DD3C0 0%, #5B9BD5 100%); }
+.app-jump-icon.ant { background: linear-gradient(135deg, #1677FF 0%, #69B1FF 100%); }
+.app-jump-body { flex: 1; min-width: 0; }
+.app-jump-name {
+  font-size: 14px; font-weight: 600; color: var(--choco);
+  margin-bottom: 2px;
+}
+.app-jump-desc {
+  font-size: 11px; color: var(--choco-hint);
+}
+.app-jump-arrow {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.app-jump-arrow svg { width: 12px; height: 12px; color: var(--choco-light); }
+
 /* --- 底部操作栏 --- */
 .footer {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
@@ -497,6 +548,33 @@ body {
     </div>
     <!-- 课程打卡列表 -->
     <div class="course-list" id="courseList"></div>
+  </div>
+
+  <!-- 第4块：第三方APP快捷跳转 -->
+  <div class="section-title"><span class="emoji">🔗</span>快捷跳转</div>
+  <div class="app-jump-card">
+    <div class="app-jump-grid">
+      <div class="app-jump-item" id="appKeep">
+        <div class="app-jump-icon keep">🏃</div>
+        <div class="app-jump-body">
+          <div class="app-jump-name">Keep</div>
+          <div class="app-jump-desc">运动记录与课程</div>
+        </div>
+        <div class="app-jump-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+      <div class="app-jump-item" id="appAnt">
+        <div class="app-jump-icon ant">🐜</div>
+        <div class="app-jump-body">
+          <div class="app-jump-name">蚂蚁健康</div>
+          <div class="app-jump-desc">健康数据管理</div>
+        </div>
+        <div class="app-jump-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -743,6 +821,12 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.tag-l2').forEach(function(t){
     t.addEventListener('click',function(e){e.stopPropagation();switchL2(this.getAttribute('data-l2'))});
   });
+
+  /* 第三方APP跳转 */
+  var appKeep=document.getElementById('appKeep');
+  var appAnt=document.getElementById('appAnt');
+  if(appKeep)appKeep.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://m.gotokeep.com/fd-page/shareSportRecord?shareid=6a6b095a1d85d700014c0f47&title_type=group_a&utm_source=wechat'});
+  if(appAnt)appAnt.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://u.antaq.com/?scheme=aijk%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D20002184%26ijk_source%3Dmain_chat_share'});
 
   /* 初始化 */
   loadCheckins();
