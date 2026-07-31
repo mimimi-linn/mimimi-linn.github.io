@@ -6,500 +6,254 @@
   <title>🎧 播客</title>
   <style>
 /* ============================================
-   detail-common.css - H5二级详情页共享样式
-   薄荷绿色调 | 375px移动端 | 极简治愈风格
+   播客页 - 薄荷绿 × 巧克力棕
    ============================================ */
-
-/* --- Reset & Base --- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --mint: #6B9AC4;
+  --mint-light: #EBF2F8;
+  --mint-lighter: #FAFAFA;
+  --choco: #3D3D3D;
+  --choco-light: #8A8A8A;
+  --choco-hint: #B0B0B0;
+  --border: #E8E8E8;
+  --white: #FFFFFF;
+  --shadow: 0 2px 12px rgba(107, 154, 196, 0.10);
+  --shadow-float: 0 4px 20px rgba(107, 154, 196, 0.15);
 }
-
-html, body {
-  width: 100%;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  background: var(--mint-lighter);
+  color: var(--choco);
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
-  color: #2d3436;
-  background: #FAFAFA;
-  -webkit-font-smoothing: antialiased;
- padding-left: 104px; }
-
-/* --- Top Fixed Header --- */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-  padding: 0 16px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.header-back {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #EBF2F8;
-  border-radius: 12px;
-  font-size: 18px;
-  color: #6B9AC4;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.header-back:hover {
-  background: #EBF2F8;
-}
-
-.header-title {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #2d3436;
-  letter-spacing: 0.5px;
-}
-
-.header-drawer {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #EBF2F8;
-  border-radius: 12px;
-  font-size: 16px;
-  color: #6B9AC4;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.header-drawer:hover {
-  background: #EBF2F8;
-}
-
-/* --- Main Content Area --- */
-.main {
-  padding: 72px 16px 120px;
-  max-width: 375px;
+  max-width: 430px;
   margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 140px;
+  padding-left: 104px;
 }
 
-/* --- Card --- */
-.card {
-  background: #ffffff;
+/* --- 顶部导航栏 --- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.header-back {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint-light); display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--choco); font-size: 18px; flex-shrink: 0;
+}
+.header-back:active { transform: scale(0.92); }
+.header-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--choco); }
+.header-drawer {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.header-drawer:active { transform: scale(0.92); }
+.header-drawer span { display: block; width: 14px; height: 2px; background: var(--white); border-radius: 1px; margin: 1.5px 0; }
+
+/* --- 主体内容 --- */
+.main { padding: 16px 16px 0; }
+
+/* --- 通用标题 --- */
+.section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.section-title .emoji { font-size: 18px; }
+
+/* ============================================
+   第1块：小宇宙横幅
+   ============================================ */
+.podcast-banner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #5B6EE1 0%, #8B5CF6 100%);
   border-radius: 20px;
-  padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 12px rgba(107, 154, 196, 0.08);
+  box-shadow: 0 4px 16px rgba(91, 110, 225, 0.25);
 }
+.banner-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0; overflow: hidden;
+}
+.banner-icon img { width: 100%; height: 100%; object-fit: contain; }
+.banner-body { flex: 1; min-width: 0; }
+.banner-title {
+  font-size: 15px; font-weight: 700; color: #fff;
+  margin-bottom: 2px;
+}
+.banner-desc {
+  font-size: 11px; color: rgba(255,255,255,0.85);
+}
+.banner-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.95);
+  color: #5B6EE1;
+  font-size: 13px; font-weight: 600;
+  border: none; cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.banner-btn:active { transform: scale(0.95); }
 
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #2d3436;
+/* ============================================
+   播客列表卡片
+   ============================================ */
+.podcast-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
   margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: var(--shadow);
 }
-
-.card-title .emoji {
-  font-size: 18px;
+.podcast-list {
+  display: flex; flex-direction: column; gap: 10px;
 }
-
-/* --- List Item --- */
-.list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  background: #FCFCFC;
+.podcast-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px;
+  background: var(--mint-lighter);
   border-radius: 14px;
-  margin-bottom: 8px;
-  transition: background 0.2s;
-}
-
-.list-item:last-child {
-  margin-bottom: 0;
-}
-
-.list-item-label {
-  font-size: 13px;
-  color: #2d3436;
-  font-weight: 500;
-}
-
-.list-item-value {
-  font-size: 12px;
-  color: #999;
-}
-
-/* --- Stat Row --- */
-.stat-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 12px;
-  padding: 8px 0;
-}
-
-.stat-item {
-  text-align: center;
-  flex: 1;
-}
-
-.stat-num {
-  font-size: 28px;
-  font-weight: 700;
-  color: #6B9AC4;
-  line-height: 1.2;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: #999;
-  margin-top: 4px;
-}
-
-/* --- Note Textarea --- */
-.note-textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 14px;
-  border: 2px solid #EBF2F8;
-  border-radius: 14px;
-  font-size: 14px;
-  color: #2d3436;
-  background: #FAFAFA;
-  resize: vertical;
-  outline: none;
-  transition: border-color 0.2s;
-  font-family: inherit;
-  line-height: 1.6;
-}
-
-.note-textarea::placeholder {
-  color: #b2bec3;
-}
-
-.note-textarea:focus {
-  border-color: #6B9AC4;
-}
-
-/* --- Info Card (News) --- */
-.info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px;
-  background: #FCFCFC;
-  border-radius: 14px;
-  margin-bottom: 10px;
-  transition: transform 0.2s;
-}
-
-.info-card:last-child {
-  margin-bottom: 0;
-}
-
-.info-card:active {
-  transform: scale(0.98);
-}
-
-.info-card-img {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #EBF2F8;
-  border-radius: 14px;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.info-card-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.info-card-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #2d3436;
-  line-height: 1.4;
-  margin-bottom: 4px;
-}
-
-.info-card-source {
-  font-size: 11px;
-  color: #b2bec3;
-}
-
-/* --- Progress Ring --- */
-.progress-ring-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
-}
-
-.progress-ring {
-  transform: rotate(-90deg);
-}
-
-.progress-ring-bg {
-  fill: none;
-  stroke: #EBF2F8;
-  stroke-width: 8;
-}
-
-.progress-ring-fg {
-  fill: none;
-  stroke: #6B9AC4;
-  stroke-width: 8;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1s ease-in-out;
-}
-
-.ring-label {
-  font-size: 13px;
-  color: #999;
-  margin-top: 12px;
-  text-align: center;
-}
-
-/* --- Todo Item --- */
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: #FCFCFC;
-  border-radius: 14px;
-  margin-bottom: 8px;
   cursor: pointer;
-  transition: background 0.2s;
-}
-
-.todo-item:last-child {
-  margin-bottom: 0;
-}
-
-.todo-item:active {
-  background: #EBF2F8;
-}
-
-.todo-checkbox {
-  width: 22px;
-  height: 22px;
-  border: 2px solid #d0e8dc;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 12px;
-  color: transparent;
   transition: all 0.2s;
-  cursor: pointer;
+}
+.podcast-item:active { transform: scale(0.98); }
+.podcast-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.podcast-avatar.p1 { background: #E8E0FF; }
+.podcast-avatar.p2 { background: #FFE0EC; }
+.podcast-avatar.p3 { background: #FFF0E0; }
+.podcast-avatar.p4 { background: #E0F0FF; }
+.podcast-avatar.p5 { background: #E8F5E9; }
+.podcast-avatar.p6 { background: #FFF8E1; }
+.podcast-body { flex: 1; min-width: 0; }
+.podcast-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 3px;
+}
+.podcast-name {
+  font-size: 14px; font-weight: 600; color: var(--choco);
+  display: flex; align-items: center; gap: 5px;
+}
+.podcast-tag {
+  font-size: 9px; font-weight: 500;
+  background: var(--mint-light); color: var(--mint);
+  padding: 2px 6px; border-radius: 4px;
+}
+.podcast-jump {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; cursor: pointer; transition: all 0.2s;
+}
+.podcast-jump:active { background: var(--mint-light); transform: scale(0.9); }
+.podcast-jump svg { width: 12px; height: 12px; color: var(--choco-light); }
+.podcast-desc {
+  font-size: 11px; color: var(--choco-hint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
-.todo-item.done .todo-checkbox {
-  background: #6B9AC4;
-  border-color: #6B9AC4;
-  color: #fff;
+/* --- 平台分区标题 --- */
+.platform-title {
+  font-size: 13px; font-weight: 700; color: var(--choco);
+  margin: 0 4px 10px;
+  display: flex; align-items: center; gap: 6px;
 }
-
-.todo-text {
-  font-size: 13px;
-  color: #2d3436;
-  line-height: 1.4;
-  transition: color 0.2s;
+.platform-title .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0;
 }
+.platform-title .dot.xiaoyuzhou { background: #5B6EE1; }
+.platform-title .dot.bilibili { background: #FB7299; }
+.platform-title .dot.douyin { background: #1C1C1C; }
 
-.todo-item.done .todo-text {
-  color: #b2bec3;
-  text-decoration: line-through;
+/* ============================================
+   心得打卡
+   ============================================ */
+.checkin-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
 }
-
-/* --- Emoji Mood Selector --- */
-.mood-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 10px;
-  padding: 10px 0;
+.checkin-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
 }
-
-.mood-item {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  background: #FCFCFC;
-  cursor: pointer;
-  transition: all 0.25s;
-  user-select: none;
+.checkin-title .emoji { font-size: 18px; }
+.note-textarea {
+  width: 100%; min-height: 100px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--choco);
+  background: var(--mint-lighter);
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  transition: border 0.2s;
 }
+.note-textarea:focus { border-color: var(--mint); background: var(--white); }
+.note-textarea::placeholder { color: var(--choco-hint); }
 
-.mood-item.active {
-  border-color: #6B9AC4;
-  background: #EBF2F8;
-  transform: scale(1.1);
-}
-
-/* --- Bottom Fixed Action Bar --- */
+/* --- 底部操作栏 --- */
 .footer {
-  position: fixed;
-  bottom: 56px;
-  left: 104px;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px);
+  display: flex; gap: 12px;
   padding: 12px 16px;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-width: 375px;
-  margin: 0 auto;
+  border-top: 1px solid var(--border);
+  z-index: 50;
 }
-
 .btn-primary {
-  flex: 1.2;
-  height: 48px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #6B9AC4, #8AB5D6);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: opacity 0.2s, transform 0.15s;
-  letter-spacing: 1px;
+  flex: 2; height: 48px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, #6B9AC4, #8AB5D6); color: var(--white);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: transform 0.15s;
 }
-
-.btn-primary:active {
-  opacity: 0.85;
-  transform: scale(0.97);
-}
-
-.btn-primary.checked {
-  background: linear-gradient(135deg, #b2bec3, #dfe6e9);
-  color: #fff;
-}
-
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary.checked { background: var(--mint-light); color: var(--choco); border: 1.5px solid var(--mint); }
 .btn-secondary {
-  flex: 0.8;
-  height: 48px;
-  border: 2px solid #6B9AC4;
-  border-radius: 16px;
-  background: #fff;
-  color: #6B9AC4;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  flex: 1; height: 48px; border: 1.5px solid var(--mint); border-radius: 14px;
+  background: var(--white); color: var(--choco);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
   transition: all 0.2s;
-  letter-spacing: 1px;
 }
-
-.btn-secondary:active {
-  background: #FAFAFA;
-  transform: scale(0.97);
-}
+.btn-secondary:active { background: var(--mint-light); transform: scale(0.97); }
 
 /* --- Toast --- */
 .toast {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  padding: 10px 24px;
-  background: rgba(107, 154, 196, 0.92);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.35s ease;
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(93, 64, 55, 0.9); color: #fff;
+  padding: 14px 22px; border-radius: 14px;
+  font-size: 13px; font-weight: 500;
+  z-index: 999; opacity: 0; visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   white-space: nowrap;
-  backdrop-filter: blur(8px);
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* --- Income / Expense Stat --- */
-.stat-income {
-  font-size: 28px;
-  font-weight: 700;
-  color: #6B9AC4;
-}
-
-.stat-expense {
-  font-size: 28px;
-  font-weight: 700;
-  color: #D45555;
-}
-
-
-/* 右侧滑出抽屉 */
-.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-.drawer-overlay.open { opacity: 1; visibility: visible; }
-.drawer { position: fixed; top: 0; left: -160px; width: 160px; height: 100%; background: #FFFFFF; z-index: 301; transition: left 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: 4px 0 24px rgba(0,0,0,0.08); }
-.drawer.open { left: 0; }
-.drawer-header { padding: 16px 12px 12px; border-bottom: 1px solid #E8E8E8; }
-.drawer-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; font-size: 28px; }
-.drawer-title { font-size: 15px; font-weight: 700; color: #3D3D3D; margin-bottom: 4px; }
-.drawer-subtitle { font-size: 11px; color: #B0B0B0; }
-.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
-.drawer-menu-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #3D3D3D; font-size: 13px; }
-.drawer-menu-item:active { background: #EBF2F8; }
-.drawer-menu-item.active { background: #EBF2F8; color: #3D3D3D; font-weight: 600; }
-.drawer-menu-item .menu-emoji { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
-.drawer-menu-item.home-link { border-bottom: 1px solid #E8E8E8; margin-bottom: 8px; color: #3D3D3D; font-weight: 600; }
-.drawer-footer { padding: 12px 12px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px) + 56px)); border-top: 1px solid #E8E8E8; }
-.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #EBF2F8; border: 1.5px solid #6B9AC4; color: #3D3D3D; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
-.drawer-reset-btn:active { background: #6B9AC4; color: #fff; }
-
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
 
 /* ===== 底部导航栏 ===== */
 .bottom-nav { position: fixed; bottom: 0; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
@@ -524,7 +278,7 @@ html, body {
 .sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
-<meta name="theme-color" content="#C9985A">
+<meta name="theme-color" content="#6B9AC4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -555,49 +309,214 @@ html, body {
   </div>
 </div>
 
+<!-- ===== 主体内容 ===== -->
+<div class="main">
 
+  <!-- 第1块：小宇宙横幅 -->
+  <div class="podcast-banner" id="xiaoyuzhouBanner" data-url="https://www.xiaoyuzhoufm.com/">
+    <div class="banner-icon">🪐</div>
+    <div class="banner-body">
+      <div class="banner-title">小宇宙</div>
+      <div class="banner-desc">发现好播客，听见新世界</div>
     </div>
-
-    <!-- 心得打卡卡 -->
-    <div class="card">
-      <div class="card-title"><span class="emoji">✍️</span> 心得打卡</div>
-      <textarea class="note-textarea" placeholder="记录今天的播客心得..."></textarea>
-    </div>
-
+    <button class="banner-btn" id="openXiaoyuzhou">打开App</button>
   </div>
 
-  <!-- 底部固定操作区 -->
-  <div class="footer">
-    <button class="btn-primary" id="checkinBtn">打卡提交</button>
-    <button class="btn-secondary" id="saveBtn">记录保存</button>
+  <!-- 第2块：小宇宙播客列表 -->
+  <div class="podcast-card">
+    <div class="platform-title"><span class="dot xiaoyuzhou"></span>小宇宙常听</div>
+    <div class="podcast-list">
+      <div class="podcast-item" data-url="https://www.xiaoyuzhoufm.com/podcast/60de7c003dd577b40d5a40f3">
+        <div class="podcast-avatar p1">☕</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">声动早咖啡<span class="podcast-tag">商业</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">15分钟商业科技早报</div>
+        </div>
+      </div>
+      <div class="podcast-item" data-url="https://www.xiaoyuzhoufm.com/podcast/65cef9e3cace72dff8d98de3">
+        <div class="podcast-avatar p2">🦋</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">天真不天真<span class="podcast-tag">成长</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">杨天真的个人成长播客</div>
+        </div>
+      </div>
+      <div class="podcast-item" data-url="https://www.xiaoyuzhoufm.com/podcast/625635587bfca4e73e990703">
+        <div class="podcast-avatar p3">🌸</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">岩中花述<span class="podcast-tag">访谈</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">鲁豫对话各行业女性</div>
+        </div>
+      </div>
+      <div class="podcast-item" data-url="https://www.xiaoyuzhoufm.com/podcast/611719d3cb0b82e1df0ad29e">
+        <div class="podcast-avatar p4">🌌</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">无人知晓<span class="podcast-tag">投资</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">孟岩的投资与人生思考</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script>
+  <!-- 第3块：B站博主 -->
+  <div class="podcast-card">
+    <div class="platform-title"><span class="dot bilibili"></span>B站常看</div>
+    <div class="podcast-list">
+      <div class="podcast-item" data-url="https://b23.tv/kzIvyzG">
+        <div class="podcast-avatar p5">📓</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">本子在隔壁<span class="podcast-tag">生活</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">在B站分享生活和思考</div>
+        </div>
+      </div>
+      <div class="podcast-item" data-url="https://b23.tv/NIftUGw">
+        <div class="podcast-avatar p6">🎯</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">姜Dora<span class="podcast-tag">职场</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">职场成长与人生探索</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第4块：抖音博主 -->
+  <div class="podcast-card">
+    <div class="platform-title"><span class="dot douyin"></span>抖音常看</div>
+    <div class="podcast-list">
+      <div class="podcast-item" data-url="https://www.douyin.com/user/MS4wLjABAAAA2O85rynMZP11qdfr_2C_7k7VwArCpvrJh-VJYHwN51Q17TzqgZ2IhedmGQfnPplc">
+        <div class="podcast-avatar p1">🌶️</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">周小辣<span class="podcast-tag">情感</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">温暖治愈的情感分享</div>
+        </div>
+      </div>
+      <div class="podcast-item" data-url="https://www.douyin.com/user/MS4wLjABAAAAoEfsaMGI3JP-n2OZb2hFA_UJijcyAGydtgrNfVdKyvA">
+        <div class="podcast-avatar p2">🥛</div>
+        <div class="podcast-body">
+          <div class="podcast-top">
+            <div class="podcast-name">牛奶的英文叫milk<span class="podcast-tag">英语</span></div>
+            <div class="podcast-jump">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+          </div>
+          <div class="podcast-desc">趣味英语学习内容</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第5块：心得打卡 -->
+  <div class="checkin-card">
+    <div class="checkin-title"><span class="emoji">✍️</span>心得打卡</div>
+    <textarea class="note-textarea" id="noteInput" placeholder="记录今天的播客心得..."></textarea>
+  </div>
+
+</div>
+
+<!-- 底部操作栏 -->
+<div class="footer">
+  <button class="btn-primary" id="checkinBtn">打卡提交</button>
+  <button class="btn-secondary" id="saveBtn">记录保存</button>
+</div>
+
+<script>
+/* ============================================
+   打卡逻辑 - 与首页共用 localStorage
+   ============================================ */
 function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
 function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
 function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
-function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
-function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
-function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(true);showToast('打卡成功 🎧')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(false);showToast('已撤销打卡')}
 function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
-function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
-function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
-/* 抽屉已移除，使用侧边栏导航 */
-function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}showToast('今日打卡已重置 🌿')}
-function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
-function initDrawerEvents(){
-  var resetBtn=document.getElementById('resetBtn');
+function updateCheckinButton(checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.textContent='✓ 已完成打卡'}else{b.classList.remove('checked');b.textContent='打卡提交'}}
+
+/* Toast */
+function showToast(msg){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1500)}
+
+/* 事件绑定 */
+document.addEventListener('DOMContentLoaded',function(){
   var checkinBtn=document.getElementById('checkinBtn');
   var saveBtn=document.getElementById('saveBtn');
-  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
-  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(9)});}
-  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
-}
-document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
-initCheckinState(9);
+
+  /* 打卡提交 */
+  if(checkinBtn)checkinBtn.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var note=document.getElementById('noteInput').value.trim();
+    if(!note){showToast('请填写心得内容');return}
+    if(!isChecked(9)){submitCheckin(9)}
+    else{showToast('今日已打卡 🎧')}
+  });
+
+  /* 记录保存 */
+  if(saveBtn)saveBtn.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var note=document.getElementById('noteInput').value.trim();
+    if(!note){showToast('暂无内容可保存');return}
+    showToast('记录已保存');
+  });
+
+  /* 小宇宙横幅跳转 */
+  var openXiaoyuzhou=document.getElementById('openXiaoyuzhou');
+  var xiaoyuzhouBanner=document.getElementById('xiaoyuzhouBanner');
+  if(openXiaoyuzhou)openXiaoyuzhou.addEventListener('click',function(e){
+    e.stopPropagation();
+    window.location.href='https://www.xiaoyuzhoufm.com/';
+  });
+  if(xiaoyuzhouBanner)xiaoyuzhouBanner.addEventListener('click',function(e){
+    if(e.target.closest('.banner-btn'))return;
+    window.location.href='https://www.xiaoyuzhoufm.com/';
+  });
+
+  /* 播客列表点击跳转 */
+  document.querySelectorAll('.podcast-item').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      var url=el.getAttribute('data-url');
+      if(url){window.location.href=url}
+    });
+  });
+
+  /* 初始化打卡状态 */
+  updateCheckinButton(isChecked(9));
+});
 </script>
 
-<!-- Service Worker 注册（PWA 离线支持） -->
+<!-- Service Worker 注册 -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
