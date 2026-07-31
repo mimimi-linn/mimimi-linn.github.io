@@ -206,7 +206,8 @@ body {
   transition: transform 0.2s;
 }
 .sector-item:active { transform: scale(0.97); }
-.sector-name { font-size: 12px; font-weight: 600; color: var(--choco); margin-bottom: 4px; }
+.sector-name { font-size: 12px; font-weight: 600; color: var(--choco); margin-bottom: 2px; }
+.sector-code { font-size: 9px; color: var(--choco-hint); margin-bottom: 4px; line-height: 1; }
 .sector-rate { font-size: 13px; font-weight: 700; }
 .sector-rate.up { color: var(--up); }
 .sector-rate.down { color: var(--down); }
@@ -558,34 +559,34 @@ body {
     <!-- 自选基金 -->
     <div class="tab-panel" id="panel-fund" style="display:none;">
       <div class="fund-list" id="fundList">
-        <div class="fund-item">
+        <div class="fund-item" data-code="510300">
           <div class="fund-left">
             <div class="fund-name">沪深300ETF</div>
             <div class="fund-code">510300</div>
           </div>
           <div class="fund-right">
-            <div class="fund-nav">3.856</div>
-            <div class="fund-rate up">+0.52%</div>
+            <div class="fund-nav">--</div>
+            <div class="fund-rate flat">--</div>
           </div>
         </div>
-        <div class="fund-item">
+        <div class="fund-item" data-code="510500">
           <div class="fund-left">
             <div class="fund-name">中证500ETF</div>
             <div class="fund-code">510500</div>
           </div>
           <div class="fund-right">
-            <div class="fund-nav">5.234</div>
-            <div class="fund-rate down">-0.18%</div>
+            <div class="fund-nav">--</div>
+            <div class="fund-rate flat">--</div>
           </div>
         </div>
-        <div class="fund-item">
+        <div class="fund-item" data-code="159915">
           <div class="fund-left">
             <div class="fund-name">创业板ETF</div>
             <div class="fund-code">159915</div>
           </div>
           <div class="fund-right">
-            <div class="fund-nav">1.923</div>
-            <div class="fund-rate up">+1.25%</div>
+            <div class="fund-nav">--</div>
+            <div class="fund-rate flat">--</div>
           </div>
         </div>
       </div>
@@ -595,15 +596,15 @@ body {
     <!-- 行业板块 -->
     <div class="tab-panel" id="panel-sector" style="display:none;">
       <div class="sector-grid">
-        <div class="sector-item"><div class="sector-name">半导体</div><div class="sector-rate up">+2.35%</div></div>
-        <div class="sector-item"><div class="sector-name">新能源</div><div class="sector-rate up">+1.82%</div></div>
-        <div class="sector-item"><div class="sector-name">白酒</div><div class="sector-rate down">-0.56%</div></div>
-        <div class="sector-item"><div class="sector-name">医药</div><div class="sector-rate up">+0.93%</div></div>
-        <div class="sector-item"><div class="sector-name">银行</div><div class="sector-rate down">-0.21%</div></div>
-        <div class="sector-item"><div class="sector-name">券商</div><div class="sector-rate up">+1.45%</div></div>
-        <div class="sector-item"><div class="sector-name">人工智能</div><div class="sector-rate up">+3.12%</div></div>
-        <div class="sector-item"><div class="sector-name">房地产</div><div class="sector-rate down">-1.08%</div></div>
-        <div class="sector-item"><div class="sector-name">军工</div><div class="sector-rate up">+0.67%</div></div>
+        <div class="sector-item" data-code="sh512480"><div class="sector-name">半导体</div><div class="sector-code">512480</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh516160"><div class="sector-name">新能源</div><div class="sector-code">516160</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh512690"><div class="sector-name">白酒</div><div class="sector-code">512690</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh512010"><div class="sector-name">医药</div><div class="sector-code">512010</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh512800"><div class="sector-name">银行</div><div class="sector-code">512800</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh512000"><div class="sector-name">券商</div><div class="sector-code">512000</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh515000"><div class="sector-name">人工智能</div><div class="sector-code">515000</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh512200"><div class="sector-name">房地产</div><div class="sector-code">512200</div><div class="sector-rate flat">--</div></div>
+        <div class="sector-item" data-code="sh512660"><div class="sector-name">军工</div><div class="sector-code">512660</div><div class="sector-rate flat">--</div></div>
       </div>
     </div>
   </div>
@@ -612,45 +613,11 @@ body {
   <div class="news-card">
     <div class="section-title" style="margin-bottom:10px;"><span class="emoji">📰</span>财经资讯</div>
     <div class="news-tabs">
-      <button class="news-tab-btn active" data-news="macro">宏观</button>
-      <button class="news-tab-btn" data-news="market">市场</button>
-      <button class="news-tab-btn" data-news="global">国际</button>
+      <button class="news-tab-btn active" data-news="latest">最新资讯</button>
       <button class="news-tab-btn" data-news="fav">⭐收藏</button>
     </div>
     <div class="news-list" id="newsList">
-      <!-- 宏观资讯 -->
-      <div class="news-item" data-id="n1">
-        <div class="news-emoji">🏦</div>
-        <div class="news-body">
-          <div class="news-title">央行宣布降准0.5个百分点，释放长期资金约1万亿元</div>
-          <div class="news-meta"><span>央行官网</span><span>·</span><span>2小时前</span></div>
-        </div>
-        <button class="news-star">☆</button>
-      </div>
-      <div class="news-item" data-id="n2">
-        <div class="news-emoji">📉</div>
-        <div class="news-body">
-          <div class="news-title">7月制造业PMI为49.4%，景气水平有所改善</div>
-          <div class="news-meta"><span>国家统计局</span><span>·</span><span>5小时前</span></div>
-        </div>
-        <button class="news-star">☆</button>
-      </div>
-      <div class="news-item" data-id="n3">
-        <div class="news-emoji">💱</div>
-        <div class="news-body">
-          <div class="news-title">人民币汇率中间价报7.1345，较上一交易日上调15个基点</div>
-          <div class="news-meta"><span>外汇交易中心</span><span>·</span><span>8小时前</span></div>
-        </div>
-        <button class="news-star">☆</button>
-      </div>
-      <div class="news-item" data-id="n4">
-        <div class="news-emoji">🏠</div>
-        <div class="news-body">
-          <div class="news-title">住建部：加快推进保障性住房建设，支持刚性和改善性住房需求</div>
-          <div class="news-meta"><span>住建部</span><span>·</span><span>12小时前</span></div>
-        </div>
-        <button class="news-star">☆</button>
-      </div>
+      <div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">正在加载实时财经资讯...</div>
     </div>
   </div>
 
@@ -714,42 +681,44 @@ body {
 
 <script>
 /* ============================================
-   行情数据 - 新浪财经接口
+   行情数据 - 腾讯财经接口（免费无Key，JSONP）
+   接口: https://qt.gtimg.cn/q=sh000001,sz399001,...
+   返回: v_sh000001="1~上证指数~000001~3832.26~3804.69~..."
+   字段: [1]名称 [3]当前价 [4]昨收 [31]涨跌 [32]涨跌幅
    ============================================ */
 function fetchMarketData() {
-  var codes = ['sh000001', 'sz399001', 'sz399006', 'sh000688'];
+  var codes = 'sh000001,sz399001,sz399006,sh000688';
   var script = document.createElement('script');
-  script.src = 'https://hq.sinajs.cn/list=' + codes.join(',');
+  script.src = 'https://qt.gtimg.cn/q=' + codes;
+  script.charset = 'GBK';
   script.onerror = function() { useFallbackData(); };
   document.head.appendChild(script);
 
-  // 新浪接口返回格式: var hq_str_sh000001="上证指数名称,当前价,...";
   window.setTimeout(function() {
     try {
-      updateIndex('sh000001', 'sh-price', 'sh-change');
-      updateIndex('sz399001', 'sz-price', 'sz-change');
-      updateIndex('sz399006', 'cy-price', 'cy-change');
-      updateIndex('sh000688', 'kc-price', 'kc-change');
+      updateIndexQQ('v_sh000001', 'sh-price', 'sh-change');
+      updateIndexQQ('v_sz399001', 'sz-price', 'sz-change');
+      updateIndexQQ('v_sz399006', 'cy-price', 'cy-change');
+      updateIndexQQ('v_sh000688', 'kc-price', 'kc-change');
     } catch(e) { useFallbackData(); }
     if(script.parentNode) script.parentNode.removeChild(script);
-  }, 1500);
+  }, 1200);
 }
 
-function updateIndex(code, priceId, changeId) {
-  var data = window['hq_str_' + code];
-  if(!data) return;
-  var parts = data.split(',');
-  if(parts.length < 3) return;
-  var name = parts[0];
+function updateIndexQQ(varName, priceId, changeId) {
+  var raw = window[varName];
+  if(!raw) return;
+  var parts = raw.split('~');
+  if(parts.length < 33) return;
+  var name = parts[1];
   var current = parseFloat(parts[3]);
-  var prevClose = parseFloat(parts[2]);
-  if(!current || !prevClose) return;
-  var change = current - prevClose;
-  var changePct = (change / prevClose * 100);
-  var sign = change >= 0 ? '+' : '';
+  var change = parseFloat(parts[31]);
+  var changePct = parseFloat(parts[32]);
+  if(isNaN(current)) return;
 
   var priceEl = document.getElementById(priceId);
   var changeEl = document.getElementById(changeId);
+  var sign = change >= 0 ? '+' : '';
   if(priceEl) priceEl.textContent = current.toFixed(2);
   if(changeEl) {
     changeEl.textContent = sign + change.toFixed(2) + ' (' + sign + changePct.toFixed(2) + '%)';
@@ -759,66 +728,179 @@ function updateIndex(code, priceId, changeId) {
 
 function useFallbackData() {
   var fallback = {
-    'sh-price': ['3250.35', '+12.45 (+0.38%)', 'up'],
-    'sz-price': ['10450.20', '-28.60 (-0.27%)', 'down'],
-    'cy-price': ['2156.80', '+18.25 (+0.85%)', 'up'],
-    'kc-price': ['980.45', '-3.20 (-0.33%)', 'down']
+    'sh-price': ['--', '数据获取中...', 'flat'],
+    'sz-price': ['--', '数据获取中...', 'flat'],
+    'cy-price': ['--', '数据获取中...', 'flat'],
+    'kc-price': ['--', '数据获取中...', 'flat']
   };
   for(var id in fallback) {
     var el = document.getElementById(id);
     if(el) {
-      if(id.indexOf('price') > -1) {
-        el.textContent = fallback[id][0];
-      } else {
-        el.textContent = fallback[id][1];
-        el.className = 'index-change ' + fallback[id][2];
-      }
+      el.textContent = fallback[id][id.indexOf('price') > -1 ? 0 : 1];
+      el.className = 'index-change ' + fallback[id][2];
     }
   }
 }
 
 /* ============================================
-   标签切换 - 行情数据
+   自选基金 - 腾讯财经接口（ETF实时行情）
    ============================================ */
-document.querySelectorAll('.market-tab').forEach(function(tab) {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.market-tab').forEach(function(t) { t.classList.remove('active'); });
-    tab.classList.add('active');
-    var target = tab.getAttribute('data-tab');
-    document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
-    var panel = document.getElementById('panel-' + target);
-    if(panel) panel.style.display = 'block';
-  });
-});
+function fetchFundData() {
+  var codes = 'sh510300,sh510500,sz159915';
+  var script = document.createElement('script');
+  script.src = 'https://qt.gtimg.cn/q=' + codes;
+  script.charset = 'GBK';
+  script.onerror = function() {};
+  document.head.appendChild(script);
+
+  window.setTimeout(function() {
+    updateFundItem('v_sh510300', '510300');
+    updateFundItem('v_sh510500', '510500');
+    updateFundItem('v_sz159915', '159915');
+    if(script.parentNode) script.parentNode.removeChild(script);
+  }, 1200);
+}
+
+function updateFundItem(varName, code) {
+  var raw = window[varName];
+  if(!raw) return;
+  var parts = raw.split('~');
+  if(parts.length < 33) return;
+  var current = parseFloat(parts[3]);
+  var changePct = parseFloat(parts[32]);
+  if(isNaN(current)) return;
+
+  var items = document.querySelectorAll('.fund-item');
+  for(var i = 0; i < items.length; i++) {
+    var codeEl = items[i].querySelector('.fund-code');
+    if(codeEl && codeEl.textContent.trim() === code) {
+      var navEl = items[i].querySelector('.fund-nav');
+      var rateEl = items[i].querySelector('.fund-rate');
+      if(navEl) navEl.textContent = current.toFixed(3);
+      if(rateEl) {
+        var sign = changePct >= 0 ? '+' : '';
+        rateEl.textContent = sign + changePct.toFixed(2) + '%';
+        rateEl.className = 'fund-rate ' + (changePct > 0 ? 'up' : changePct < 0 ? 'down' : 'flat');
+      }
+      break;
+    }
+  }
+}
 
 /* ============================================
-   资讯标签切换
+   行业板块 - 腾讯财经接口（ETF代表行情）
    ============================================ */
-var newsData = {
-  macro: [
-    {id:'n1', emoji:'🏦', title:'央行宣布降准0.5个百分点，释放长期资金约1万亿元', source:'央行官网', time:'2小时前'},
-    {id:'n2', emoji:'📉', title:'7月制造业PMI为49.4%，景气水平有所改善', source:'国家统计局', time:'5小时前'},
-    {id:'n3', emoji:'💱', title:'人民币汇率中间价报7.1345，较上一交易日上调15个基点', source:'外汇交易中心', time:'8小时前'},
-    {id:'n4', emoji:'🏠', title:'住建部：加快推进保障性住房建设，支持刚性和改善性住房需求', source:'住建部', time:'12小时前'}
-  ],
-  market: [
-    {id:'n5', emoji:'📈', title:'A股三大指数集体收涨，成交额突破万亿', source:'证券时报', time:'1小时前'},
-    {id:'n6', emoji:'🔋', title:'宁德时代发布半年报，净利润同比增长超20%', source:'公司公告', time:'3小时前'},
-    {id:'n7', emoji:'🍶', title:'白酒板块调整，机构称估值已进入合理区间', source:'券商研报', time:'6小时前'},
-    {id:'n8', emoji:'💻', title:'半导体板块持续活跃，存储芯片涨价预期升温', source:'行业新闻', time:'9小时前'}
-  ],
-  global: [
-    {id:'n9', emoji:'🇺🇸', title:'美联储维持利率不变，鲍威尔暗示9月可能降息', source:'财联社', time:'30分钟前'},
-    {id:'n10', emoji:'🛢️', title:'国际油价震荡走低，布伦特原油跌破80美元', source:'路透社', time:'4小时前'},
-    {id:'n11', emoji:'🪙', title:'比特币突破7万美元关口，加密货币市场情绪回暖', source:'CoinDesk', time:'7小时前'},
-    {id:'n12', emoji:'🇯🇵', title:'日本央行加息至0.25%，日元短线走强', source:'NHK', time:'10小时前'}
-  ],
-  fav: []
-};
+function fetchSectorData() {
+  var codes = 'sh512480,sh516160,sh512690,sh512010,sh512800,sh512000,sh515000,sh512200,sh512660';
+  var script = document.createElement('script');
+  script.src = 'https://qt.gtimg.cn/q=' + codes;
+  script.charset = 'GBK';
+  script.onerror = function() {};
+  document.head.appendChild(script);
+
+  window.setTimeout(function() {
+    var map = {
+      'v_sh512480': '半导体',
+      'v_sh516160': '新能源',
+      'v_sh512690': '白酒',
+      'v_sh512010': '医药',
+      'v_sh512800': '银行',
+      'v_sh512000': '券商',
+      'v_sh515000': '人工智能',
+      'v_sh512200': '房地产',
+      'v_sh512660': '军工'
+    };
+    for(var varName in map) {
+      updateSectorItem(varName, map[varName]);
+    }
+    if(script.parentNode) script.parentNode.removeChild(script);
+  }, 1200);
+}
+
+function updateSectorItem(varName, sectorName) {
+  var raw = window[varName];
+  if(!raw) return;
+  var parts = raw.split('~');
+  if(parts.length < 33) return;
+  var changePct = parseFloat(parts[32]);
+  if(isNaN(changePct)) return;
+
+  var items = document.querySelectorAll('.sector-item');
+  for(var i = 0; i < items.length; i++) {
+    var nameEl = items[i].querySelector('.sector-name');
+    if(nameEl && nameEl.textContent.trim() === sectorName) {
+      var rateEl = items[i].querySelector('.sector-rate');
+      if(rateEl) {
+        var sign = changePct >= 0 ? '+' : '';
+        rateEl.textContent = sign + changePct.toFixed(2) + '%';
+        rateEl.className = 'sector-rate ' + (changePct > 0 ? 'up' : changePct < 0 ? 'down' : 'flat');
+      }
+      break;
+    }
+  }
+}
+
+/* ============================================
+   财经资讯 - 东方财富接口（免费无Key，JSONP）
+   接口: https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_N_1_.html?cb=cbFunc
+   返回: cbFunc({"LivesList":[{title,digest,showtime,url_m,...}],...})
+   ============================================ */
+var allNewsData = { latest: [], fav: [] };
+
+function fetchNewsData() {
+  var cbName = 'juheNewsCallback_' + Date.now();
+  window[cbName] = function(data) {
+    if(data && data.LivesList) {
+      allNewsData.latest = data.LivesList.map(function(item) {
+        var digest = item.digest || item.title || '';
+        var emoji = '📰';
+        if(digest.indexOf('央行') !== -1 || digest.indexOf('利率') !== -1) emoji = '🏦';
+        else if(digest.indexOf('A股') !== -1 || digest.indexOf('指数') !== -1) emoji = '📈';
+        else if(digest.indexOf('油价') !== -1 || digest.indexOf('商品') !== -1) emoji = '🛢️';
+        else if(digest.indexOf('汇率') !== -1 || digest.indexOf('人民币') !== -1) emoji = '💱';
+        else if(digest.indexOf('科技') !== -1 || digest.indexOf('AI') !== -1 || digest.indexOf('芯片') !== -1) emoji = '💻';
+        else if(digest.indexOf('房产') !== -1 || digest.indexOf('住房') !== -1) emoji = '🏠';
+        else if(digest.indexOf('美联储') !== -1 || digest.indexOf('日本') !== -1 || digest.indexOf('美国') !== -1) emoji = '🌍';
+
+        return {
+          id: item.newsid || item.id,
+          emoji: emoji,
+          title: item.title,
+          source: '东方财富',
+          time: item.showtime || '',
+          url: item.url_m || item.url_w || '',
+          digest: digest
+        };
+      });
+      renderNews('latest');
+    }
+    delete window[cbName];
+    if(oldScript.parentNode) oldScript.parentNode.removeChild(oldScript);
+  };
+
+  var oldScript = document.querySelector('#newsScript');
+  if(oldScript) oldScript.parentNode.removeChild(oldScript);
+
+  var script = document.createElement('script');
+  script.id = 'newsScript';
+  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_20_1_.html?cb=' + cbName;
+  script.onerror = function() {
+    renderNewsFallback();
+    delete window[cbName];
+  };
+  document.head.appendChild(script);
+}
+
+function renderNewsFallback() {
+  allNewsData.latest = [
+    {id:'fb1', emoji:'⚠️', title:'实时资讯获取失败，请稍后刷新重试', source:'系统提示', time:'', url:'', digest:''}
+  ];
+  renderNews('latest');
+}
 
 function renderNews(type) {
   var list = document.getElementById('newsList');
-  var data = type === 'fav' ? getFavNews() : (newsData[type] || []);
+  var data = type === 'fav' ? getFavNews() : (allNewsData[type] || allNewsData.latest || []);
   if(type === 'fav' && data.length === 0) {
     list.innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">暂无收藏资讯<br>点击资讯右侧☆收藏</div>';
     return;
@@ -828,14 +910,28 @@ function renderNews(type) {
     var div = document.createElement('div');
     div.className = 'news-item';
     div.setAttribute('data-id', item.id);
+    if(item.url) div.setAttribute('data-url', item.url);
     var isFav = isNewsFav(item.id);
+    var timeStr = item.time || item.time_text || '';
     div.innerHTML = '<div class="news-emoji">' + item.emoji + '</div>' +
       '<div class="news-body"><div class="news-title">' + item.title + '</div>' +
-      '<div class="news-meta"><span>' + item.source + '</span><span>·</span><span>' + item.time + '</span></div></div>' +
+      '<div class="news-meta"><span>' + item.source + '</span><span>·</span><span>' + timeStr + '</span></div></div>' +
       '<button class="news-star ' + (isFav ? 'starred' : '') + '">' + (isFav ? '★' : '☆') + '</button>';
     list.appendChild(div);
   });
   bindStarEvents();
+}
+
+function bindNewsClickEvents() {
+  var list = document.getElementById('newsList');
+  if(!list) return;
+  list.addEventListener('click', function(e) {
+    if(e.target.closest('.news-star')) return;
+    var item = e.target.closest('.news-item');
+    if(!item) return;
+    var url = item.getAttribute('data-url');
+    if(url) window.open(url, '_blank');
+  });
 }
 
 document.querySelectorAll('.news-tab-btn').forEach(function(btn) {
@@ -868,11 +964,7 @@ function toggleNewsFav(id) {
 }
 function getFavNews() {
   var ids = getFavNewsIds();
-  var all = [];
-  ['macro','market','global'].forEach(function(k) {
-    all = all.concat(newsData[k] || []);
-  });
-  return all.filter(function(item) { return ids.indexOf(item.id) !== -1; });
+  return (allNewsData.latest || []).filter(function(item) { return ids.indexOf(item.id) !== -1; });
 }
 function bindStarEvents() {
   document.querySelectorAll('.news-star').forEach(function(btn) {
@@ -885,7 +977,6 @@ function bindStarEvents() {
       btn.classList.toggle('starred', isFav);
       btn.textContent = isFav ? '★' : '☆';
       showToast(isFav ? '已收藏 ⭐' : '已取消收藏');
-      // 如果在收藏标签页，重新渲染
       var activeTab = document.querySelector('.news-tab-btn.active');
       if(activeTab && activeTab.getAttribute('data-news') === 'fav') {
         renderNews('fav');
@@ -893,6 +984,20 @@ function bindStarEvents() {
     });
   });
 }
+
+/* ============================================
+   标签切换 - 行情数据
+   ============================================ */
+document.querySelectorAll('.market-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.market-tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    var target = tab.getAttribute('data-tab');
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.style.display = 'none'; });
+    var panel = document.getElementById('panel-' + target);
+    if(panel) panel.style.display = 'block';
+  });
+});
 
 /* ============================================
    干货合集收藏
@@ -952,7 +1057,6 @@ if(addFundBtn) {
     fundModal.classList.add('open');
     fundCodeInput.value = '';
     fundNameInput.value = '';
-    fundCodeInput.focus();
   });
 }
 
@@ -984,7 +1088,6 @@ function addCustomFund(code, name) {
   div.innerHTML = '<div class="fund-left"><div class="fund-name">' + name + '</div><div class="fund-code">' + code + '</div></div>' +
     '<div class="fund-right"><div class="fund-nav">--</div><div class="fund-rate flat">--</div></div>';
   list.appendChild(div);
-  // 保存到localStorage
   var funds = getCustomFunds();
   funds.push({code: code, name: name});
   localStorage.setItem('finance_custom_funds', JSON.stringify(funds));
@@ -1033,14 +1136,25 @@ function showToast(msg){var e=document.getElementById('appToast');if(e)e.remove(
 
 /* 事件绑定 */
 document.addEventListener('DOMContentLoaded',function(){
-  /* 获取行情数据 */
+  /* 绑定新闻点击事件委托（只需一次） */
+  bindNewsClickEvents();
+
+  /* 获取实时行情数据 */
   fetchMarketData();
+
+  /* 获取自选基金实时数据 */
+  fetchFundData();
+
+  /* 获取行业板块实时数据 */
+  fetchSectorData();
+
+  /* 获取实时财经新闻 */
+  fetchNewsData();
 
   /* 加载自定义基金 */
   loadCustomFunds();
 
   /* 初始化收藏 */
-  bindStarEvents();
   initCollections();
 
   /* 打卡提交 */
