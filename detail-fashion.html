@@ -225,7 +225,8 @@ body {
 .merge-item.fashion { background: linear-gradient(135deg, #E0F0FF 0%, #EBF2F8 100%); }
 .merge-item.outfit { background: linear-gradient(135deg, #EBF2F8 0%, #FAFAFA 100%); border: 1.5px solid var(--mint); }
 .merge-item.makeup { background: linear-gradient(135deg, #FAEBEB 0%, #FFFAFB 100%); border: 1.5px solid var(--pink); }
-.merge-item-icon { font-size: 26px; line-height: 1; }
+.merge-item-icon { font-size: 26px; line-height: 1; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; }
+.merge-item-icon img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .merge-item-name { font-size: 13px; font-weight: 600; color: var(--choco); }
 .merge-item-sub { font-size: 9px; color: var(--choco-hint); }
 
@@ -464,12 +465,12 @@ body {
       <div class="merge-col">
         <div class="merge-col-title"><span class="emoji">🔖</span>收藏夹</div>
         <div class="merge-item beauty" id="favBeauty">
-          <div class="merge-item-icon"><img src="icons/fav-beauty.png" alt="美妆" style="width:40px;height:40px;object-fit:contain;"></div>
+          <div class="merge-item-icon"><img src="icons/fav-beauty.png" alt="美妆"></div>
           <div class="merge-item-name">美妆收藏</div>
           <div class="merge-item-sub">点击复制抖音口令</div>
         </div>
         <div class="merge-item fashion" id="favFashion">
-          <div class="merge-item-icon"><img src="icons/fav-fashion.png" alt="穿搭" style="width:40px;height:40px;object-fit:contain;"></div>
+          <div class="merge-item-icon"><img src="icons/fav-fashion.png" alt="穿搭"></div>
           <div class="merge-item-name">穿搭收藏</div>
           <div class="merge-item-sub">点击跳转小红书</div>
         </div>
