@@ -448,35 +448,18 @@ body {
 <script>
 /* ============================================
    新闻联播数据（近7日存档）
-   数据来源：央视新闻/钛媒体速览
+   ⚠️ 数据来源说明：
+   - 新闻联播文稿为【静态硬编码数据】，非实时API
+   - 每日19:00后需手动更新当日文稿内容
+   - 数据采集自央视新闻/钛媒体速览等公开来源
    ============================================ */
+
+/* 判断当前时间是否在今日新闻联播播出前（19:00前） */
+var _now = new Date();
+var isBeforeBroadcast = _now.getHours() < 19;
+
 var xwlbData = {
-  '2026-07-31': {
-    label: '7/31 今天',
-    items: [
-      '中央军委主席习近平签署命令 发布军事航天部队 网络空间部队 信息支援部队 联勤保障部队军旗旗面式样 在八一建军节到来之际 向全体人民解放军指战员武警部队官兵军队文职人员预备役人员和民兵致以节日的祝贺',
-      '中央军委主席习近平签署通令 给2个单位 5名个人记功',
-      '李强主持召开国务院常务会议',
-      '赵乐际对瑞士进行正式友好访问',
-      '【"十四五"高质量发展答卷】持续推动退役军人工作提质升级',
-      '出口动能向优向新 我国外贸发展韧性更强',
-      '【铭记历史 缅怀先烈】暑期红色旅游升温 抗战主题纪念馆迎来参观热',
-      '各地各部门全力应对汛情 有序开展灾后重建',
-      '【党旗在基层一线高高飘扬】全力守护人民生命财产安全',
-      '2024年我国"三新"经济增加值同比增长6.7%',
-      '公安部部署开展"平安原野—2025"专项行动',
-      '全体专业技术人才将开展人工智能通识继续教育',
-      '义乌外资经营主体突破1万户',
-      '前海蛇口自贸片区上半年进出口超2600亿元',
-      '横钦高速郁江特大桥合龙',
-      '俄称控制顿涅茨克重镇恰索夫亚尔 乌称在波克罗夫斯克击退俄军多次进攻',
-      '巴称以军袭击等待领取物资民众 致50多人死亡 联合国会议就落实"两国方案"发布宣言',
-      '俄罗斯堪察加半岛区域发生上百次5级以上余震',
-      '巴西总统府称美加征关税侵犯巴西主权',
-      '德国二季度国内生产总值环比下降0.1%',
-      '美军一架F-35战机在加州坠毁'
-    ]
-  },
+  /* 7/31今日：19:00前标记为待播出，不预填充内容 */
   '2026-07-30': {
     label: '7/30',
     items: [
@@ -503,15 +486,21 @@ var xwlbData = {
   }
 };
 
-/* 补充空日期占位 */
+/* 生成近7日日期列表 + 默认选中逻辑 */
 var dateList = [];
+var todayKey = '';
 (function(){
   var today = new Date();
+  todayKey = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+
   for(var i = 0; i < 7; i++) {
     var d = new Date(today);
     d.setDate(d.getDate() - i);
     var key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-    var label = (d.getMonth()+1) + '/' + d.getDate() + (i === 0 ? ' 今天' : '');
+    var label = (d.getMonth()+1) + '/' + d.getDate();
+    if(i === 0) {
+      label += isBeforeBroadcast ? ' 今天(待播)' : ' 今天';
+    }
     dateList.push({ key: key, label: label });
     if(!xwlbData[key]) {
       xwlbData[key] = { label: label, items: null };
@@ -519,7 +508,8 @@ var dateList = [];
   }
 })();
 
-var currentDateKey = dateList[0].key;
+/* 默认选中：19:00前选昨日（最新已播出），19:00后选今日 */
+var currentDateKey = isBeforeBroadcast ? dateList[1].key : dateList[0].key;
 
 /* 渲染日期选择器 */
 function renderDateSelector() {
@@ -547,6 +537,21 @@ function renderTranscript() {
   var dateEl = document.getElementById('transcriptDate');
   var contentEl = document.getElementById('transcriptContent');
   dateEl.textContent = data.label + ' · 新闻联播';
+
+  /* 今日且19:00前：新闻联播尚未播出 */
+  if(currentDateKey === todayKey && isBeforeBroadcast) {
+    contentEl.innerHTML = '<div style="text-align:center;padding:36px 12px;color:#B0B0B0;font-size:13px;line-height:2;">' +
+      '<div style="font-size:28px;margin-bottom:12px;">📺</div>' +
+      '今日新闻联播将于<span style="color:var(--mint);font-weight:600;">19:00</span>播出后更新<br>' +
+      '请稍后再来查看完整文稿</div>';
+    /* 隐藏AI总结按钮（无内容可总结） */
+    document.getElementById('aiSummaryBtn').style.display = 'none';
+    document.getElementById('aiSummaryResult').classList.remove('show');
+    return;
+  }
+
+  /* 恢复AI总结按钮显示 */
+  document.getElementById('aiSummaryBtn').style.display = '';
 
   if(!data.items || data.items.length === 0) {
     contentEl.innerHTML = '<div style="text-align:center;padding:30px 0;color:#B0B0B0;font-size:13px;">暂无当日文稿数据</div>';
@@ -638,6 +643,16 @@ function extractKeyPhrase(text, keyword) {
 
 document.getElementById('aiSummaryBtn').addEventListener('click', function() {
   var btn = this;
+  /* 今日待播出状态不允许总结 */
+  if(currentDateKey === todayKey && isBeforeBroadcast) {
+    showToast('今日新闻联播尚未播出');
+    return;
+  }
+  var data = xwlbData[currentDateKey];
+  if(!data.items || data.items.length === 0) {
+    showToast('暂无文稿可总结');
+    return;
+  }
   btn.classList.add('loading');
   btn.innerHTML = '<span>⏳</span> 正在分析生成...';
   setTimeout(function() {
