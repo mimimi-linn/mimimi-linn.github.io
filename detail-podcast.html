@@ -68,44 +68,6 @@ body {
 .section-title .emoji { font-size: 18px; }
 
 /* ============================================
-   第1块：小宇宙横幅
-   ============================================ */
-.podcast-banner {
-  display: flex; align-items: center; gap: 12px;
-  padding: 16px 18px;
-  background: linear-gradient(135deg, #5B6EE1 0%, #8B5CF6 100%);
-  border-radius: 20px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 16px rgba(91, 110, 225, 0.25);
-}
-.banner-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: rgba(255,255,255,0.25);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px; flex-shrink: 0; overflow: hidden;
-}
-.banner-icon img { width: 100%; height: 100%; object-fit: contain; }
-.banner-body { flex: 1; min-width: 0; }
-.banner-title {
-  font-size: 15px; font-weight: 700; color: #fff;
-  margin-bottom: 2px;
-}
-.banner-desc {
-  font-size: 11px; color: rgba(255,255,255,0.85);
-}
-.banner-btn {
-  padding: 8px 16px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.95);
-  color: #5B6EE1;
-  font-size: 13px; font-weight: 600;
-  border: none; cursor: pointer;
-  flex-shrink: 0;
-  transition: transform 0.15s;
-}
-.banner-btn:active { transform: scale(0.95); }
-
-/* ============================================
    播客列表卡片
    ============================================ */
 .podcast-card {
@@ -312,17 +274,7 @@ body {
 <!-- ===== 主体内容 ===== -->
 <div class="main">
 
-  <!-- 第1块：小宇宙横幅 -->
-  <div class="podcast-banner" id="xiaoyuzhouBanner" data-url="https://www.xiaoyuzhoufm.com/">
-    <div class="banner-icon">🪐</div>
-    <div class="banner-body">
-      <div class="banner-title">小宇宙</div>
-      <div class="banner-desc">发现好播客，听见新世界</div>
-    </div>
-    <button class="banner-btn" id="openXiaoyuzhou">打开App</button>
-  </div>
-
-  <!-- 第2块：小宇宙播客列表 -->
+  <!-- 第1块：小宇宙播客列表 -->
   <div class="podcast-card">
     <div class="platform-title"><span class="dot xiaoyuzhou"></span>小宇宙常听</div>
     <div class="podcast-list">
@@ -488,18 +440,6 @@ document.addEventListener('DOMContentLoaded',function(){
     var note=document.getElementById('noteInput').value.trim();
     if(!note){showToast('暂无内容可保存');return}
     showToast('记录已保存');
-  });
-
-  /* 小宇宙横幅跳转 */
-  var openXiaoyuzhou=document.getElementById('openXiaoyuzhou');
-  var xiaoyuzhouBanner=document.getElementById('xiaoyuzhouBanner');
-  if(openXiaoyuzhou)openXiaoyuzhou.addEventListener('click',function(e){
-    e.stopPropagation();
-    window.location.href='https://www.xiaoyuzhoufm.com/';
-  });
-  if(xiaoyuzhouBanner)xiaoyuzhouBanner.addEventListener('click',function(e){
-    if(e.target.closest('.banner-btn'))return;
-    window.location.href='https://www.xiaoyuzhoufm.com/';
   });
 
   /* 播客列表点击跳转 */
