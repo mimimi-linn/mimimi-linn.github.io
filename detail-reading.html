@@ -4,135 +4,416 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>📖 阅读</title>
+<meta name="theme-color" content="#6B9AC4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
 <style>
+/* ============================================
+   阅读页 - 薄荷绿×巧克力棕 安静舒缓
+   ============================================ */
 :root {
-  --color-primary: #6B9AC4;
-  --color-primary-light: #EBF2F8;
-  --color-primary-dark: #3D3D3D;
-  --gradient-primary: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%);
-  --color-white: #FFFFFF;
-  --color-bg: #FAFAFA;
-  --color-text-primary: #3D3D3D;
-  --color-text-secondary: #8A8A8A;
-  --color-text-hint: #B0B0B0;
-  --color-border: #E8E8E8;
-  --color-card-shadow: rgba(107, 154, 196, 0.10);
-  --radius-sm: 12px;
-  --radius-md: 16px;
-  --radius-lg: 20px;
-  --radius-xl: 24px;
-  --radius-full: 50%;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 12px;
-  --space-lg: 16px;
-  --space-xl: 20px;
-  --space-xxl: 24px;
-  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', 'Helvetica Neue', sans-serif;
-  --font-size-hero: 28px;
-  --font-size-title: 18px;
-  --font-size-body: 15px;
-  --font-size-caption: 13px;
-  --font-size-small: 11px;
-  --font-weight-bold: 700;
-  --font-weight-semibold: 600;
-  --font-weight-medium: 500;
-  --font-weight-regular: 400;
-  --shadow-card: 0 2px 12px var(--color-card-shadow);
+  --mint: #6B9AC4;
+  --mint-light: #EBF2F8;
+  --mint-lighter: #FAFAFA;
+  --choco: #3D3D3D;
+  --choco-light: #8A8A8A;
+  --choco-hint: #B0B0B0;
+  --border: #E8E8E8;
+  --white: #FFFFFF;
+  --shadow: 0 2px 12px rgba(107, 154, 196, 0.10);
   --shadow-float: 0 4px 20px rgba(107, 154, 196, 0.15);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: var(--font-family);
-  background-color: var(--color-bg);
-  color: var(--color-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  background: var(--mint-lighter);
+  color: var(--choco);
   min-height: 100vh;
   max-width: 430px;
   margin: 0 auto;
-  position: relative;
-  padding-bottom: 140px;
   -webkit-font-smoothing: antialiased;
- padding-left: 104px; }
-.detail-header {
-  position: sticky; top: 0; z-index: 100; background: var(--color-bg);
+  padding-bottom: 140px;
+  padding-left: 104px;
+}
+
+/* --- 顶部导航栏 --- */
+.header {
+  position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-lg) var(--space-xl); height: 56px;
+  height: 56px; padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
 }
-.back-btn {
-  width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--color-white);
-  border: none; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; box-shadow: var(--shadow-card); color: var(--color-text-primary);
-  flex-shrink: 0; text-decoration: none;
+.header-back {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint-light); display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--choco); font-size: 18px; flex-shrink: 0;
 }
-.back-btn:active { transform: scale(0.92); }
-.back-btn svg { width: 20px; height: 20px; }
-.detail-title { font-size: var(--font-size-title); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
-.drawer-btn {
-  width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--gradient-primary);
-  border: none; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; box-shadow: var(--shadow-float); flex-shrink: 0;
+.header-back:active { transform: scale(0.92); }
+.header-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--choco); }
+.header-drawer {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--mint); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
 }
-.drawer-btn:active { transform: scale(0.92); }
-.drawer-btn .hamburger-icon { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-.drawer-btn .hamburger-icon span { display: block; width: 14px; height: 2px; background: var(--color-white); border-radius: 1px; }
-.detail-body { padding: var(--space-lg) var(--space-xl); }
-.module-title {
-  font-size: var(--font-size-title); font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary); margin-bottom: var(--space-md);
-  display: flex; align-items: center; gap: var(--space-sm);
+.header-drawer:active { transform: scale(0.92); }
+.header-drawer span { display: block; width: 14px; height: 2px; background: var(--white); border-radius: 1px; margin: 1.5px 0; }
+
+/* --- 主体内容 --- */
+.main { padding: 16px 16px 0; }
+
+/* ============================================
+   第1块：微信读书横幅
+   ============================================ */
+.read-banner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%);
+  border-radius: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(107, 154, 196, 0.25);
 }
-.module-title .title-emoji { font-size: 22px; }
-.card { background: var(--color-white); border-radius: var(--radius-lg); padding: var(--space-xl); box-shadow: var(--shadow-card); margin-bottom: var(--space-lg); }
-.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
-.card-label { display: flex; align-items: center; gap: var(--space-sm); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); color: var(--color-primary-dark); }
-.card-label svg { width: 18px; height: 18px; }
-.stat-row { display: flex; align-items: baseline; gap: var(--space-sm); }
-.stat-big { font-size: var(--font-size-hero); font-weight: var(--font-weight-bold); color: var(--color-primary-dark); font-variant-numeric: tabular-nums; line-height: 1; }
-.stat-small { font-size: var(--font-size-caption); color: var(--color-text-hint); }
-.list-item { display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
-.list-item:last-child { border-bottom: none; }
-.list-item-icon { width: 36px; height: 36px; border-radius: var(--space-xs); background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.list-item-content { flex: 1; }
-.list-item-title { font-size: var(--font-size-body); font-weight: var(--font-weight-medium); color: var(--color-text-primary); margin-bottom: 2px; }
-.list-item-sub { font-size: var(--font-size-small); color: var(--color-text-hint); }
-.list-item-meta { font-size: var(--font-size-small); color: var(--color-text-hint); flex-shrink: 0; }
-.note-textarea { width: 100%; min-height: 80px; border: 1.5px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-md); font-size: var(--font-size-body); font-family: var(--font-family); color: var(--color-text-primary); background: var(--color-bg); resize: none; outline: none; line-height: 1.6; transition: border 0.2s; }
-.note-textarea:focus { border-color: var(--color-primary); background: var(--color-white); }
-.note-textarea::placeholder { color: var(--color-text-hint); }
-.log-item { display: flex; gap: var(--space-md); padding: var(--space-md) 0; border-bottom: 1px solid var(--color-border); }
-.log-item:last-child { border-bottom: none; }
-.log-time { font-size: var(--font-size-small); color: var(--color-text-hint); flex-shrink: 0; width: 50px; padding-top: 2px; }
-.log-content { flex: 1; }
-.detail-footer { position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); background: var(--color-white); padding: var(--space-md) var(--space-xl); padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 20px)); display: flex; gap: var(--space-md); box-shadow: 0 -2px 12px rgba(107, 154, 196, 0.08); z-index: 50; }
-.btn-primary { flex: 2; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--gradient-primary); border: none; color: var(--color-white); font-size: var(--font-size-body); font-weight: var(--font-weight-semibold); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: transform 0.2s; box-shadow: var(--shadow-card); }
+.banner-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.banner-body { flex: 1; min-width: 0; }
+.banner-title {
+  font-size: 15px; font-weight: 700; color: #fff;
+  margin-bottom: 2px;
+}
+.banner-desc {
+  font-size: 11px; color: rgba(255,255,255,0.85);
+}
+.banner-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.95);
+  color: var(--mint);
+  font-size: 13px; font-weight: 600;
+  border: none; cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.banner-btn:active { transform: scale(0.95); }
+
+/* ============================================
+   通用标题
+   ============================================ */
+.section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.section-title .emoji { font-size: 18px; }
+.section-title .refresh-btn {
+  margin-left: auto;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: none; background: var(--mint-light);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.section-title .refresh-btn:active { transform: scale(0.9) rotate(180deg); }
+.section-title .refresh-btn svg { width: 14px; height: 14px; color: var(--mint); }
+
+/* ============================================
+   第2块：我的书架
+   ============================================ */
+.shelf-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.shelf-book {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+}
+.shelf-book-cover {
+  width: 100%; aspect-ratio: 3/4;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  overflow: hidden;
+}
+.shelf-book-cover.c1 { background: linear-gradient(135deg, #D4E4F4, #EBF2F8); }
+.shelf-book-cover.c2 { background: linear-gradient(135deg, #F5E6D3, #FAF0E0); }
+.shelf-book-cover.c3 { background: linear-gradient(135deg, #DDE8D8, #EDF3E8); }
+.shelf-book-name {
+  font-size: 12px; font-weight: 600; color: var(--choco);
+  text-align: center;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  width: 100%;
+}
+.shelf-book-author {
+  font-size: 10px; color: var(--choco-hint);
+  text-align: center;
+}
+.shelf-add {
+  width: 100%; aspect-ratio: 3/4;
+  border: 2px dashed var(--mint);
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--mint-light);
+}
+.shelf-add:active { transform: scale(0.95); background: rgba(107,154,196,0.15); }
+.shelf-add .plus { font-size: 24px; color: var(--mint); line-height: 1; }
+.shelf-add .add-text { font-size: 10px; color: var(--mint); font-weight: 500; }
+
+/* ============================================
+   第3块：最近阅读（横向滑动）
+   ============================================ */
+.recent-scroll {
+  display: flex; gap: 14px;
+  overflow-x: auto;
+  padding: 2px 0 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.recent-scroll::-webkit-scrollbar { display: none; }
+.recent-book {
+  flex-shrink: 0;
+  width: 100px;
+  display: flex; flex-direction: column; gap: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.recent-book:active { transform: scale(0.96); }
+.recent-cover {
+  width: 100px; height: 140px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+  position: relative;
+}
+.recent-cover.c1 { background: linear-gradient(135deg, #C8D8F0, #D4E4F4); }
+.recent-cover.c2 { background: linear-gradient(135deg, #F0D8C8, #F5E6D3); }
+.recent-cover.c3 { background: linear-gradient(135deg, #C8E0D0, #DDE8D8); }
+.recent-cover .progress-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 4px; background: rgba(0,0,0,0.1);
+}
+.recent-cover .progress-bar .fill {
+  height: 100%; background: var(--mint); border-radius: 0 2px 2px 0;
+}
+.recent-name {
+  font-size: 13px; font-weight: 600; color: var(--choco);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.recent-author {
+  font-size: 11px; color: var(--choco-hint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ============================================
+   第4块：有声书（双列）
+   ============================================ */
+.audio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.audio-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.audio-card:active { transform: scale(0.97); }
+.audio-cover {
+  width: 100%; aspect-ratio: 1;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.audio-cover.c1 { background: linear-gradient(135deg, #E8D4F0, #F0E0F5); }
+.audio-cover.c2 { background: linear-gradient(135deg, #D4F0E4, #E0F5EC); }
+.audio-cover .play-icon {
+  position: absolute; bottom: 8px; right: 8px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+}
+.audio-cover .play-icon svg { width: 12px; height: 12px; color: var(--mint); margin-left: 2px; }
+.audio-name {
+  font-size: 13px; font-weight: 600; color: var(--choco);
+  margin-bottom: 3px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.audio-episodes {
+  font-size: 11px; color: var(--choco-hint);
+}
+
+/* ============================================
+   第5块：底部数据标签
+   ============================================ */
+.data-tags {
+  display: flex; gap: 10px;
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+.data-tag {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px;
+  background: var(--mint-light);
+  border-radius: 14px;
+}
+.data-tag .tag-icon { font-size: 18px; }
+.data-tag .tag-num {
+  font-size: 18px; font-weight: 700; color: var(--mint);
+  font-variant-numeric: tabular-nums;
+}
+.data-tag .tag-label {
+  font-size: 12px; color: var(--choco-light);
+}
+
+/* ============================================
+   第6块：今日阅读打卡
+   ============================================ */
+.checkin-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.checkin-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.checkin-title .emoji { font-size: 18px; }
+.checkin-input-group {
+  margin-bottom: 12px;
+}
+.checkin-input-group label {
+  display: block;
+  font-size: 12px; font-weight: 600; color: var(--choco-light);
+  margin-bottom: 6px;
+}
+.checkin-input {
+  width: 100%; height: 44px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--choco);
+  background: var(--mint-lighter);
+  outline: none;
+  transition: border 0.2s;
+}
+.checkin-input:focus { border-color: var(--mint); background: var(--white); }
+.checkin-input::placeholder { color: var(--choco-hint); }
+.checkin-textarea {
+  width: 100%; min-height: 80px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--choco);
+  background: var(--mint-lighter);
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  transition: border 0.2s;
+}
+.checkin-textarea:focus { border-color: var(--mint); background: var(--white); }
+.checkin-textarea::placeholder { color: var(--choco-hint); }
+.checkin-history {
+  margin-top: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.checkin-history-title {
+  font-size: 12px; font-weight: 600; color: var(--choco-light);
+  margin-bottom: 8px;
+}
+.history-item {
+  display: flex; gap: 10px;
+  padding: 8px 0;
+}
+.history-date {
+  font-size: 11px; color: var(--choco-hint);
+  flex-shrink: 0; width: 42px;
+  padding-top: 1px;
+}
+.history-content {
+  flex: 1; min-width: 0;
+}
+.history-book {
+  font-size: 13px; font-weight: 500; color: var(--choco);
+  margin-bottom: 2px;
+}
+.history-note {
+  font-size: 11px; color: var(--choco-hint);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* --- 底部操作栏 --- */
+.footer {
+  position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px);
+  display: flex; gap: 12px;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  z-index: 50;
+}
+.btn-primary {
+  flex: 2; height: 48px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, #6B9AC4, #8AB5D6); color: var(--white);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: transform 0.15s;
+}
 .btn-primary:active { transform: scale(0.97); }
-.btn-primary svg { width: 18px; height: 18px; }
-.btn-primary.checked { background: var(--color-primary-light); color: var(--color-primary-dark); border: 1.5px solid var(--color-primary); }
-.btn-secondary { flex: 1; padding: var(--space-md) 0; border-radius: var(--radius-sm); background: var(--color-white); border: 1.5px solid var(--color-primary); color: var(--color-primary-dark); font-size: var(--font-size-body); font-weight: var(--font-weight-medium); font-family: var(--font-family); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--space-xs); transition: all 0.2s; }
-.btn-secondary:active { background: var(--color-primary-light); }
-.btn-secondary svg { width: 16px; height: 16px; }
-.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); background: rgba(45, 52, 54, 0.88); color: #fff; padding: 14px 22px; border-radius: var(--radius-sm); font-size: var(--font-size-caption); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); text-align: center; max-width: 240px; line-height: 1.5; backdrop-filter: blur(8px); }
+.btn-primary.checked { background: var(--mint-light); color: var(--choco); border: 1.5px solid var(--mint); }
+.btn-secondary {
+  flex: 1; height: 48px; border: 1.5px solid var(--mint); border-radius: 14px;
+  background: var(--white); color: var(--choco);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s;
+}
+.btn-secondary:active { background: var(--mint-light); transform: scale(0.97); }
+
+/* --- Toast --- */
+.toast {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(93, 64, 55, 0.9); color: #fff;
+  padding: 14px 22px; border-radius: 14px;
+  font-size: 13px; font-weight: 500;
+  z-index: 999; opacity: 0; visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
 .toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-
-/* 右侧滑出抽屉 */
-.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-.drawer-overlay.open { opacity: 1; visibility: visible; }
-.drawer { position: fixed; top: 0; left: -160px; width: 160px; height: 100%; background: #FFFFFF; z-index: 301; transition: left 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: 4px 0 24px rgba(0,0,0,0.08); }
-.drawer.open { left: 0; }
-.drawer-header { padding: 16px 12px 12px; border-bottom: 1px solid #E8E8E8; }
-.drawer-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; font-size: 28px; }
-.drawer-title { font-size: 15px; font-weight: 700; color: #3D3D3D; margin-bottom: 4px; }
-.drawer-subtitle { font-size: 11px; color: #B0B0B0; }
-.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
-.drawer-menu-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #3D3D3D; font-size: 13px; }
-.drawer-menu-item:active { background: #EBF2F8; }
-.drawer-menu-item.active { background: #EBF2F8; color: #3D3D3D; font-weight: 600; }
-.drawer-menu-item .menu-emoji { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
-.drawer-menu-item.home-link { border-bottom: 1px solid #E8E8E8; margin-bottom: 8px; color: #3D3D3D; font-weight: 600; }
-.drawer-footer { padding: 12px 12px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px) + 56px)); border-top: 1px solid #E8E8E8; }
-.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #EBF2F8; border: 1.5px solid #6B9AC4; color: #3D3D3D; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
-.drawer-reset-btn:active { background: #6B9AC4; color: #fff; }
-
 
 /* ===== 底部导航栏 ===== */
 .bottom-nav { position: fixed; bottom: 0; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
@@ -157,12 +438,6 @@ body {
 .sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
-<meta name="theme-color" content="#C9985A">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" href="icons/favicon-32.png">
 </head>
 <body>
 <!-- ===== 左侧固定侧边栏 ===== -->
@@ -188,87 +463,315 @@ body {
   </div>
 </div>
 
+<!-- ===== 主体内容 ===== -->
+<div class="main">
 
-  </div>
-
-  <!-- 书单收藏卡 -->
-  <div class="card">
-    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>书单收藏</div></div>
-    <div class="list-item">
-      <div class="list-item-icon">📚</div>
-      <div class="list-item-content">
-        <div class="list-item-title">被讨厌的勇气</div>
-        <div class="list-item-sub">岸见一郎 / 古贺史健</div>
-        <div style="margin-top:6px; background:var(--color-primary-light); border-radius:4px; height:8px; overflow:hidden;"><div style="width:72%; height:100%; background:var(--color-primary); border-radius:4px;"></div></div>
-      </div>
-      <div class="list-item-meta">72%</div>
+  <!-- 第1块：微信读书横幅 -->
+  <div class="read-banner" id="readBanner">
+    <div class="banner-icon">📚</div>
+    <div class="banner-body">
+      <div class="banner-title">微信读书</div>
+      <div class="banner-desc">海量好书，随时畅读</div>
     </div>
-    <div class="list-item">
-      <div class="list-item-icon">📘</div>
-      <div class="list-item-content">
-        <div class="list-item-title">原子习惯</div>
-        <div class="list-item-sub">James Clear</div>
-        <div style="margin-top:6px; background:var(--color-primary-light); border-radius:4px; height:8px; overflow:hidden;"><div style="width:45%; height:100%; background:var(--color-primary); border-radius:4px;"></div></div>
+    <button class="banner-btn" id="openBookCity">打开书城</button>
+  </div>
+
+  <!-- 第2块：我的书架 -->
+  <div class="section-title">
+    <span class="emoji">📚</span>我的书架
+    <button class="refresh-btn" id="refreshShelf" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+    </button>
+  </div>
+  <div class="shelf-card">
+    <div class="shelf-grid">
+      <div class="shelf-book">
+        <div class="shelf-book-cover c1">📕</div>
+        <div class="shelf-book-name">被讨厌的勇气</div>
+        <div class="shelf-book-author">岸见一郎</div>
       </div>
-      <div class="list-item-meta">45%</div>
-    </div>
-    <div class="list-item">
-      <div class="list-item-icon">📗</div>
-      <div class="list-item-content">
-        <div class="list-item-title">心流</div>
-        <div class="list-item-sub">米哈里·契克森米哈赖</div>
-        <div style="margin-top:6px; background:var(--color-primary-light); border-radius:4px; height:8px; overflow:hidden;"><div style="width:20%; height:100%; background:var(--color-primary); border-radius:4px;"></div></div>
+      <div class="shelf-book">
+        <div class="shelf-book-cover c2">📘</div>
+        <div class="shelf-book-name">原子习惯</div>
+        <div class="shelf-book-author">James Clear</div>
       </div>
-      <div class="list-item-meta">20%</div>
+      <div class="shelf-book">
+        <div class="shelf-book-cover c3">📗</div>
+        <div class="shelf-book-name">心流</div>
+        <div class="shelf-book-author">米哈里</div>
+      </div>
+      <div class="shelf-book">
+        <div class="shelf-book-cover c1">📙</div>
+        <div class="shelf-book-name">纳瓦尔宝典</div>
+        <div class="shelf-book-author">纳瓦尔</div>
+      </div>
+      <div class="shelf-book">
+        <div class="shelf-book-cover c2">📓</div>
+        <div class="shelf-book-name">人间值得</div>
+        <div class="shelf-book-author">中村恒子</div>
+      </div>
+      <div class="shelf-book">
+        <div class="shelf-add" id="addBook">
+          <span class="plus">+</span>
+          <span class="add-text">添加书籍</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 阅读感悟笔记卡 -->
-  <div class="card">
-    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>阅读感悟</div></div>
-    <textarea class="note-textarea" placeholder="记录今天的阅读感悟..."></textarea>
+  <!-- 第3块：最近阅读 -->
+  <div class="section-title"><span class="emoji">📖</span>最近阅读</div>
+  <div class="recent-scroll">
+    <div class="recent-book" id="recentBook1">
+      <div class="recent-cover c1">
+        📕
+        <div class="progress-bar"><div class="fill" style="width:72%;"></div></div>
+      </div>
+      <div class="recent-name">被讨厌的勇气</div>
+      <div class="recent-author">岸见一郎</div>
+    </div>
+    <div class="recent-book" id="recentBook2">
+      <div class="recent-cover c2">
+        📘
+        <div class="progress-bar"><div class="fill" style="width:45%;"></div></div>
+      </div>
+      <div class="recent-name">原子习惯</div>
+      <div class="recent-author">James Clear</div>
+    </div>
+    <div class="recent-book" id="recentBook3">
+      <div class="recent-cover c3">
+        📗
+        <div class="progress-bar"><div class="fill" style="width:20%;"></div></div>
+      </div>
+      <div class="recent-name">心流</div>
+      <div class="recent-author">米哈里·契克森米哈赖</div>
+    </div>
   </div>
 
-  <!-- 打卡日志卡 -->
-  <div class="card">
-    <div class="card-header"><div class="card-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>打卡日志</div></div>
-    <div class="log-item"><div class="log-time">07-28</div><div class="log-content"><div style="font-size:var(--font-size-body);font-weight:var(--font-weight-medium);margin-bottom:2px;">读完《被讨厌的勇气》第三章</div><div style="font-size:var(--font-size-small);color:var(--color-text-hint);">阅读了45分钟，深刻理解了课题分离的概念</div></div></div>
-    <div class="log-item"><div class="log-time">07-27</div><div class="log-content"><div style="font-size:var(--font-size-body);font-weight:var(--font-weight-medium);margin-bottom:2px;">开始阅读《原子习惯》</div><div style="font-size:var(--font-size-small);color:var(--color-text-hint);">阅读了30分钟，学习了习惯循环的四个步骤</div></div></div>
+  <!-- 第4块：有声书 -->
+  <div class="section-title" style="margin-top:16px;"><span class="emoji">🎧</span>有声书</div>
+  <div class="audio-grid">
+    <div class="audio-card" id="audio1">
+      <div class="audio-cover c1">
+        🎙️
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+      </div>
+      <div class="audio-name">三体广播剧</div>
+      <div class="audio-episodes">共 78 集</div>
+    </div>
+    <div class="audio-card" id="audio2">
+      <div class="audio-cover c2">
+        📻
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+      </div>
+      <div class="audio-name">蒋勋细说红楼</div>
+      <div class="audio-episodes">共 160 集</div>
+    </div>
   </div>
+
+  <!-- 第5块：底部数据标签 -->
+  <div class="data-tags" style="margin-top:16px;">
+    <div class="data-tag">
+      <span class="tag-icon">📚</span>
+      <span class="tag-num" id="bookCount">5</span>
+      <span class="tag-label">藏书总数</span>
+    </div>
+    <div class="data-tag">
+      <span class="tag-icon">🎧</span>
+      <span class="tag-num" id="audioCount">2</span>
+      <span class="tag-label">有声专辑</span>
+    </div>
+  </div>
+
+  <!-- 第6块：今日阅读打卡 -->
+  <div class="checkin-card">
+    <div class="checkin-title"><span class="emoji">✍️</span>今日阅读打卡</div>
+    <div class="checkin-input-group">
+      <label>阅读书名</label>
+      <input type="text" class="checkin-input" id="bookInput" placeholder="今天在读哪本书？" />
+    </div>
+    <div class="checkin-input-group">
+      <label>阅读时长（分钟）</label>
+      <input type="number" class="checkin-input" id="timeInput" placeholder="例如：30" min="0" max="999" />
+    </div>
+    <div class="checkin-input-group">
+      <label>阅读感悟</label>
+      <textarea class="checkin-textarea" id="noteInput" placeholder="记录今天的阅读心得..."></textarea>
+    </div>
+    <div class="checkin-history" id="checkinHistory">
+      <div class="checkin-history-title">最近打卡记录</div>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
 </div>
 
-<!-- 底部固定操作区 -->
-<div class="detail-footer">
-  <button class="btn-primary" id="checkinBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交</button>
+<!-- 底部操作栏 -->
+<div class="footer">
+  <button class="btn-primary" id="checkinBtn">打卡提交</button>
   <button class="btn-secondary" id="saveBtn">记录保存</button>
 </div>
 
 <script>
+/* ============================================
+   打卡逻辑 - 与首页共用 localStorage
+   ============================================ */
 function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
 function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
 function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
-function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
-function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
-function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
+function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(true);showToast('打卡成功 📖')}
+function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(false);showToast('已撤销打卡')}
 function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
-function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
-function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
-/* 抽屉已移除，使用侧边栏导航 */
-function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}showToast('今日打卡已重置 🌿')}
-function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
-function initDrawerEvents(){
-  var resetBtn=document.getElementById('resetBtn');
+function updateCheckinButton(checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.textContent='✓ 已完成打卡'}else{b.classList.remove('checked');b.textContent='打卡提交'}}
+
+/* Toast */
+function showToast(msg){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1500)}
+
+/* 阅读打卡记录（独立存储） */
+var READING_LOG_KEY='reading_log';
+function getReadingLog(){try{return JSON.parse(localStorage.getItem(READING_LOG_KEY)||'[]')}catch(e){return[]}}
+function saveReadingLog(log){localStorage.setItem(READING_LOG_KEY,JSON.stringify(log))}
+function addReadingLog(entry){var log=getReadingLog();log.unshift(entry);if(log.length>20)log=log.slice(0,20);saveReadingLog(log);renderHistory()}
+function renderHistory(){
+  var log=getReadingLog();
+  var list=document.getElementById('historyList');
+  if(!list)return;
+  if(log.length===0){list.innerHTML='<div style="font-size:12px;color:var(--choco-hint);padding:8px 0;">暂无打卡记录</div>';return}
+  var html='';
+  for(var i=0;i<Math.min(log.length,5);i++){
+    var e=log[i];
+    var dateStr=e.date?e.date.substring(5):'';
+    html+='<div class="history-item">'+
+      '<div class="history-date">'+dateStr+'</div>'+
+      '<div class="history-content">'+
+        '<div class="history-book">'+e.book+(e.time?' · '+e.time+'分钟':'')+'</div>'+
+        (e.note?'<div class="history-note">'+e.note+'</div>':'')+
+      '</div>'+
+    '</div>';
+  }
+  list.innerHTML=html;
+}
+
+/* 事件绑定 */
+document.addEventListener('DOMContentLoaded',function(){
   var checkinBtn=document.getElementById('checkinBtn');
   var saveBtn=document.getElementById('saveBtn');
-  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
-  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(1)});}
-  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
-}
-document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
-initCheckinState(1);
+
+  /* 打卡提交 - 同时记录阅读日志 */
+  if(checkinBtn)checkinBtn.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var book=document.getElementById('bookInput').value.trim();
+    var time=document.getElementById('timeInput').value.trim();
+    var note=document.getElementById('noteInput').value.trim();
+    if(!book){showToast('请填写阅读书名');return}
+    /* 如果还没打卡，先打卡 */
+    if(!isChecked(1)){
+      submitCheckin(1);
+    }
+    /* 记录阅读日志 */
+    addReadingLog({
+      date:getTodayKey(),
+      book:book,
+      time:time||'',
+      note:note||''
+    });
+    /* 清空输入 */
+    document.getElementById('bookInput').value='';
+    document.getElementById('timeInput').value='';
+    document.getElementById('noteInput').value='';
+  });
+
+  /* 记录保存 */
+  if(saveBtn)saveBtn.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var book=document.getElementById('bookInput').value.trim();
+    var note=document.getElementById('noteInput').value.trim();
+    if(!book&&!note){showToast('暂无内容可保存');return}
+    addReadingLog({
+      date:getTodayKey(),
+      book:book||'（未填写）',
+      time:document.getElementById('timeInput').value.trim()||'',
+      note:note||''
+    });
+    showToast('记录已保存');
+  });
+
+  /* 微信读书跳转 */
+  var openBookCity=document.getElementById('openBookCity');
+  var readBanner=document.getElementById('readBanner');
+  var openWeRead=function(e){
+    e.stopPropagation();
+    /* 优先唤起微信读书App，失败则跳网页版 */
+    var scheme='weread://';
+    var webUrl='https://weread.qq.com/';
+    var ua=navigator.userAgent.toLowerCase();
+    var isIOS=/iphone|ipad|ipod/.test(ua);
+    var start=Date.now();
+    var timer=setTimeout(function(){
+      if(Date.now()-start<2200){window.location.href=webUrl}
+    },2000);
+    if(isIOS){
+      var iframe=document.createElement('iframe');
+      iframe.style.display='none';
+      iframe.src=scheme;
+      document.body.appendChild(iframe);
+      setTimeout(function(){document.body.removeChild(iframe)},300);
+    }else{
+      window.location.href=scheme;
+    }
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden){clearTimeout(timer)}
+    },{once:true});
+  };
+  if(openBookCity)openBookCity.addEventListener('click',openWeRead);
+  if(readBanner)readBanner.addEventListener('click',function(e){
+    if(e.target.closest('.banner-btn'))return;
+    openWeRead(e);
+  });
+
+  /* 刷新书架 */
+  var refreshShelf=document.getElementById('refreshShelf');
+  if(refreshShelf)refreshShelf.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    showToast('书架已刷新 📚');
+  });
+
+  /* 添加书籍 */
+  var addBook=document.getElementById('addBook');
+  if(addBook)addBook.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    showToast('请前往微信读书添加');
+  });
+
+  /* 最近阅读点击 */
+  document.querySelectorAll('.recent-book').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      openWeRead(e);
+    });
+  });
+
+  /* 有声书点击 */
+  document.querySelectorAll('.audio-card').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      showToast('即将打开有声书 🎧');
+    });
+  });
+
+  /* 渲染打卡历史 */
+  renderHistory();
+
+  /* 初始化打卡状态 */
+  updateCheckinButton(isChecked(1));
+});
 </script>
 
-<!-- Service Worker 注册（PWA 离线支持） -->
+<!-- Service Worker 注册 -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
