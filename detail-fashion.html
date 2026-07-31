@@ -223,8 +223,8 @@ body {
 .merge-item:active { transform: scale(0.95); }
 .merge-item.beauty { background: linear-gradient(135deg, #FFE0EC 0%, #FAEBEB 100%); }
 .merge-item.fashion { background: linear-gradient(135deg, #E0F0FF 0%, #EBF2F8 100%); }
-.merge-item.outfit { background: linear-gradient(135deg, #EBF2F8 0%, #FAFAFA 100%); border: 1.5px solid var(--mint); }
-.merge-item.makeup { background: linear-gradient(135deg, #FAEBEB 0%, #FFFAFB 100%); border: 1.5px solid var(--pink); }
+.merge-item.outfit { background: linear-gradient(135deg, #EBF2F8 0%, #FAFAFA 100%); }
+.merge-item.makeup { background: linear-gradient(135deg, #FAEBEB 0%, #FFFAFB 100%); }
 .merge-item-icon { font-size: 26px; line-height: 1; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; overflow: hidden; }
 .merge-item-icon img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
 .merge-item-name { font-size: 13px; font-weight: 600; color: var(--choco); }
@@ -483,12 +483,12 @@ body {
         <div class="merge-item outfit" id="inspireOutfit">
           <div class="merge-item-icon"><img src="icons/inspire-outfit.png" alt="穿搭灵感"></div>
           <div class="merge-item-name">穿搭灵感</div>
-          <div class="merge-item-sub">点击进入备忘录</div>
+          <div class="merge-item-sub">点击跳转飞书文档</div>
         </div>
         <div class="merge-item makeup" id="inspireMakeup">
           <div class="merge-item-icon"><img src="icons/inspire-makeup.png" alt="妆容灵感"></div>
           <div class="merge-item-name">妆容灵感</div>
-          <div class="merge-item-sub">点击进入备忘录</div>
+          <div class="merge-item-sub">点击跳转飞书文档</div>
         </div>
       </div>
     </div>
@@ -613,11 +613,12 @@ document.addEventListener('DOMContentLoaded',function(){
   var wardrobeApp=document.getElementById('wardrobeApp');
   if(wardrobeApp)wardrobeApp.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置衣橱App链接')});
 
-  /* 灵感记录跳转备忘录 */
+  /* 灵感记录跳转飞书文档 */
   var inspireOutfit=document.getElementById('inspireOutfit');
   var inspireMakeup=document.getElementById('inspireMakeup');
-  if(inspireOutfit)inspireOutfit.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置备忘录链接')});
-  if(inspireMakeup)inspireMakeup.addEventListener('click',function(e){e.stopPropagation();showToast('请先设置备忘录链接')});
+  var feishuUrl='https://bg2633jeoj.feishu.cn/wiki/JTM7wGzz8i70L0kp8ZKcVa6NnVc';
+  if(inspireOutfit)inspireOutfit.addEventListener('click',function(e){e.stopPropagation();window.location.href=feishuUrl});
+  if(inspireMakeup)inspireMakeup.addEventListener('click',function(e){e.stopPropagation();window.location.href=feishuUrl});
 
   /* 初始化 */
   updateCheckinButton(isChecked(6));
