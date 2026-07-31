@@ -122,60 +122,41 @@ body {
 .section-title .refresh-btn svg { width: 14px; height: 14px; color: var(--mint); }
 
 /* ============================================
-   第2块：我的书架
+   第2块：我的书架（快捷跳转按钮）
    ============================================ */
-.shelf-card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-}
 .shelf-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  display: flex; gap: 10px;
+  overflow-x: auto;
+  padding: 2px 0 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-bottom: 16px;
 }
-.shelf-book {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 6px;
-}
-.shelf-book-cover {
-  width: 100%; aspect-ratio: 3/4;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
-  overflow: hidden;
-}
-.shelf-book-cover.c1 { background: linear-gradient(135deg, #D4E4F4, #EBF2F8); }
-.shelf-book-cover.c2 { background: linear-gradient(135deg, #F5E6D3, #FAF0E0); }
-.shelf-book-cover.c3 { background: linear-gradient(135deg, #DDE8D8, #EDF3E8); }
-.shelf-book-name {
-  font-size: 12px; font-weight: 600; color: var(--choco);
-  text-align: center;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  width: 100%;
-}
-.shelf-book-author {
-  font-size: 10px; color: var(--choco-hint);
-  text-align: center;
-}
-.shelf-add {
-  width: 100%; aspect-ratio: 3/4;
-  border: 2px dashed var(--mint);
-  border-radius: 10px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 4px;
+.shelf-grid::-webkit-scrollbar { display: none; }
+.shelf-btn {
+  flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 10px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: all 0.2s;
-  background: var(--mint-light);
+  transition: transform 0.2s;
+  min-width: 72px;
 }
-.shelf-add:active { transform: scale(0.95); background: rgba(107,154,196,0.15); }
-.shelf-add .plus { font-size: 24px; color: var(--mint); line-height: 1; }
-.shelf-add .add-text { font-size: 10px; color: var(--mint); font-weight: 500; }
+.shelf-btn:active { transform: scale(0.95); }
+.shelf-btn-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.shelf-btn-name {
+  font-size: 11px; font-weight: 600; color: var(--choco);
+  white-space: nowrap;
+}
 
 /* ============================================
-   第3块：最近阅读（横向滑动）
+   第3块：最近阅读（自定义封面+链接）
    ============================================ */
 .recent-scroll {
   display: flex; gap: 14px;
@@ -183,6 +164,7 @@ body {
   padding: 2px 0 8px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  margin-bottom: 16px;
 }
 .recent-scroll::-webkit-scrollbar { display: none; }
 .recent-book {
@@ -191,6 +173,7 @@ body {
   display: flex; flex-direction: column; gap: 6px;
   cursor: pointer;
   transition: transform 0.2s;
+  position: relative;
 }
 .recent-book:active { transform: scale(0.96); }
 .recent-cover {
@@ -201,16 +184,12 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
   overflow: hidden;
   position: relative;
+  background: linear-gradient(135deg, #D4E4F4, #EBF2F8);
 }
-.recent-cover.c1 { background: linear-gradient(135deg, #C8D8F0, #D4E4F4); }
-.recent-cover.c2 { background: linear-gradient(135deg, #F0D8C8, #F5E6D3); }
-.recent-cover.c3 { background: linear-gradient(135deg, #C8E0D0, #DDE8D8); }
-.recent-cover .progress-bar {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 4px; background: rgba(0,0,0,0.1);
-}
-.recent-cover .progress-bar .fill {
-  height: 100%; background: var(--mint); border-radius: 0 2px 2px 0;
+.recent-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .recent-name {
   font-size: 13px; font-weight: 600; color: var(--choco);
@@ -220,6 +199,87 @@ body {
   font-size: 11px; color: var(--choco-hint);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.recent-del {
+  position: absolute; top: -6px; right: -6px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,0,0,0.5); color: #fff;
+  border: none; font-size: 14px; line-height: 1;
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 5;
+}
+.recent-book.editing .recent-del { display: flex; }
+.recent-add {
+  flex-shrink: 0;
+  width: 100px; height: 140px;
+  border: 2px dashed var(--mint);
+  border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--mint-light);
+}
+.recent-add:active { transform: scale(0.95); }
+.recent-add .plus { font-size: 28px; color: var(--mint); line-height: 1; }
+.recent-add .add-text { font-size: 10px; color: var(--mint); font-weight: 500; }
+
+/* 添加书籍弹窗 */
+.book-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 500;
+  opacity: 0; visibility: hidden; transition: all 0.3s;
+}
+.book-modal-overlay.open { opacity: 1; visibility: visible; }
+.book-modal {
+  position: fixed; bottom: 0; left: 104px; right: 0;
+  width: auto; max-width: calc(430px - 104px); margin: 0 auto;
+  background: var(--white); border-radius: 24px 24px 0 0;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 20px));
+  z-index: 501; transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  max-height: 80vh; overflow-y: auto;
+  transform: translateY(100%);
+}
+.book-modal.open { transform: translateY(0); }
+.book-modal-title {
+  font-size: 17px; font-weight: 600; color: var(--choco);
+  text-align: center; margin-bottom: 20px;
+}
+.book-modal-group { margin-bottom: 16px; }
+.book-modal-group label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--choco-light); margin-bottom: 6px;
+}
+.book-modal-input {
+  width: 100%; height: 44px;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 0 14px; font-size: 14px; font-family: inherit;
+  color: var(--choco); background: var(--mint-lighter);
+  outline: none; transition: border 0.2s;
+}
+.book-modal-input:focus { border-color: var(--mint); background: var(--white); }
+.book-modal-input::placeholder { color: var(--choco-hint); }
+.book-cover-preview {
+  width: 80px; height: 110px; border-radius: 10px;
+  margin: 8px auto 0; display: none;
+  overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.book-cover-preview img { width: 100%; height: 100%; object-fit: cover; }
+.book-cover-preview.show { display: block; }
+.book-modal-btns { display: flex; gap: 12px; margin-top: 20px; }
+.book-modal-btns .btn-cancel {
+  flex: 1; height: 44px; border-radius: 12px;
+  border: 1.5px solid var(--border); background: var(--white);
+  color: var(--choco-light); font-size: 15px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.book-modal-btns .btn-confirm {
+  flex: 1.5; height: 44px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, #6B9AC4, #8AB5D6);
+  color: #fff; font-size: 15px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.book-modal-btns .btn-cancel:active { background: var(--mint-lighter); }
+.book-modal-btns .btn-confirm:active { transform: scale(0.97); }
 
 /* ============================================
    第4块：有声书（双列）
@@ -476,75 +536,64 @@ body {
     <button class="banner-btn" id="openBookCity">打开书城</button>
   </div>
 
-  <!-- 第2块：我的书架 -->
-  <div class="section-title">
-    <span class="emoji">📚</span>我的书架
-    <button class="refresh-btn" id="refreshShelf" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-    </button>
-  </div>
-  <div class="shelf-card">
-    <div class="shelf-grid">
-      <div class="shelf-book">
-        <div class="shelf-book-cover c1">📕</div>
-        <div class="shelf-book-name">被讨厌的勇气</div>
-        <div class="shelf-book-author">岸见一郎</div>
-      </div>
-      <div class="shelf-book">
-        <div class="shelf-book-cover c2">📘</div>
-        <div class="shelf-book-name">原子习惯</div>
-        <div class="shelf-book-author">James Clear</div>
-      </div>
-      <div class="shelf-book">
-        <div class="shelf-book-cover c3">📗</div>
-        <div class="shelf-book-name">心流</div>
-        <div class="shelf-book-author">米哈里</div>
-      </div>
-      <div class="shelf-book">
-        <div class="shelf-book-cover c1">📙</div>
-        <div class="shelf-book-name">纳瓦尔宝典</div>
-        <div class="shelf-book-author">纳瓦尔</div>
-      </div>
-      <div class="shelf-book">
-        <div class="shelf-book-cover c2">📓</div>
-        <div class="shelf-book-name">人间值得</div>
-        <div class="shelf-book-author">中村恒子</div>
-      </div>
-      <div class="shelf-book">
-        <div class="shelf-add" id="addBook">
-          <span class="plus">+</span>
-          <span class="add-text">添加书籍</span>
-        </div>
-      </div>
+  <!-- 第2块：我的书架（快捷跳转按钮） -->
+  <div class="section-title"><span class="emoji">📚</span>我的书架</div>
+  <div class="shelf-grid" id="shelfGrid">
+    <div class="shelf-btn" data-url="https://weread.qq.com/" data-scheme="weread://">
+      <div class="shelf-btn-icon" style="background:#EBF2F8;">📖</div>
+      <div class="shelf-btn-name">微信读书</div>
+    </div>
+    <div class="shelf-btn" data-url="https://book.douban.com/">
+      <div class="shelf-btn-icon" style="background:#E8F5E9;">📗</div>
+      <div class="shelf-btn-name">豆瓣读书</div>
+    </div>
+    <div class="shelf-btn" data-url="https://read.douban.com/">
+      <div class="shelf-btn-icon" style="background:#FFF3E0;">📕</div>
+      <div class="shelf-btn-name">豆瓣阅读</div>
+    </div>
+    <div class="shelf-btn" data-url="https://www.qidian.com/">
+      <div class="shelf-btn-icon" style="background:#FCE4EC;">📙</div>
+      <div class="shelf-btn-name">起点读书</div>
+    </div>
+    <div class="shelf-btn" data-url="https://www.amazon.com/Kindle-eBooks">
+      <div class="shelf-btn-icon" style="background:#FFF8E1;">📚</div>
+      <div class="shelf-btn-name">Kindle</div>
     </div>
   </div>
 
-  <!-- 第3块：最近阅读 -->
-  <div class="section-title"><span class="emoji">📖</span>最近阅读</div>
-  <div class="recent-scroll">
-    <div class="recent-book" id="recentBook1">
-      <div class="recent-cover c1">
-        📕
-        <div class="progress-bar"><div class="fill" style="width:72%;"></div></div>
-      </div>
-      <div class="recent-name">被讨厌的勇气</div>
-      <div class="recent-author">岸见一郎</div>
+  <!-- 第3块：最近阅读（自定义封面+链接） -->
+  <div class="section-title">
+    <span class="emoji">📖</span>最近阅读
+    <button class="refresh-btn" id="editRecent" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    </button>
+  </div>
+  <div class="recent-scroll" id="recentScroll"></div>
+
+  <!-- 添加书籍弹窗 -->
+  <div class="book-modal-overlay" id="bookModalOverlay"></div>
+  <div class="book-modal" id="bookModal">
+    <div class="book-modal-title">添加最近阅读</div>
+    <div class="book-modal-group">
+      <label>书名</label>
+      <input type="text" class="book-modal-input" id="bookNameInput" placeholder="请输入书名" />
     </div>
-    <div class="recent-book" id="recentBook2">
-      <div class="recent-cover c2">
-        📘
-        <div class="progress-bar"><div class="fill" style="width:45%;"></div></div>
-      </div>
-      <div class="recent-name">原子习惯</div>
-      <div class="recent-author">James Clear</div>
+    <div class="book-modal-group">
+      <label>作者（选填）</label>
+      <input type="text" class="book-modal-input" id="bookAuthorInput" placeholder="请输入作者" />
     </div>
-    <div class="recent-book" id="recentBook3">
-      <div class="recent-cover c3">
-        📗
-        <div class="progress-bar"><div class="fill" style="width:20%;"></div></div>
-      </div>
-      <div class="recent-name">心流</div>
-      <div class="recent-author">米哈里·契克森米哈赖</div>
+    <div class="book-modal-group">
+      <label>封面图片链接</label>
+      <input type="text" class="book-modal-input" id="bookCoverInput" placeholder="粘贴封面图片URL" />
+      <div class="book-cover-preview" id="coverPreview"><img id="coverPreviewImg" src="" alt="" /></div>
+    </div>
+    <div class="book-modal-group">
+      <label>跳转链接</label>
+      <input type="text" class="book-modal-input" id="bookLinkInput" placeholder="粘贴书籍阅读链接" />
+    </div>
+    <div class="book-modal-btns">
+      <button class="btn-cancel" id="bookCancel" type="button">取消</button>
+      <button class="btn-confirm" id="bookConfirm" type="button">确认添加</button>
     </div>
   </div>
 
@@ -656,6 +705,83 @@ function renderHistory(){
   list.innerHTML=html;
 }
 
+/* ============================================
+   最近阅读 - 自定义封面+链接（localStorage持久化）
+   ============================================ */
+var RECENT_BOOKS_KEY='recent_books';
+function getRecentBooks(){try{return JSON.parse(localStorage.getItem(RECENT_BOOKS_KEY)||'[]')}catch(e){return[]}}
+function saveRecentBooks(books){localStorage.setItem(RECENT_BOOKS_KEY,JSON.stringify(books))}
+function renderRecentBooks(){
+  var books=getRecentBooks();
+  var container=document.getElementById('recentScroll');
+  if(!container)return;
+  var html='';
+  books.forEach(function(book,idx){
+    var coverHtml=book.cover
+      ?'<img src="'+book.cover+'" alt="'+(book.name||'')+'" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'📖\'">'
+      :'📖';
+    html+='<div class="recent-book" data-link="'+(book.link||'')+'" data-idx="'+idx+'">'+
+      '<div class="recent-cover">'+coverHtml+
+        '<button class="recent-del" data-idx="'+idx+'" type="button">×</button>'+
+      '</div>'+
+      '<div class="recent-name">'+(book.name||'')+'</div>'+
+      '<div class="recent-author">'+(book.author||'')+'</div>'+
+    '</div>';
+  });
+  html+='<div class="recent-add" id="addRecentBook"><span class="plus">+</span><span class="add-text">添加</span></div>';
+  container.innerHTML=html;
+  /* 更新藏书总数 */
+  var bookCountEl=document.getElementById('bookCount');
+  if(bookCountEl)bookCountEl.textContent=books.length;
+  bindRecentBookEvents();
+}
+function bindRecentBookEvents(){
+  var container=document.getElementById('recentScroll');
+  if(!container)return;
+  /* 点击书籍跳转 */
+  container.querySelectorAll('.recent-book').forEach(function(el){
+    el.addEventListener('click',function(e){
+      if(e.target.classList.contains('recent-del'))return;
+      if(el.classList.contains('editing'))return;
+      e.stopPropagation();
+      var link=el.getAttribute('data-link');
+      if(link){window.location.href=link}else{showToast('暂无跳转链接')}
+    });
+  });
+  /* 删除书籍 */
+  container.querySelectorAll('.recent-del').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var idx=parseInt(btn.getAttribute('data-idx'));
+      var books=getRecentBooks();
+      books.splice(idx,1);
+      saveRecentBooks(books);
+      renderRecentBooks();
+      showToast('已删除');
+    });
+  });
+  /* 添加书籍 */
+  var addBtn=document.getElementById('addRecentBook');
+  if(addBtn)addBtn.addEventListener('click',function(e){
+    e.stopPropagation();
+    openBookModal();
+  });
+}
+function openBookModal(){
+  document.getElementById('bookNameInput').value='';
+  document.getElementById('bookAuthorInput').value='';
+  document.getElementById('bookCoverInput').value='';
+  document.getElementById('bookLinkInput').value='';
+  var cp=document.getElementById('coverPreview');
+  if(cp)cp.classList.remove('show');
+  document.getElementById('bookModalOverlay').classList.add('open');
+  document.getElementById('bookModal').classList.add('open');
+}
+function closeBookModal(){
+  document.getElementById('bookModalOverlay').classList.remove('open');
+  document.getElementById('bookModal').classList.remove('open');
+}
+
 /* 事件绑定 */
 document.addEventListener('DOMContentLoaded',function(){
   var checkinBtn=document.getElementById('checkinBtn');
@@ -733,26 +859,88 @@ document.addEventListener('DOMContentLoaded',function(){
     openWeRead(e);
   });
 
-  /* 刷新书架 */
-  var refreshShelf=document.getElementById('refreshShelf');
-  if(refreshShelf)refreshShelf.addEventListener('click',function(e){
-    e.preventDefault();e.stopPropagation();
-    showToast('书架已刷新 📚');
-  });
-
-  /* 添加书籍 */
-  var addBook=document.getElementById('addBook');
-  if(addBook)addBook.addEventListener('click',function(e){
-    e.preventDefault();e.stopPropagation();
-    showToast('请前往微信读书添加');
-  });
-
-  /* 最近阅读点击 */
-  document.querySelectorAll('.recent-book').forEach(function(el){
-    el.addEventListener('click',function(e){
+  /* 书架快捷跳转按钮 */
+  document.querySelectorAll('.shelf-btn').forEach(function(btn){
+    btn.addEventListener('click',function(e){
       e.stopPropagation();
-      openWeRead(e);
+      var url=btn.getAttribute('data-url');
+      var scheme=btn.getAttribute('data-scheme');
+      if(scheme){
+        /* 尝试唤起App，失败则跳网页版 */
+        var start=Date.now();
+        var timer=setTimeout(function(){
+          if(Date.now()-start<2200){window.location.href=url}
+        },2000);
+        var ua=navigator.userAgent.toLowerCase();
+        var isIOS=/iphone|ipad|ipod/.test(ua);
+        if(isIOS){
+          var iframe=document.createElement('iframe');
+          iframe.style.display='none';
+          iframe.src=scheme;
+          document.body.appendChild(iframe);
+          setTimeout(function(){document.body.removeChild(iframe)},300);
+        }else{
+          window.location.href=scheme;
+        }
+        document.addEventListener('visibilitychange',function(){
+          if(document.hidden){clearTimeout(timer)}
+        },{once:true});
+      }else{
+        window.location.href=url;
+      }
     });
+  });
+
+  /* 最近阅读弹窗 */
+  var bookOverlay=document.getElementById('bookModalOverlay');
+  var bookCancel=document.getElementById('bookCancel');
+  var bookConfirm=document.getElementById('bookConfirm');
+  if(bookOverlay)bookOverlay.addEventListener('click',closeBookModal);
+  if(bookCancel)bookCancel.addEventListener('click',function(e){e.stopPropagation();closeBookModal()});
+
+  /* 封面链接实时预览 */
+  var coverInput=document.getElementById('bookCoverInput');
+  var coverPreview=document.getElementById('coverPreview');
+  var coverPreviewImg=document.getElementById('coverPreviewImg');
+  if(coverInput)coverInput.addEventListener('input',function(){
+    var url=coverInput.value.trim();
+    if(url){
+      coverPreviewImg.src=url;
+      coverPreview.classList.add('show');
+      coverPreviewImg.onerror=function(){coverPreview.classList.remove('show')};
+    }else{
+      coverPreview.classList.remove('show');
+    }
+  });
+
+  if(bookConfirm)bookConfirm.addEventListener('click',function(e){
+    e.stopPropagation();
+    var name=document.getElementById('bookNameInput').value.trim();
+    if(!name){showToast('请输入书名');return}
+    var author=document.getElementById('bookAuthorInput').value.trim();
+    var cover=document.getElementById('bookCoverInput').value.trim();
+    var link=document.getElementById('bookLinkInput').value.trim();
+    var books=getRecentBooks();
+    books.push({name:name,author:author,cover:cover,link:link});
+    saveRecentBooks(books);
+    renderRecentBooks();
+    closeBookModal();
+    showToast('添加成功 📖');
+  });
+
+  /* 编辑模式切换（删除书籍） */
+  var editRecent=document.getElementById('editRecent');
+  if(editRecent)editRecent.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    var container=document.getElementById('recentScroll');
+    if(!container)return;
+    var bookEls=container.querySelectorAll('.recent-book');
+    if(bookEls.length===0){showToast('暂无书籍可编辑');return}
+    var isEditing=bookEls[0].classList.contains('editing');
+    bookEls.forEach(function(b){
+      if(isEditing){b.classList.remove('editing')}else{b.classList.add('editing')}
+    });
+    showToast(isEditing?'已退出编辑':'点击×删除书籍');
   });
 
   /* 有声书点击 */
@@ -762,6 +950,9 @@ document.addEventListener('DOMContentLoaded',function(){
       showToast('即将打开有声书 🎧');
     });
   });
+
+  /* 渲染最近阅读 */
+  renderRecentBooks();
 
   /* 渲染打卡历史 */
   renderHistory();
