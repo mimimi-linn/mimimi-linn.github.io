@@ -412,7 +412,7 @@ body {
   <div class="podcast-card">
     <div class="platform-title"><span class="dot douyin"></span>抖音常看</div>
     <div class="podcast-list">
-      <div class="podcast-item" data-url="https://www.douyin.com/user/MS4wLjABAAAA2O85rynMZP11qdfr_2C_7k7VwArCpvrJh-VJYHwN51Q17TzqgZ2IhedmGQfnPplc">
+      <div class="podcast-item" data-platform="douyin" data-sec-uid="MS4wLjABAAAA2O85rynMZP11qdfr_2C_7k7VwArCpvrJh-VJYHwN51Q17TzqgZ2IhedmGQfnPplc" data-url="https://www.douyin.com/user/MS4wLjABAAAA2O85rynMZP11qdfr_2C_7k7VwArCpvrJh-VJYHwN51Q17TzqgZ2IhedmGQfnPplc">
         <div class="podcast-avatar p1">🌶️</div>
         <div class="podcast-body">
           <div class="podcast-top">
@@ -424,7 +424,7 @@ body {
           <div class="podcast-desc">温暖治愈的情感分享</div>
         </div>
       </div>
-      <div class="podcast-item" data-url="https://www.douyin.com/user/MS4wLjABAAAAoEfsaMGI3JP-n2OZb2hFA_UJijcyAGydtgrNfVdKyvA">
+      <div class="podcast-item" data-platform="douyin" data-sec-uid="MS4wLjABAAAAoEfsaMGI3JP-n2OZb2hFA_UJijcyAGydtgrNfVdKyvA" data-url="https://www.douyin.com/user/MS4wLjABAAAAoEfsaMGI3JP-n2OZb2hFA_UJijcyAGydtgrNfVdKyvA">
         <div class="podcast-avatar p2">🥛</div>
         <div class="podcast-body">
           <div class="podcast-top">
@@ -506,8 +506,40 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.podcast-item').forEach(function(el){
     el.addEventListener('click',function(e){
       e.stopPropagation();
+      var platform=el.getAttribute('data-platform');
       var url=el.getAttribute('data-url');
-      if(url){window.location.href=url}
+      if(!url)return;
+
+      /* 抖音：先尝试唤起App，失败回退网页版 */
+      if(platform==='douyin'){
+        var secUid=el.getAttribute('data-sec-uid');
+        if(secUid){
+          var scheme='snssdk1128://user/profile?sec_uid='+secUid;
+          var startTime=Date.now();
+          var opened=false;
+
+          /* 监听页面隐藏（App成功唤起时页面会隐藏） */
+          var visHandler=function(){
+            if(document.hidden){opened=true}
+          };
+          document.addEventListener('visibilitychange',visHandler);
+
+          /* 2.5秒后检测：如果页面仍可见说明App未唤起，回退到网页版 */
+          setTimeout(function(){
+            document.removeEventListener('visibilitychange',visHandler);
+            if(!opened && Date.now()-startTime<3500){
+              window.location.href=url;
+            }
+          },2500);
+
+          /* 尝试唤起抖音App */
+          window.location.href=scheme;
+          return;
+        }
+      }
+
+      /* 其他平台直接跳转 */
+      window.location.href=url;
     });
   });
 
