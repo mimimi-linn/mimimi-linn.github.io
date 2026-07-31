@@ -658,60 +658,73 @@ var internationalKeywords = ['美国', '日本', '俄罗斯', '欧盟', '联合�
 var allStreamData = { domestic: [], international: [] };
 
 function fetchStreamNews() {
-  var cbName = 'newsStreamCallback_' + Date.now();
-  window[cbName] = function(data) {
-    if(data && data.LivesList) {
-      var domestic = [];
-      var international = [];
-      data.LivesList.forEach(function(item) {
-        var text = (item.title || '') + (item.digest || '');
-        var emoji = '📰';
-        var isDomestic = false;
-        var isInternational = false;
-
-        for(var i = 0; i < domesticKeywords.length; i++) {
-          if(text.indexOf(domesticKeywords[i]) !== -1) { isDomestic = true; break; }
-        }
-        for(var j = 0; j < internationalKeywords.length; j++) {
-          if(text.indexOf(internationalKeywords[j]) !== -1) { isInternational = true; break; }
-        }
-
-        if(isInternational) emoji = '🌍';
-        else if(isDomestic) emoji = '🏛️';
-
-        var newsItem = {
-          id: item.newsid || item.id,
-          emoji: emoji,
-          title: item.title,
-          source: '东方财富',
-          time: item.showtime || '',
-          url: item.url_m || item.url_w || ''
-        };
-
-        if(isDomestic) domestic.push(newsItem);
-        if(isInternational) international.push(newsItem);
-      });
-
-      allStreamData.domestic = domestic.slice(0, 30);
-      allStreamData.international = international.slice(0, 30);
-      renderStream('domestic');
-    }
-    delete window[cbName];
-    var s = document.querySelector('#streamScript');
-    if(s && s.parentNode) s.parentNode.removeChild(s);
-  };
-
+  /* 东方财富接口固定写入全局变量 ajaxResult，不支持自定义回调名 */
   var oldScript = document.querySelector('#streamScript');
   if(oldScript) oldScript.parentNode.removeChild(oldScript);
 
+  /* 先清除旧数据 */
+  window.ajaxResult = null;
+
   var script = document.createElement('script');
   script.id = 'streamScript';
-  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_50_1_.html?cb=' + cbName;
+  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_50_1_.html';
   script.onerror = function() {
     document.getElementById('newsList').innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">资讯获取失败，请稍后刷新重试</div>';
-    delete window[cbName];
   };
   document.head.appendChild(script);
+
+  /* 轮询等待 ajaxResult 被赋值 */
+  var attempts = 0;
+  var timer = setInterval(function() {
+    attempts++;
+    if(window.ajaxResult && window.ajaxResult.LivesList) {
+      clearInterval(timer);
+      processStreamData(window.ajaxResult);
+      if(script.parentNode) script.parentNode.removeChild(script);
+    } else if(attempts > 15) {
+      clearInterval(timer);
+      document.getElementById('newsList').innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">资讯加载超时，请稍后刷新重试</div>';
+      if(script.parentNode) script.parentNode.removeChild(script);
+    }
+  }, 200);
+}
+
+function processStreamData(data) {
+  if(!data || !data.LivesList) return;
+  var domestic = [];
+  var international = [];
+  data.LivesList.forEach(function(item) {
+    var text = (item.title || '') + (item.digest || '');
+    var emoji = '📰';
+    var isDomestic = false;
+    var isInternational = false;
+
+    for(var i = 0; i < domesticKeywords.length; i++) {
+      if(text.indexOf(domesticKeywords[i]) !== -1) { isDomestic = true; break; }
+    }
+    for(var j = 0; j < internationalKeywords.length; j++) {
+      if(text.indexOf(internationalKeywords[j]) !== -1) { isInternational = true; break; }
+    }
+
+    if(isInternational) emoji = '🌍';
+    else if(isDomestic) emoji = '🏛️';
+
+    var newsItem = {
+      id: item.newsid || item.id,
+      emoji: emoji,
+      title: item.title,
+      source: '东方财富',
+      time: item.showtime || '',
+      url: item.url_m || item.url_w || ''
+    };
+
+    if(isDomestic) domestic.push(newsItem);
+    if(isInternational) international.push(newsItem);
+  });
+
+  allStreamData.domestic = domestic.slice(0, 30);
+  allStreamData.international = international.slice(0, 30);
+  renderStream('domestic');
 }
 
 function renderStream(type) {
