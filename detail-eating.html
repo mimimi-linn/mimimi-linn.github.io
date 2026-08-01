@@ -6,11 +6,12 @@
 <title>🍱 饮食</title>
 <style>
 /* ============================================
-   饮食页 - 暖橙 × 薄荷绿点缀
+   饮食页 - 蓝灰薄荷主色调
    ============================================ */
 :root {
   --mint: #6B9AC4;
   --mint-light: #EBF2F8;
+  --mint-lighter: #F5F8FC;
   --orange: #E8915A;
   --orange-light: #FFF3EC;
   --orange-lighter: #FFF8F3;
@@ -24,9 +25,9 @@
   --border: #E8E8E8;
   --white: #FFFFFF;
   --bg: #FAFAFA;
-  --shadow: 0 2px 12px rgba(232, 145, 90, 0.10);
+  --shadow: 0 2px 12px rgba(107, 154, 196, 0.10);
   --shadow-mint: 0 2px 12px rgba(107, 154, 196, 0.10);
-  --shadow-float: 0 4px 20px rgba(232, 145, 90, 0.15);
+  --shadow-float: 0 4px 20px rgba(107, 154, 196, 0.15);
 }
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -51,14 +52,14 @@ body {
 }
 .header-back {
   width: 36px; height: 36px; border: none; border-radius: 50%;
-  background: var(--orange-light); display: flex; align-items: center; justify-content: center;
+  background: var(--mint-light); display: flex; align-items: center; justify-content: center;
   text-decoration: none; color: var(--choco); font-size: 18px; flex-shrink: 0;
 }
 .header-back:active { transform: scale(0.92); }
 .header-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--choco); }
 .header-drawer {
   width: 36px; height: 36px; border: none; border-radius: 50%;
-  background: var(--orange); display: flex; align-items: center; justify-content: center;
+  background: var(--mint); display: flex; align-items: center; justify-content: center;
   cursor: pointer; flex-shrink: 0;
 }
 .header-drawer:active { transform: scale(0.92); }
@@ -96,7 +97,7 @@ body {
 }
 .dual-card:active { transform: scale(0.96); }
 .dual-card.recipe {
-  background: linear-gradient(135deg, #FFF3EC, #FFF8F3);
+  background: linear-gradient(135deg, #EBF2F8, #F5F8FC);
 }
 .dual-card.fav {
   background: linear-gradient(135deg, #FFF0F0, #FFF8F8);
@@ -106,7 +107,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 26px; flex-shrink: 0;
 }
-.dual-card.recipe .dual-card-icon { background: rgba(232, 145, 90, 0.15); }
+.dual-card.recipe .dual-card-icon { background: rgba(107, 154, 196, 0.15); }
 .dual-card.fav .dual-card-icon { background: rgba(212, 85, 85, 0.12); }
 .dual-card-title {
   font-size: 14px; font-weight: 700; color: var(--choco);
@@ -157,14 +158,14 @@ body {
 .week-btn .week-day { font-size: 11px; }
 .week-btn .week-date { font-size: 13px; font-weight: 700; }
 .week-btn.active {
-  background: linear-gradient(135deg, var(--orange), #F0A878);
+  background: linear-gradient(135deg, var(--mint), #8AB5D6);
   color: var(--white);
-  border-color: var(--orange);
-  box-shadow: 0 2px 10px rgba(232, 145, 90, 0.3);
+  border-color: var(--mint);
+  box-shadow: 0 2px 10px rgba(107, 154, 196, 0.3);
 }
 .week-btn.today:not(.active) {
-  border-color: var(--orange);
-  color: var(--orange);
+  border-color: var(--mint);
+  color: var(--mint);
 }
 .week-btn:active { transform: scale(0.95); }
 
@@ -182,7 +183,7 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; flex-shrink: 0;
 }
-.meal-breakfast .meal-icon { background: var(--orange-light); }
+.meal-breakfast .meal-icon { background: var(--mint-light); }
 .meal-lunch .meal-icon { background: var(--mint-light); }
 .meal-dinner .meal-icon { background: #F0E6F6; }
 .meal-snack .meal-icon { background: var(--green-light); }
@@ -202,11 +203,11 @@ body {
 .food-tag {
   display: flex; align-items: center; gap: 4px;
   padding: 8px 14px;
-  background: var(--orange-lighter);
+  background: var(--mint-lighter);
   border-radius: 12px;
   font-size: 13px; font-weight: 500;
   color: var(--choco);
-  border: 1px solid rgba(232, 145, 90, 0.15);
+  border: 1px solid rgba(107, 154, 196, 0.15);
 }
 .meal-lunch .food-tag { background: var(--mint-light); border-color: rgba(107, 154, 196, 0.15); }
 .meal-dinner .food-tag { background: #F8F0FC; border-color: rgba(150, 100, 180, 0.15); }
@@ -223,7 +224,7 @@ body {
   cursor: pointer; transition: all 0.2s;
   font-family: inherit;
 }
-.add-food-btn:active { border-color: var(--orange); color: var(--orange); }
+.add-food-btn:active { border-color: var(--mint); color: var(--mint); }
 .meal-lunch .add-food-btn:active { border-color: var(--mint); color: var(--mint); }
 .meal-dinner .add-food-btn:active { border-color: #9670B4; color: #9670B4; }
 .meal-snack .add-food-btn:active { border-color: var(--green); color: var(--green); }
@@ -284,12 +285,12 @@ body {
 .recipe-item {
   display: flex; align-items: center; gap: 12px;
   padding: 14px;
-  background: var(--orange-lighter);
+  background: var(--mint-lighter);
   border-radius: 14px;
 }
 .recipe-emoji {
   width: 40px; height: 40px; border-radius: 10px;
-  background: var(--orange-light);
+  background: var(--mint-light);
   display: flex; align-items: center; justify-content: center;
   font-size: 22px; flex-shrink: 0;
 }
@@ -314,10 +315,10 @@ body {
   color: var(--choco); outline: none; transition: border 0.2s;
   background: var(--bg);
 }
-.recipe-input:focus { border-color: var(--orange); background: var(--white); }
+.recipe-input:focus { border-color: var(--mint); background: var(--white); }
 .recipe-add-btn {
   width: 44px; height: 44px; border: none; border-radius: 12px;
-  background: linear-gradient(135deg, var(--orange), #F0A878);
+  background: linear-gradient(135deg, var(--mint), #8AB5D6);
   color: var(--white); font-size: 20px; cursor: pointer;
   flex-shrink: 0; transition: transform 0.15s;
 }
@@ -327,7 +328,7 @@ body {
 .recipe-form {
   display: none;
   padding: 14px;
-  background: var(--orange-lighter);
+  background: var(--mint-lighter);
   border-radius: 14px;
   margin-bottom: 12px;
 }
@@ -345,7 +346,7 @@ body {
   outline: none; line-height: 1.6; transition: border 0.2s;
   margin-top: 8px;
 }
-.recipe-textarea:focus { border-color: var(--orange); }
+.recipe-textarea:focus { border-color: var(--mint); }
 .recipe-textarea::placeholder { color: var(--choco-hint); }
 .recipe-form-btns {
   display: flex; gap: 8px; margin-top: 10px;
@@ -359,7 +360,7 @@ body {
 .recipe-cancel-btn:active { background: var(--bg); }
 .recipe-save-btn {
   flex: 2; height: 42px; border: none; border-radius: 12px;
-  background: linear-gradient(135deg, var(--orange), #F0A878);
+  background: linear-gradient(135deg, var(--mint), #8AB5D6);
   color: var(--white); font-size: 14px; font-weight: 600;
   cursor: pointer; font-family: inherit; transition: transform 0.15s;
 }
@@ -367,12 +368,12 @@ body {
 
 /* 添加菜谱大按钮 */
 .recipe-add-big-btn {
-  width: 100%; height: 44px; border: 1.5px dashed var(--orange);
-  border-radius: 12px; background: var(--orange-light);
-  color: var(--orange); font-size: 14px; font-weight: 600;
+  width: 100%; height: 44px; border: 1.5px dashed var(--mint);
+  border-radius: 12px; background: var(--mint-light);
+  color: var(--mint); font-size: 14px; font-weight: 600;
   cursor: pointer; font-family: inherit; transition: all 0.2s;
 }
-.recipe-add-big-btn:active { background: var(--orange); color: var(--white); }
+.recipe-add-big-btn:active { background: var(--mint); color: var(--white); }
 .recipe-add-big-btn.hide { display: none; }
 
 /* 食谱项操作按钮 */
@@ -381,7 +382,7 @@ body {
 }
 .recipe-edit-btn {
   width: 28px; height: 28px; border: none; border-radius: 8px;
-  background: var(--orange-light); color: var(--orange);
+  background: var(--mint-light); color: var(--mint);
   font-size: 13px; cursor: pointer; transition: all 0.2s;
 }
 .recipe-edit-btn:active { transform: scale(0.9); }
@@ -414,11 +415,11 @@ body {
 }
 .food-quick-tag {
   padding: 7px 14px; border-radius: 10px;
-  background: var(--orange-lighter); border: 1px solid rgba(232,145,90,0.12);
+  background: var(--mint-lighter); border: 1px solid rgba(107,154,196,0.12);
   font-size: 12px; color: var(--choco); cursor: pointer;
   transition: all 0.15s; font-family: inherit;
 }
-.food-quick-tag:active { background: var(--orange); color: var(--white); }
+.food-quick-tag:active { background: var(--mint); color: var(--white); }
 
 /* ============================================
    添加食物弹窗
@@ -441,22 +442,22 @@ body {
 }
 .btn-primary {
   flex: 2; height: 48px; border: none; border-radius: 14px;
-  background: linear-gradient(135deg, var(--orange), #F0A878); color: var(--white);
+  background: linear-gradient(135deg, var(--mint), #8AB5D6); color: var(--white);
   font-size: 15px; font-weight: 600; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 6px;
   transition: transform 0.15s; font-family: inherit;
-  box-shadow: 0 2px 8px rgba(232, 145, 90, 0.25);
+  box-shadow: 0 2px 8px rgba(107, 154, 196, 0.25);
 }
 .btn-primary:active { transform: scale(0.97); }
-.btn-primary.checked { background: var(--orange-light); color: var(--choco); border: 1.5px solid var(--orange); }
+.btn-primary.checked { background: var(--mint-light); color: var(--choco); border: 1.5px solid var(--mint); }
 .btn-secondary {
-  flex: 1; height: 48px; border: 1.5px solid var(--orange); border-radius: 14px;
+  flex: 1; height: 48px; border: 1.5px solid var(--mint); border-radius: 14px;
   background: var(--white); color: var(--choco);
   font-size: 15px; font-weight: 600; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 6px;
   transition: all 0.2s; font-family: inherit;
 }
-.btn-secondary:active { background: var(--orange-light); transform: scale(0.97); }
+.btn-secondary:active { background: var(--mint-light); transform: scale(0.97); }
 
 /* --- Toast --- */
 .toast {
@@ -477,13 +478,13 @@ body {
 .nav-tab:active { transform: scale(0.92); }
 .nav-tab svg { width: 24px; height: 24px; color: #B0B0B0; transition: color 0.2s; }
 .nav-tab .nav-tab-label { font-size: 11px; color: #B0B0B0; font-weight: 500; transition: color 0.2s; }
-.nav-tab.active svg { color: var(--orange); }
-.nav-tab.active .nav-tab-label { color: var(--orange); font-weight: 600; }
+.nav-tab.active svg { color: var(--mint); }
+.nav-tab.active .nav-tab-label { color: var(--mint); font-weight: 600; }
 
 /* ===== 左侧固定侧边栏 ===== */
 .sidebar { position: fixed; top: 0; left: 0; width: 104px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
 .sidebar-header { padding: 14px 10px 10px; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
-.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #E8915A 0%, #F0A878 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .sidebar-name { font-size: 16px; font-weight: 700; color: #3D3D3D; line-height: 1.3; text-align: center; }
 .sidebar-menu { flex: 1; overflow-y: auto; padding: 6px 0; -webkit-overflow-scrolling: touch; }
 .sidebar-menu::-webkit-scrollbar { display: none; }
@@ -491,10 +492,10 @@ body {
 .sidebar-item:active { transform: scale(0.95); }
 .sidebar-item .sb-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
-.sidebar-item.active { background: rgba(232, 145, 90, 0.15); color: #E8915A; }
+.sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
-<meta name="theme-color" content="#E8915A">
+<meta name="theme-color" content="#6B9AC4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
