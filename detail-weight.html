@@ -138,29 +138,29 @@ body {
 }
 .checkin-item:active { transform: scale(0.95); }
 .checkin-item.done {
-  background: var(--green-light);
+  background: var(--mint-light);
 }
 .checkin-item.pending {
-  background: var(--orange-light);
+  background: var(--mint-lighter);
 }
 .checkin-icon {
   width: 36px; height: 36px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0;
 }
-.checkin-item.done .checkin-icon { background: rgba(39,174,96,0.15); }
-.checkin-item.pending .checkin-icon { background: rgba(232,145,90,0.15); }
+.checkin-item.done .checkin-icon { background: rgba(107,154,196,0.2); }
+.checkin-item.pending .checkin-icon { background: rgba(107,154,196,0.1); }
 .checkin-name { font-size: 11px; font-weight: 600; color: var(--choco); text-align: center; }
 .checkin-status {
   font-size: 10px; font-weight: 600;
   padding: 2px 8px; border-radius: 8px;
 }
-.checkin-item.done .checkin-status { color: var(--green); background: rgba(39,174,96,0.1); }
-.checkin-item.pending .checkin-status { color: var(--orange); background: rgba(232,145,90,0.1); }
+.checkin-item.done .checkin-status { color: var(--mint); background: rgba(107,154,196,0.12); }
+.checkin-item.pending .checkin-status { color: var(--mint); background: rgba(107,154,196,0.08); }
 .checkin-check {
   position: absolute; top: 6px; right: 6px;
   width: 16px; height: 16px; border-radius: 50%;
-  background: var(--green); color: var(--white);
+  background: var(--mint); color: var(--white);
   display: none; align-items: center; justify-content: center;
   font-size: 10px; font-weight: 700;
 }
