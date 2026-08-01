@@ -2194,7 +2194,7 @@ function switchTab(tabName){
 
 /* 绑定导航按钮点击事件 + 读取URL hash跳转 */
 document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.nav-tab').forEach(function(tab){
+  document.querySelectorAll('.nav-tab[data-tab]').forEach(function(tab){
     tab.addEventListener('click',function(e){
       e.preventDefault();
       e.stopPropagation();
