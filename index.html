@@ -1550,33 +1550,44 @@ const ICONS = {
 };
 
 // ============================================
-// 语录数据（自定义语录库）
+// 语录数据（纯自定义语录库）
 // ============================================
-const DEFAULT_QUOTES = [
-  '做难事必有所得，走远路必有所归。',
-  '温柔且坚定地，做好每一件小事。',
-  '慢慢来，比较快。',
-  '每一次坚持，都是未来的伏笔。',
-  '今天比昨天好一点点，就够了。',
-  '不急不躁，自有光芒。',
-  '把每一天当作新的开始。',
-  '自律即自由，行动即答案。',
-  '星光不问赶路人，时光不负有心人。',
-  '你只管努力，时间会给你答案。'
-];
-// 自定义语录库 = 默认语录 + 用户添加
-let customQuotes = [...DEFAULT_QUOTES];
+const DEFAULT_QUOTES = [];
+let customQuotes = [];
 let selectedQuoteIndex = 0;
+
+// 从 localStorage 加载自定义语录
+function loadCustomQuotes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('custom_quotes') || '[]');
+    customQuotes = saved.length > 0 ? saved : [];
+  } catch(e) { customQuotes = []; }
+  try {
+    selectedQuoteIndex = parseInt(localStorage.getItem('selected_quote_index') || '0');
+    if(selectedQuoteIndex >= customQuotes.length) selectedQuoteIndex = 0;
+  } catch(e) { selectedQuoteIndex = 0; }
+}
+
+// 保存自定义语录到 localStorage
+function saveCustomQuotes() {
+  localStorage.setItem('custom_quotes', JSON.stringify(customQuotes));
+  localStorage.setItem('selected_quote_index', String(selectedQuoteIndex));
+}
 
 // 应用语录到首页卡片
 function applyQuote(index) {
   selectedQuoteIndex = index;
+  saveCustomQuotes();
   const el = document.getElementById('quoteText');
   el.style.opacity = '0';
   el.style.transform = 'translateY(8px)';
   el.style.transition = 'all 0.3s ease';
   setTimeout(() => {
-    el.textContent = `「${customQuotes[index]}」`;
+    if(customQuotes.length === 0) {
+      el.textContent = '点击「编辑」添加你的专属语录 ✨';
+    } else {
+      el.textContent = `「${customQuotes[index]}」`;
+    }
     el.style.opacity = '1';
     el.style.transform = 'translateY(0)';
   }, 200);
@@ -1604,7 +1615,6 @@ function renderQuoteList() {
   container.innerHTML = '';
   customQuotes.forEach((quote, index) => {
     const isSelected = index === selectedQuoteIndex;
-    const isCustom = index >= DEFAULT_QUOTES.length;
     const div = document.createElement('div');
     div.className = `sheet-quote-item ${isSelected ? 'selected' : ''}`;
     div.innerHTML = `
@@ -1612,9 +1622,9 @@ function renderQuoteList() {
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
       <div class="sheet-quote-text">${escapeQuoteHtml(quote)}</div>
-      ${isCustom ? `<button class="sheet-quote-delete" data-index="${index}">
+      <button class="sheet-quote-delete" data-index="${index}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
-      </button>` : ''}
+      </button>
     `;
     // 点击选中
     div.addEventListener('click', function(e) {
@@ -1629,8 +1639,9 @@ function renderQuoteList() {
         e.stopPropagation();
         customQuotes.splice(index, 1);
         if (selectedQuoteIndex >= customQuotes.length) {
-          selectedQuoteIndex = 0;
+          selectedQuoteIndex = Math.max(0, customQuotes.length - 1);
         }
+        saveCustomQuotes();
         applyQuote(selectedQuoteIndex);
         renderQuoteList();
         showToast('已删除该语录 🗑️');
@@ -1807,6 +1818,7 @@ function addCustomQuote() {
     return;
   }
   customQuotes.push(text);
+  saveCustomQuotes();
   input.value = '';
   applyQuote(customQuotes.length - 1);
   renderQuoteList();
@@ -1891,6 +1903,7 @@ window.showToast = showToast;
   renderDrawerMenu();
 
   // 初始化语录
+  loadCustomQuotes();
   applyQuote(selectedQuoteIndex);
   // 初始化语录面板事件
   initQuoteSheetEvents();
