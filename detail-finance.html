@@ -847,55 +847,129 @@ function updateSectorItem(varName, sectorName) {
    ============================================ */
 var allNewsData = { latest: [], fav: [] };
 
+/* 重试与缓存配置 */
+var newsRetryCount = 0;
+var NEWS_MAX_RETRY = 3;
+var newsFromCache = false;
+var NEWS_CACHE_KEY = 'news_cache_finance';
+var NEWS_CACHE_TTL = 30 * 60 * 1000; /* 30分钟 */
+
+/* 读取本地缓存（超时后仍可返回，由调用方决定是否标注） */
+function getCachedNewsData() {
+  try {
+    var raw = localStorage.getItem(NEWS_CACHE_KEY);
+    if(!raw) return null;
+    var obj = JSON.parse(raw);
+    if(!obj || !obj.data) return null;
+    obj.expired = (Date.now() - (obj.time || 0)) > NEWS_CACHE_TTL;
+    return obj;
+  } catch(e) {
+    return null;
+  }
+}
+
+/* 保存数据到本地缓存 */
+function saveCachedNewsData(data) {
+  try {
+    localStorage.setItem(NEWS_CACHE_KEY, JSON.stringify({
+      data: data,
+      time: Date.now()
+    }));
+  } catch(e) {}
+}
+
+/* 解析东方财富数据并渲染（成功与缓存复用） */
+function processNewsData(data) {
+  if(!data || !data.LivesList) return;
+  allNewsData.latest = data.LivesList.map(function(item) {
+    var digest = item.digest || item.title || '';
+    var emoji = '📰';
+    if(digest.indexOf('央行') !== -1 || digest.indexOf('利率') !== -1) emoji = '🏦';
+    else if(digest.indexOf('A股') !== -1 || digest.indexOf('指数') !== -1) emoji = '📈';
+    else if(digest.indexOf('油价') !== -1 || digest.indexOf('商品') !== -1) emoji = '🛢️';
+    else if(digest.indexOf('汇率') !== -1 || digest.indexOf('人民币') !== -1) emoji = '💱';
+    else if(digest.indexOf('科技') !== -1 || digest.indexOf('AI') !== -1 || digest.indexOf('芯片') !== -1) emoji = '💻';
+    else if(digest.indexOf('房产') !== -1 || digest.indexOf('住房') !== -1) emoji = '🏠';
+    else if(digest.indexOf('美联储') !== -1 || digest.indexOf('日本') !== -1 || digest.indexOf('美国') !== -1) emoji = '🌍';
+
+    return {
+      id: item.newsid || item.id,
+      emoji: emoji,
+      title: item.title,
+      source: '东方财富',
+      time: item.showtime || '',
+      url: item.url_m || item.url_w || '',
+      digest: digest
+    };
+  });
+  renderNews('latest');
+}
+
 function fetchNewsData() {
-  var cbName = 'juheNewsCallback_' + Date.now();
-  window[cbName] = function(data) {
-    if(data && data.LivesList) {
-      allNewsData.latest = data.LivesList.map(function(item) {
-        var digest = item.digest || item.title || '';
-        var emoji = '📰';
-        if(digest.indexOf('央行') !== -1 || digest.indexOf('利率') !== -1) emoji = '🏦';
-        else if(digest.indexOf('A股') !== -1 || digest.indexOf('指数') !== -1) emoji = '📈';
-        else if(digest.indexOf('油价') !== -1 || digest.indexOf('商品') !== -1) emoji = '🛢️';
-        else if(digest.indexOf('汇率') !== -1 || digest.indexOf('人民币') !== -1) emoji = '💱';
-        else if(digest.indexOf('科技') !== -1 || digest.indexOf('AI') !== -1 || digest.indexOf('芯片') !== -1) emoji = '💻';
-        else if(digest.indexOf('房产') !== -1 || digest.indexOf('住房') !== -1) emoji = '🏠';
-        else if(digest.indexOf('美联储') !== -1 || digest.indexOf('日本') !== -1 || digest.indexOf('美国') !== -1) emoji = '🌍';
-
-        return {
-          id: item.newsid || item.id,
-          emoji: emoji,
-          title: item.title,
-          source: '东方财富',
-          time: item.showtime || '',
-          url: item.url_m || item.url_w || '',
-          digest: digest
-        };
-      });
-      renderNews('latest');
-    }
-    delete window[cbName];
-    if(oldScript.parentNode) oldScript.parentNode.removeChild(oldScript);
-  };
-
+  /* 东方财富接口固定写入全局变量 ajaxResult，不支持自定义回调名（去掉无用的 ?cb= 参数） */
   var oldScript = document.querySelector('#newsScript');
   if(oldScript) oldScript.parentNode.removeChild(oldScript);
 
+  /* 先清除旧数据 */
+  window.ajaxResult = null;
+  newsFromCache = false;
+
   var script = document.createElement('script');
   script.id = 'newsScript';
-  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_20_1_.html?cb=' + cbName;
+  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_20_1_.html';
   script.onerror = function() {
-    renderNewsFallback();
-    delete window[cbName];
+    handleNewsFail();
   };
   document.head.appendChild(script);
+
+  /* 轮询等待 ajaxResult 被赋值，30次×200ms=6秒超时 */
+  var attempts = 0;
+  var timer = setInterval(function() {
+    attempts++;
+    if(window.ajaxResult && window.ajaxResult.LivesList) {
+      clearInterval(timer);
+      processNewsData(window.ajaxResult);
+      saveCachedNewsData(window.ajaxResult);
+      if(script.parentNode) script.parentNode.removeChild(script);
+      newsRetryCount = 0;
+    } else if(attempts > 30) {
+      clearInterval(timer);
+      if(script.parentNode) script.parentNode.removeChild(script);
+      handleNewsFail();
+    }
+  }, 200);
+}
+
+/* 失败处理：重试 -> 缓存 -> 错误提示 */
+function handleNewsFail() {
+  newsRetryCount++;
+  if(newsRetryCount <= NEWS_MAX_RETRY) {
+    /* 友好的重试提示，间隔递增：1s, 2s, 3s */
+    allNewsData.latest = [
+      {id:'retry_' + newsRetryCount, emoji:'⏳', title:'资讯加载中，正在重试...（第' + newsRetryCount + '次）', source:'系统提示', time:'', url:'', digest:''}
+    ];
+    renderNews('latest');
+    setTimeout(function() {
+      fetchNewsData();
+    }, newsRetryCount * 1000);
+  } else {
+    /* 重试用尽，交由 renderNewsFallback 优先取缓存 */
+    newsRetryCount = 0;
+    renderNewsFallback();
+  }
 }
 
 function renderNewsFallback() {
-  allNewsData.latest = [
-    {id:'fb1', emoji:'⚠️', title:'实时资讯获取失败，请稍后刷新重试', source:'系统提示', time:'', url:'', digest:''}
-  ];
-  renderNews('latest');
+  var cached = getCachedNewsData();
+  if(cached && cached.data) {
+    newsFromCache = true;
+    processNewsData(cached.data);
+  } else {
+    allNewsData.latest = [
+      {id:'fb1', emoji:'⚠️', title:'实时资讯获取失败，请稍后刷新重试', source:'系统提示', time:'', url:'', digest:''}
+    ];
+    renderNews('latest');
+  }
 }
 
 function renderNews(type) {
@@ -906,6 +980,13 @@ function renderNews(type) {
     return;
   }
   list.innerHTML = '';
+  /* 缓存数据标注（仅在最新资讯且来自缓存时显示） */
+  if(type !== 'fav' && newsFromCache) {
+    var notice = document.createElement('div');
+    notice.style.cssText = 'text-align:center;padding:8px 12px;color:#E6A23C;font-size:12px;background:rgba(230,162,60,0.08);';
+    notice.textContent = '当前为缓存数据（可能非最新）';
+    list.appendChild(notice);
+  }
   data.forEach(function(item) {
     var div = document.createElement('div');
     div.className = 'news-item';
