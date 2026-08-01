@@ -3,7 +3,7 @@
    每日打卡 · 自律成长工作台
    ============================================ */
 
-const CACHE_VERSION = 'v1.3.1';
+const CACHE_VERSION = 'v1.3.2';
 const CACHE_NAME = `checkin-app-${CACHE_VERSION}`;
 
 // 需要缓存的资源列表
