@@ -323,17 +323,110 @@ body {
 }
 .recipe-add-btn:active { transform: scale(0.92); }
 
+/* 食谱表单（添加/编辑） */
+.recipe-form {
+  display: none;
+  padding: 14px;
+  background: var(--orange-lighter);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+.recipe-form.show { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.recipe-form-title {
+  font-size: 14px; font-weight: 700; color: var(--choco);
+  margin-bottom: 10px;
+}
+.recipe-textarea {
+  width: 100%; min-height: 80px;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; font-size: 13px; font-family: inherit;
+  color: var(--choco); background: var(--white); resize: none;
+  outline: none; line-height: 1.6; transition: border 0.2s;
+  margin-top: 8px;
+}
+.recipe-textarea:focus { border-color: var(--orange); }
+.recipe-textarea::placeholder { color: var(--choco-hint); }
+.recipe-form-btns {
+  display: flex; gap: 8px; margin-top: 10px;
+}
+.recipe-cancel-btn {
+  flex: 1; height: 42px; border: 1.5px solid var(--border); border-radius: 12px;
+  background: var(--white); color: var(--choco-light);
+  font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.recipe-cancel-btn:active { background: var(--bg); }
+.recipe-save-btn {
+  flex: 2; height: 42px; border: none; border-radius: 12px;
+  background: linear-gradient(135deg, var(--orange), #F0A878);
+  color: var(--white); font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: transform 0.15s;
+}
+.recipe-save-btn:active { transform: scale(0.97); }
+
+/* 添加菜谱大按钮 */
+.recipe-add-big-btn {
+  width: 100%; height: 44px; border: 1.5px dashed var(--orange);
+  border-radius: 12px; background: var(--orange-light);
+  color: var(--orange); font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: all 0.2s;
+}
+.recipe-add-big-btn:active { background: var(--orange); color: var(--white); }
+.recipe-add-big-btn.hide { display: none; }
+
+/* 食谱项操作按钮 */
+.recipe-item-actions {
+  display: flex; gap: 6px; flex-shrink: 0;
+}
+.recipe-edit-btn {
+  width: 28px; height: 28px; border: none; border-radius: 8px;
+  background: var(--orange-light); color: var(--orange);
+  font-size: 13px; cursor: pointer; transition: all 0.2s;
+}
+.recipe-edit-btn:active { transform: scale(0.9); }
+.recipe-item .tag-remove {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--red-light); color: var(--red);
+}
+
+/* 食谱详情展示 */
+.recipe-detail-text {
+  font-size: 11px; color: var(--choco-light);
+  line-height: 1.5; margin-top: 3px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.recipe-detail-full {
+  font-size: 12px; color: var(--choco-light);
+  line-height: 1.7; white-space: pre-wrap;
+  padding: 10px 12px; background: var(--bg);
+  border-radius: 10px; margin-top: 6px;
+}
+
+/* 添加食物弹窗 */
+.food-input-wrap {
+  display: flex; gap: 8px; margin-bottom: 14px;
+}
+.food-input-large { height: 48px; font-size: 15px; }
+.food-quick-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.food-quick-tag {
+  padding: 7px 14px; border-radius: 10px;
+  background: var(--orange-lighter); border: 1px solid rgba(232,145,90,0.12);
+  font-size: 12px; color: var(--choco); cursor: pointer;
+  transition: all 0.15s; font-family: inherit;
+}
+.food-quick-tag:active { background: var(--orange); color: var(--white); }
+
 /* ============================================
    添加食物弹窗
    ============================================ */
 .add-food-modal {
   padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 20px));
 }
-.add-food-modal .recipe-list { margin-bottom: 12px; }
-.food-suggest {
-  font-size: 12px; color: var(--choco-hint);
-  margin-bottom: 8px; padding: 0 2px;
-}
+.add-food-modal { padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px)); }
 
 /* --- 底部操作栏 --- */
 .footer {
@@ -486,25 +579,31 @@ body {
     <button class="modal-close" id="recipeClose">✕</button>
   </div>
   <div class="recipe-list" id="recipeList"></div>
-  <div class="add-recipe-row">
-    <input class="recipe-input" id="recipeInput" placeholder="添加新菜谱..." maxlength="20">
-    <button class="recipe-add-btn" id="recipeAddBtn">+</button>
+  <!-- 添加/编辑食谱表单 -->
+  <div class="recipe-form" id="recipeForm">
+    <div class="recipe-form-title" id="recipeFormTitle">添加新菜谱</div>
+    <input class="recipe-input" id="recipeInput" placeholder="菜谱名称" maxlength="30">
+    <textarea class="recipe-textarea" id="recipeDetail" placeholder="详细做法（食材、步骤等）" maxlength="500"></textarea>
+    <div class="recipe-form-btns">
+      <button class="recipe-cancel-btn" id="recipeCancelBtn">取消</button>
+      <button class="recipe-save-btn" id="recipeSaveBtn">保存</button>
+    </div>
   </div>
+  <button class="recipe-add-big-btn" id="recipeAddBtn">+ 添加菜谱</button>
 </div>
 
-<!-- ===== 添加食物弹窗 ===== -->
+<!-- ===== 添加食物弹窗（直接输入） ===== -->
 <div class="modal-overlay" id="foodOverlay"></div>
 <div class="modal add-food-modal" id="foodModal">
   <div class="modal-header">
     <div class="modal-title" id="foodModalTitle">添加食物</div>
     <button class="modal-close" id="foodClose">✕</button>
   </div>
-  <div class="food-suggest">从我的食谱中选择，或直接输入食物名称</div>
-  <div class="recipe-list" id="foodRecipeList"></div>
-  <div class="add-recipe-row">
-    <input class="recipe-input" id="foodInput" placeholder="输入食物名称..." maxlength="20">
+  <div class="food-input-wrap">
+    <input class="recipe-input food-input-large" id="foodInput" placeholder="输入食物名称，如：燕麦碗" maxlength="20">
     <button class="recipe-add-btn" id="foodAddBtn">+</button>
   </div>
+  <div class="food-quick-tags" id="foodQuickTags"></div>
 </div>
 
 <script>
@@ -532,21 +631,21 @@ function saveMealPlan(obj) {
 
 /* 默认食谱数据 */
 var defaultRecipes = [
-  { emoji: '🥗', name: '牛油果鸡蛋沙拉' },
-  { emoji: '🍲', name: '番茄牛腩煲' },
-  { emoji: '🍜', name: '日式豚骨拉面' },
-  { emoji: '🍣', name: '三文鱼寿司' },
-  { emoji: '🥘', name: '韩式部队锅' },
-  { emoji: '🍝', name: '奶油蘑菇意面' },
-  { emoji: '🥞', name: '松饼早餐' },
-  { emoji: '🧇', name: '华夫饼' },
-  { emoji: '🍳', name: '番茄炒蛋' },
-  { emoji: '🥩', name: '黑椒牛排' },
-  { emoji: '🍗', name: '香煎鸡腿排' },
-  { emoji: '🥟', name: '手工水饺' },
-  { emoji: '粥', name: '皮蛋瘦肉粥' },
-  { emoji: '🥤', name: '香蕉牛奶昔' },
-  { emoji: '🍵', name: '红豆抹茶' }
+  { emoji: '🥗', name: '牛油果鸡蛋沙拉', detail: '食材：牛油果1个、水煮蛋2个、圣女果、生菜\n做法：牛油果切块，鸡蛋切片，淋上橄榄油+黑胡椒+柠檬汁' },
+  { emoji: '🍲', name: '番茄牛腩煲', detail: '食材：牛腩500g、番茄3个、土豆、洋葱\n做法：牛腩焯水，番茄炒出汁，加水炖煮1.5小时' },
+  { emoji: '🍜', name: '日式豚骨拉面', detail: '食材：拉面、叉烧、溏心蛋、葱花、海苔\n做法：豚骨汤底煮8小时，面条煮2分钟，摆盘浇汤' },
+  { emoji: '🍣', name: '三文鱼寿司', detail: '食材：寿司米、三文鱼刺身、海苔、芥末\n做法：米饭加寿司醋拌匀，捏饭团铺上鱼片' },
+  { emoji: '🥘', name: '韩式部队锅', detail: '食材：泡菜、午餐肉、年糕、芝士、拉面\n做法：泡菜炒出香味加水煮沸，放入食材煮至熟透' },
+  { emoji: '🍝', name: '奶油蘑菇意面', detail: '食材：意面、口蘑、培根、淡奶油、帕尔马干酪\n做法：意面煮至al dente，蘑菇培根煎香，加奶油收汁拌面' },
+  { emoji: '🥞', name: '松饼早餐', detail: '食材：低筋面粉、鸡蛋、牛奶、黄油、蜂蜜\n做法：面糊拌匀静置20分钟，小火煎至两面金黄' },
+  { emoji: '🧇', name: '华夫饼', detail: '食材：面粉、鸡蛋、牛奶、黄油、泡打粉\n做法：面糊倒入华夫饼机烤3-4分钟，搭配水果和糖浆' },
+  { emoji: '🍳', name: '番茄炒蛋', detail: '食材：番茄2个、鸡蛋3个、葱花、糖\n做法：鸡蛋炒散盛出，番茄炒出汁后混合，加糖调味' },
+  { emoji: '🥩', name: '黑椒牛排', detail: '食材：牛排、黑胡椒、黄油、蒜、迷迭香\n做法：牛排室温回温30分钟，大火煎每面2分钟，静置5分钟' },
+  { emoji: '🍗', name: '香煎鸡腿排', detail: '食材：去骨鸡腿、盐、黑胡椒、蒜粉\n做法：鸡皮朝下中火煎6分钟，翻面煎4分钟至金黄' },
+  { emoji: '🥟', name: '手工水饺', detail: '食材：饺子皮、猪肉馅、白菜、葱姜水\n做法：馅料调好包制，水开下饺子煮3开即可' },
+  { emoji: '🥣', name: '皮蛋瘦肉粥', detail: '食材：大米、皮蛋2个、瘦肉丝、姜丝、葱花\n做法：大米煮粥1小时，加入皮蛋肉丝煮15分钟调味' },
+  { emoji: '🥤', name: '香蕉牛奶昔', detail: '食材：香蕉1根、牛奶200ml、蜂蜜\n做法：全部放入搅拌机打30秒即可' },
+  { emoji: '🍵', name: '红豆抹茶', detail: '食材：抹茶粉、牛奶、蜜红豆、糖浆\n做法：抹茶用60度水化开，加入热牛奶，顶部放红豆' }
 ];
 
 /* 食物emoji映射 */
@@ -694,16 +793,20 @@ document.getElementById('mealContainer').addEventListener('click', function(e) {
 });
 
 /* ============================================
-   我的食谱弹窗
+   我的食谱弹窗（支持编辑）
    ============================================ */
+var editingRecipeIdx = -1; /* -1 = 新增模式 */
+
 function openRecipeModal() {
   renderRecipeList();
+  hideRecipeForm();
   document.getElementById('recipeOverlay').classList.add('open');
   document.getElementById('recipeModal').classList.add('open');
 }
 function closeRecipeModal() {
   document.getElementById('recipeOverlay').classList.remove('open');
   document.getElementById('recipeModal').classList.remove('open');
+  hideRecipeForm();
 }
 
 function renderRecipeList() {
@@ -711,89 +814,173 @@ function renderRecipeList() {
   var recipes = getRecipes();
   list.innerHTML = '';
   if(recipes.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">还没有菜谱，快添加吧</div>';
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">还没有菜谱，点击下方添加</div>';
     return;
   }
   recipes.forEach(function(r, idx) {
     var item = document.createElement('div');
     item.className = 'recipe-item';
-    item.innerHTML = '<div class="recipe-emoji">' + (r.emoji || '🍽️') + '</div>' +
-      '<div class="recipe-info"><div class="recipe-name">' + r.name + '</div>' +
-      '<div class="recipe-desc">我的菜谱 #' + (idx + 1) + '</div></div>' +
-      '<button class="tag-remove" data-idx="' + idx + '">✕</button>';
+    item.style.flexDirection = 'column';
+    item.style.alignItems = 'stretch';
+
+    var topRow = document.createElement('div');
+    topRow.style.cssText = 'display:flex;align-items:center;gap:12px;width:100%;';
+
+    var detailHtml = r.detail ? '<div class="recipe-detail-text">' + escapeHtml(r.detail) + '</div>' : '';
+
+    topRow.innerHTML = '<div class="recipe-emoji">' + (r.emoji || '🍽️') + '</div>' +
+      '<div class="recipe-info"><div class="recipe-name">' + escapeHtml(r.name) + '</div>' + detailHtml + '</div>' +
+      '<div class="recipe-item-actions">' +
+        '<button class="recipe-edit-btn" data-idx="' + idx + '">✎</button>' +
+        '<button class="tag-remove" data-idx="' + idx + '">✕</button>' +
+      '</div>';
+
+    item.appendChild(topRow);
     list.appendChild(item);
   });
+}
+
+/* HTML转义 */
+function escapeHtml(text) {
+  if(!text) return '';
+  var div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+/* 显示食谱表单 */
+function showRecipeForm(idx) {
+  editingRecipeIdx = idx;
+  var form = document.getElementById('recipeForm');
+  var title = document.getElementById('recipeFormTitle');
+  var nameInput = document.getElementById('recipeInput');
+  var detailInput = document.getElementById('recipeDetail');
+  var addBtn = document.getElementById('recipeAddBtn');
+
+  if(idx >= 0) {
+    /* 编辑模式 */
+    var recipes = getRecipes();
+    var r = recipes[idx];
+    title.textContent = '编辑菜谱';
+    nameInput.value = r.name || '';
+    detailInput.value = r.detail || '';
+  } else {
+    /* 新增模式 */
+    title.textContent = '添加新菜谱';
+    nameInput.value = '';
+    detailInput.value = '';
+  }
+
+  form.classList.add('show');
+  addBtn.classList.add('hide');
+  nameInput.focus();
+}
+
+function hideRecipeForm() {
+  editingRecipeIdx = -1;
+  document.getElementById('recipeForm').classList.remove('show');
+  document.getElementById('recipeAddBtn').classList.remove('hide');
+}
+
+/* 保存食谱（新增或编辑） */
+function saveRecipe() {
+  var name = document.getElementById('recipeInput').value.trim();
+  var detail = document.getElementById('recipeDetail').value.trim();
+  if(!name) {
+    showToast('请输入菜谱名称');
+    return;
+  }
+
+  var recipes = getRecipes();
+
+  if(editingRecipeIdx >= 0) {
+    /* 编辑模式 */
+    recipes[editingRecipeIdx].name = name;
+    recipes[editingRecipeIdx].detail = detail;
+    recipes[editingRecipeIdx].emoji = getFoodEmoji(name);
+  } else {
+    /* 新增模式 */
+    recipes.push({ emoji: getFoodEmoji(name), name: name, detail: detail });
+  }
+
+  saveRecipes(recipes);
+  var wasEditing = editingRecipeIdx >= 0;
+  hideRecipeForm();
+  renderRecipeList();
+  showToast(wasEditing ? '菜谱已更新' : '菜谱已添加 🍽️');
 }
 
 document.getElementById('recipeCard').addEventListener('click', openRecipeModal);
 document.getElementById('recipeClose').addEventListener('click', closeRecipeModal);
 document.getElementById('recipeOverlay').addEventListener('click', closeRecipeModal);
 
-/* 删除食谱 */
+/* 食谱列表点击：编辑/删除 */
 document.getElementById('recipeList').addEventListener('click', function(e) {
-  var btn = e.target.closest('.tag-remove');
-  if(!btn) return;
-  var idx = parseInt(btn.getAttribute('data-idx'));
-  var recipes = getRecipes();
-  recipes.splice(idx, 1);
-  saveRecipes(recipes);
-  renderRecipeList();
-  showToast('已删除菜谱');
+  var editBtn = e.target.closest('.recipe-edit-btn');
+  if(editBtn) {
+    var idx = parseInt(editBtn.getAttribute('data-idx'));
+    showRecipeForm(idx);
+    return;
+  }
+  var delBtn = e.target.closest('.tag-remove');
+  if(delBtn) {
+    var idx2 = parseInt(delBtn.getAttribute('data-idx'));
+    var recipes = getRecipes();
+    recipes.splice(idx2, 1);
+    saveRecipes(recipes);
+    renderRecipeList();
+    showToast('已删除菜谱');
+  }
 });
 
-/* 添加食谱 */
-document.getElementById('recipeAddBtn').addEventListener('click', addRecipe);
-document.getElementById('recipeInput').addEventListener('keydown', function(e) {
-  if(e.key === 'Enter') addRecipe();
+/* 添加菜谱按钮 */
+document.getElementById('recipeAddBtn').addEventListener('click', function() {
+  showRecipeForm(-1);
 });
-function addRecipe() {
-  var input = document.getElementById('recipeInput');
-  var name = input.value.trim();
-  if(!name) return;
-  var recipes = getRecipes();
-  recipes.push({ emoji: getFoodEmoji(name), name: name });
-  saveRecipes(recipes);
-  input.value = '';
-  renderRecipeList();
-  showToast('菜谱已添加 🍽️');
-}
+
+/* 保存/取消按钮 */
+document.getElementById('recipeSaveBtn').addEventListener('click', saveRecipe);
+document.getElementById('recipeCancelBtn').addEventListener('click', hideRecipeForm);
+
+/* Enter键在菜谱名输入框时聚焦到详情 */
+document.getElementById('recipeInput').addEventListener('keydown', function(e) {
+  if(e.key === 'Enter') {
+    e.preventDefault();
+    document.getElementById('recipeDetail').focus();
+  }
+});
 
 /* ============================================
-   添加食物弹窗
+   添加食物弹窗（直接输入 + 快捷标签）
    ============================================ */
 var currentMealKey = '';
 function openFoodModal(mealKey, mealName) {
   currentMealKey = mealKey;
   document.getElementById('foodModalTitle').textContent = '添加' + mealName;
-  renderFoodRecipeList();
   document.getElementById('foodInput').value = '';
+  renderQuickTags();
   document.getElementById('foodOverlay').classList.add('open');
   document.getElementById('foodModal').classList.add('open');
+  setTimeout(function() { document.getElementById('foodInput').focus(); }, 350);
 }
 function closeFoodModal() {
   document.getElementById('foodOverlay').classList.remove('open');
   document.getElementById('foodModal').classList.remove('open');
 }
 
-function renderFoodRecipeList() {
-  var list = document.getElementById('foodRecipeList');
-  var recipes = getRecipes();
-  list.innerHTML = '';
-  if(recipes.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:12px;color:#B0B0B0;font-size:13px;">食谱库为空，请直接输入食物名称</div>';
-    return;
-  }
-  recipes.forEach(function(r) {
-    var item = document.createElement('div');
-    item.className = 'recipe-item';
-    item.style.cursor = 'pointer';
-    item.innerHTML = '<div class="recipe-emoji">' + (r.emoji || '🍽️') + '</div>' +
-      '<div class="recipe-info"><div class="recipe-name">' + r.name + '</div></div>' +
-      '<span style="font-size:18px;color:#E8915A;">+</span>';
-    item.addEventListener('click', function() {
-      addFoodToMeal(r.name);
+/* 快捷标签 - 常见食物 */
+var quickFoods = ['燕麦碗', '鸡蛋', '牛奶', '面包', '米饭', '面条', '沙拉', '水果', '酸奶', '坚果', '三明治', '汤', '咖啡', '茶', '牛排', '鸡胸肉', '寿司', '水饺', '粥', '香蕉'];
+function renderQuickTags() {
+  var container = document.getElementById('foodQuickTags');
+  container.innerHTML = '';
+  quickFoods.forEach(function(food) {
+    var tag = document.createElement('button');
+    tag.className = 'food-quick-tag';
+    tag.textContent = getFoodEmoji(food) + ' ' + food;
+    tag.addEventListener('click', function() {
+      addFoodToMeal(food);
     });
-    list.appendChild(item);
+    container.appendChild(tag);
   });
 }
 
