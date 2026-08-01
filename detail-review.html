@@ -1,505 +1,353 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🌙 复盘</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🌙 复盘</title>
+<style>
 /* ============================================
-   detail-common.css - H5二级详情页共享样式
-   薄荷绿色调 | 375px移动端 | 极简治愈风格
+   复盘页 - 深蓝紫 × 薄荷绿
    ============================================ */
-
-/* --- Reset & Base --- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --mint: #6B9AC4;
+  --mint-light: #EBF2F8;
+  --mint-lighter: #F5F8FC;
+  --indigo: #5B6BAE;
+  --indigo-light: #ECEEF7;
+  --orange: #E8915A;
+  --orange-light: #FFF3EC;
+  --green: #27AE60;
+  --green-light: #E8F5E9;
+  --red: #D45555;
+  --red-light: #FAEBEB;
+  --gold: #C9985A;
+  --gold-light: #FFF5E6;
+  --choco: #3D3D3D;
+  --choco-light: #8A8A8A;
+  --choco-hint: #B0B0B0;
+  --border: #E8E8E8;
+  --white: #FFFFFF;
+  --bg: #FAFAFA;
+  --shadow: 0 2px 12px rgba(91, 107, 174, 0.10);
+  --shadow-float: 0 4px 20px rgba(91, 107, 174, 0.15);
 }
-
-html, body {
-  width: 100%;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  background: var(--bg);
+  color: var(--choco);
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  font-size: 14px;
-  color: #2d3436;
-  background: #FAFAFA;
-  -webkit-font-smoothing: antialiased;
- padding-left: 104px; }
-
-/* --- Top Fixed Header --- */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-  padding: 0 16px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.header-back {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #EBF2F8;
-  border-radius: 12px;
-  font-size: 18px;
-  color: #6B9AC4;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.header-back:hover {
-  background: #EBF2F8;
-}
-
-.header-title {
-  flex: 1;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #2d3436;
-  letter-spacing: 0.5px;
-}
-
-.header-drawer {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #EBF2F8;
-  border-radius: 12px;
-  font-size: 16px;
-  color: #6B9AC4;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.header-drawer:hover {
-  background: #EBF2F8;
-}
-
-/* --- Main Content Area --- */
-.main {
-  padding: 72px 16px 120px;
-  max-width: 375px;
+  max-width: 430px;
   margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 140px;
+  padding-left: 104px;
 }
 
-/* --- Card --- */
-.card {
-  background: #ffffff;
+/* --- 顶部导航栏 --- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px; padding: 0 16px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.header-back {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--indigo-light); display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--choco); font-size: 18px; flex-shrink: 0;
+}
+.header-back:active { transform: scale(0.92); }
+.header-title { flex: 1; text-align: center; font-size: 17px; font-weight: 600; color: var(--choco); }
+.header-drawer {
+  width: 36px; height: 36px; border: none; border-radius: 50%;
+  background: var(--indigo); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.header-drawer:active { transform: scale(0.92); }
+.header-drawer span { display: block; width: 14px; height: 2px; background: var(--white); border-radius: 1px; margin: 1.5px 0; }
+
+/* --- 主体内容 --- */
+.main { padding: 16px 16px 0; }
+
+/* --- 通用标题 --- */
+.section-title {
+  font-size: 15px; font-weight: 600; color: var(--choco);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  padding: 0 4px;
+}
+.section-title .emoji { font-size: 18px; }
+.section-title .sub-hint {
+  margin-left: auto; font-size: 11px; font-weight: 400; color: var(--choco-hint);
+}
+
+/* ============================================
+   第1块：周度/月度切换
+   ============================================ */
+.period-card {
+  background: var(--white);
   border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 12px rgba(107, 154, 196, 0.08);
-}
-
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #2d3436;
+  padding: 16px;
   margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  box-shadow: var(--shadow);
 }
-
-.card-title .emoji {
-  font-size: 18px;
+.period-tabs {
+  display: flex; gap: 10px; margin-bottom: 12px;
 }
-
-/* --- List Item --- */
-.list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 14px;
-  background: #FCFCFC;
-  border-radius: 14px;
-  margin-bottom: 8px;
-  transition: background 0.2s;
-}
-
-.list-item:last-child {
-  margin-bottom: 0;
-}
-
-.list-item-label {
-  font-size: 13px;
-  color: #2d3436;
-  font-weight: 500;
-}
-
-.list-item-value {
-  font-size: 12px;
-  color: #999;
-}
-
-/* --- Stat Row --- */
-.stat-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 12px;
-  padding: 8px 0;
-}
-
-.stat-item {
-  text-align: center;
-  flex: 1;
-}
-
-.stat-num {
-  font-size: 28px;
-  font-weight: 700;
-  color: #6B9AC4;
-  line-height: 1.2;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: #999;
-  margin-top: 4px;
-}
-
-/* --- Note Textarea --- */
-.note-textarea {
-  width: 100%;
-  min-height: 120px;
-  padding: 14px;
-  border: 2px solid #EBF2F8;
-  border-radius: 14px;
-  font-size: 14px;
-  color: #2d3436;
-  background: #FAFAFA;
-  resize: vertical;
-  outline: none;
-  transition: border-color 0.2s;
-  font-family: inherit;
-  line-height: 1.6;
-}
-
-.note-textarea::placeholder {
-  color: #b2bec3;
-}
-
-.note-textarea:focus {
-  border-color: #6B9AC4;
-}
-
-/* --- Info Card (News) --- */
-.info-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px;
-  background: #FCFCFC;
-  border-radius: 14px;
-  margin-bottom: 10px;
-  transition: transform 0.2s;
-}
-
-.info-card:last-child {
-  margin-bottom: 0;
-}
-
-.info-card:active {
-  transform: scale(0.98);
-}
-
-.info-card-img {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #EBF2F8;
-  border-radius: 14px;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.info-card-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.info-card-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #2d3436;
-  line-height: 1.4;
-  margin-bottom: 4px;
-}
-
-.info-card-source {
-  font-size: 11px;
-  color: #b2bec3;
-}
-
-/* --- Progress Ring --- */
-.progress-ring-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
-}
-
-.progress-ring {
-  transform: rotate(-90deg);
-}
-
-.progress-ring-bg {
-  fill: none;
-  stroke: #EBF2F8;
-  stroke-width: 8;
-}
-
-.progress-ring-fg {
-  fill: none;
-  stroke: #6B9AC4;
-  stroke-width: 8;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1s ease-in-out;
-}
-
-.ring-label {
-  font-size: 13px;
-  color: #999;
-  margin-top: 12px;
-  text-align: center;
-}
-
-/* --- Todo Item --- */
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: #FCFCFC;
-  border-radius: 14px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.todo-item:last-child {
-  margin-bottom: 0;
-}
-
-.todo-item:active {
-  background: #EBF2F8;
-}
-
-.todo-checkbox {
-  width: 22px;
-  height: 22px;
-  border: 2px solid #d0e8dc;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 12px;
-  color: transparent;
+.period-btn {
+  flex: 1; height: 44px; border: 1.5px solid var(--border); border-radius: 14px;
+  background: var(--bg); color: var(--choco-light);
+  font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
   transition: all 0.2s;
-  cursor: pointer;
+}
+.period-btn.active {
+  background: linear-gradient(135deg, var(--indigo), #7B8BC8);
+  color: var(--white); border-color: var(--indigo);
+  box-shadow: 0 2px 10px rgba(91,107,174,0.25);
+}
+.period-btn:active { transform: scale(0.97); }
+.period-info {
+  font-size: 12px; color: var(--choco-hint);
+  text-align: center; padding: 4px 0;
 }
 
-.todo-item.done .todo-checkbox {
-  background: #6B9AC4;
-  border-color: #6B9AC4;
-  color: #fff;
+/* ============================================
+   第2块：速览项 - 9项打分
+   ============================================ */
+.score-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 10px;
+}
+.score-item {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  cursor: pointer; transition: transform 0.15s;
+}
+.score-item:active { transform: scale(0.93); }
+
+/* 小圆形分数环 */
+.score-circle {
+  position: relative; width: 56px; height: 56px;
+}
+.score-circle svg { transform: rotate(-90deg); }
+.score-circle .sc-bg { fill: none; stroke: var(--border); stroke-width: 4; }
+.score-circle .sc-fg { fill: none; stroke: var(--indigo); stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 0.4s ease; }
+.score-circle .sc-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  font-size: 14px; font-weight: 700; color: var(--choco);
+}
+.score-circle .sc-text .sc-max { font-size: 9px; color: var(--choco-hint); font-weight: 400; }
+.score-name {
+  font-size: 11px; font-weight: 600; color: var(--choco);
+  text-align: center;
+}
+.score-emoji {
+  position: absolute; top: -4px; right: -4px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--white); box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
 }
 
-.todo-text {
-  font-size: 13px;
-  color: #2d3436;
-  line-height: 1.4;
-  transition: color 0.2s;
+/* ============================================
+   第3块：总体总结
+   ============================================ */
+.summary-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
 }
 
-.todo-item.done .todo-text {
-  color: #b2bec3;
-  text-decoration: line-through;
+/* 满意度滑块 */
+.satisfaction-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.satisfaction-label {
+  font-size: 13px; font-weight: 600; color: var(--choco);
+  flex-shrink: 0;
+}
+.satisfaction-slider-wrap {
+  flex: 1; position: relative; height: 36px;
+  display: flex; align-items: center;
+}
+.satisfaction-track {
+  width: 100%; height: 8px; border-radius: 4px;
+  background: var(--border); position: relative;
+}
+.satisfaction-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(to right, var(--indigo), #7B8BC8);
+  width: 70%; transition: width 0.1s;
+}
+.satisfaction-thumb {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--white); border: 3px solid var(--indigo);
+  box-shadow: 0 2px 8px rgba(91,107,174,0.3);
+  cursor: pointer; transition: transform 0.1s;
+  left: 70%;
+}
+.satisfaction-thumb:active { transform: translate(-50%, -50%) scale(1.2); }
+.satisfaction-value {
+  font-size: 18px; font-weight: 700; color: var(--indigo);
+  width: 36px; text-align: center; flex-shrink: 0;
 }
 
-/* --- Emoji Mood Selector --- */
-.mood-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 10px;
-  padding: 10px 0;
+/* 感受输入 */
+.feeling-textarea {
+  width: 100%; min-height: 80px;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 12px 14px; font-size: 13px; font-family: inherit;
+  color: var(--choco); background: var(--bg); resize: none;
+  outline: none; line-height: 1.6; transition: border 0.2s;
+  margin-bottom: 16px;
+}
+.feeling-textarea:focus { border-color: var(--indigo); background: var(--white); }
+.feeling-textarea::placeholder { color: var(--choco-hint); }
+
+/* 满意/提升 双栏 */
+.dual-section {
+  display: flex; gap: 12px;
+}
+.dual-col {
+  flex: 1; min-width: 0;
+}
+.dual-col-title {
+  font-size: 12px; font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 4px;
+}
+.dual-col.good .dual-col-title { color: var(--green); }
+.dual-col.improve .dual-col-title { color: var(--orange); }
+.dual-input {
+  width: 100%; min-height: 60px;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 10px 12px; font-size: 12px; font-family: inherit;
+  color: var(--choco); background: var(--bg); resize: none;
+  outline: none; line-height: 1.5; transition: border 0.2s;
+}
+.dual-col.good .dual-input { background: var(--green-light); border-color: rgba(39,174,96,0.15); }
+.dual-col.good .dual-input:focus { border-color: var(--green); background: var(--white); }
+.dual-col.improve .dual-input { background: var(--orange-light); border-color: rgba(232,145,90,0.15); }
+.dual-col.improve .dual-input:focus { border-color: var(--orange); background: var(--white); }
+.dual-input::placeholder { color: var(--choco-hint); }
+
+/* ============================================
+   打分弹窗
+   ============================================ */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4); z-index: 500;
+  opacity: 0; visibility: hidden; transition: all 0.3s;
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal {
+  position: fixed; bottom: 0; left: 104px; right: 0;
+  width: auto; max-width: calc(430px - 104px); margin: 0 auto;
+  background: var(--white); border-radius: 24px 24px 0 0;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom, 20px));
+  z-index: 501; transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  transform: translateY(100%);
+}
+.modal.open { transform: translateY(0); }
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.modal-title { font-size: 17px; font-weight: 700; color: var(--choco); display: flex; align-items: center; gap: 8px; }
+.modal-close {
+  width: 30px; height: 30px; border: none; border-radius: 50%;
+  background: var(--bg); color: var(--choco-light);
+  font-size: 18px; cursor: pointer; line-height: 1;
 }
 
-.mood-item {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  background: #FCFCFC;
-  cursor: pointer;
-  transition: all 0.25s;
-  user-select: none;
+/* 打分选择器 */
+.score-picker {
+  display: flex; justify-content: space-between; gap: 4px;
+  margin-bottom: 20px;
+}
+.score-pick-btn {
+  flex: 1; height: 44px; border: 1.5px solid var(--border); border-radius: 12px;
+  background: var(--bg); color: var(--choco-light);
+  font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit;
+  transition: all 0.15s;
+}
+.score-pick-btn.active {
+  background: linear-gradient(135deg, var(--indigo), #7B8BC8);
+  color: var(--white); border-color: var(--indigo);
+  transform: scale(1.05);
+}
+.score-pick-btn:active { transform: scale(0.92); }
+
+.score-display {
+  text-align: center; margin-bottom: 16px;
+}
+.score-display-num {
+  font-size: 40px; font-weight: 700; color: var(--indigo); line-height: 1;
+}
+.score-display-label {
+  font-size: 12px; color: var(--choco-hint); margin-top: 4px;
 }
 
-.mood-item.active {
-  border-color: #6B9AC4;
-  background: #EBF2F8;
-  transform: scale(1.1);
+.modal-confirm-btn {
+  width: 100%; height: 48px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, var(--indigo), #7B8BC8);
+  color: var(--white); font-size: 15px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: transform 0.15s;
 }
+.modal-confirm-btn:active { transform: scale(0.97); }
 
-/* --- Bottom Fixed Action Bar --- */
+/* --- 底部操作栏 --- */
 .footer {
-  position: fixed;
-  bottom: 56px;
-  left: 104px;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  position: fixed; bottom: 56px; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px);
+  display: flex; gap: 12px;
   padding: 12px 16px;
   padding-bottom: max(12px, env(safe-area-inset-bottom));
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-  max-width: 375px;
-  margin: 0 auto;
+  border-top: 1px solid var(--border);
+  z-index: 50;
 }
-
 .btn-primary {
-  flex: 1.2;
-  height: 48px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #6B9AC4, #8AB5D6);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: opacity 0.2s, transform 0.15s;
-  letter-spacing: 1px;
+  flex: 1; height: 48px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, var(--indigo), #7B8BC8); color: var(--white);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: transform 0.15s; font-family: inherit;
+  box-shadow: 0 2px 8px rgba(91,107,174,0.25);
 }
-
-.btn-primary:active {
-  opacity: 0.85;
-  transform: scale(0.97);
-}
-
-.btn-primary.checked {
-  background: linear-gradient(135deg, #b2bec3, #dfe6e9);
-  color: #fff;
-}
-
+.btn-primary:active { transform: scale(0.97); }
 .btn-secondary {
-  flex: 0.8;
-  height: 48px;
-  border: 2px solid #6B9AC4;
-  border-radius: 16px;
-  background: #fff;
-  color: #6B9AC4;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s;
-  letter-spacing: 1px;
+  flex: 1; height: 48px; border: 1.5px solid var(--indigo); border-radius: 14px;
+  background: var(--white); color: var(--indigo);
+  font-size: 15px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s; font-family: inherit;
 }
-
-.btn-secondary:active {
-  background: #FAFAFA;
-  transform: scale(0.97);
-}
+.btn-secondary:active { background: var(--indigo-light); transform: scale(0.97); }
 
 /* --- Toast --- */
 .toast {
-  position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  padding: 10px 24px;
-  background: rgba(107, 154, 196, 0.92);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 500;
-  border-radius: 20px;
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.35s ease;
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(61, 61, 61, 0.92); color: #fff;
+  padding: 14px 22px; border-radius: 14px;
+  font-size: 13px; font-weight: 500;
+  z-index: 999; opacity: 0; visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   white-space: nowrap;
-  backdrop-filter: blur(8px);
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* --- Income / Expense Stat --- */
-.stat-income {
-  font-size: 28px;
-  font-weight: 700;
-  color: #6B9AC4;
-}
-
-.stat-expense {
-  font-size: 28px;
-  font-weight: 700;
-  color: #D45555;
-}
-
-
-/* 右侧滑出抽屉 */
-.drawer-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 300; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-.drawer-overlay.open { opacity: 1; visibility: visible; }
-.drawer { position: fixed; top: 0; left: -160px; width: 160px; height: 100%; background: #FFFFFF; z-index: 301; transition: left 0.35s cubic-bezier(0.32,0.72,0,1); display: flex; flex-direction: column; box-shadow: 4px 0 24px rgba(0,0,0,0.08); }
-.drawer.open { left: 0; }
-.drawer-header { padding: 16px 12px 12px; border-bottom: 1px solid #E8E8E8; }
-.drawer-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; font-size: 28px; }
-.drawer-title { font-size: 15px; font-weight: 700; color: #3D3D3D; margin-bottom: 4px; }
-.drawer-subtitle { font-size: 11px; color: #B0B0B0; }
-.drawer-menu { flex: 1; overflow-y: auto; padding: 12px 0; }
-.drawer-menu-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; transition: background 0.2s; text-decoration: none; color: #3D3D3D; font-size: 13px; }
-.drawer-menu-item:active { background: #EBF2F8; }
-.drawer-menu-item.active { background: #EBF2F8; color: #3D3D3D; font-weight: 600; }
-.drawer-menu-item .menu-emoji { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
-.drawer-menu-item.home-link { border-bottom: 1px solid #E8E8E8; margin-bottom: 8px; color: #3D3D3D; font-weight: 600; }
-.drawer-footer { padding: 12px 12px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 20px) + 56px)); border-top: 1px solid #E8E8E8; }
-.drawer-reset-btn { width: 100%; padding: 12px; border-radius: 12px; background: #EBF2F8; border: 1.5px solid #6B9AC4; color: #3D3D3D; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
-.drawer-reset-btn:active { background: #6B9AC4; color: #fff; }
-
+.toast.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
 
 /* ===== 底部导航栏 ===== */
 .bottom-nav { position: fixed; bottom: 0; left: 104px; right: 0; width: auto; max-width: calc(430px - 104px); display: flex; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-top: 1px solid #E8E8E8; z-index: 200; padding-bottom: env(safe-area-inset-bottom, 0); }
@@ -507,13 +355,13 @@ html, body {
 .nav-tab:active { transform: scale(0.92); }
 .nav-tab svg { width: 24px; height: 24px; color: #B0B0B0; transition: color 0.2s; }
 .nav-tab .nav-tab-label { font-size: 11px; color: #B0B0B0; font-weight: 500; transition: color 0.2s; }
-.nav-tab.active svg { color: #6B9AC4; }
-.nav-tab.active .nav-tab-label { color: #6B9AC4; font-weight: 600; }
+.nav-tab.active svg { color: var(--indigo); }
+.nav-tab.active .nav-tab-label { color: var(--indigo); font-weight: 600; }
 
 /* ===== 左侧固定侧边栏 ===== */
 .sidebar { position: fixed; top: 0; left: 0; width: 104px; height: 100vh; background: #F5F5F7; z-index: 250; display: flex; flex-direction: column; border-right: 1px solid #E8E8E8; }
 .sidebar-header { padding: 14px 10px 10px; border-bottom: 1px solid #ECECEC; flex-shrink: 0; }
-.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #6B9AC4 0%, #8AB5D6 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #5B6BAE 0%, #7B8BC8 100%); margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .sidebar-name { font-size: 16px; font-weight: 700; color: #3D3D3D; line-height: 1.3; text-align: center; }
 .sidebar-menu { flex: 1; overflow-y: auto; padding: 6px 0; -webkit-overflow-scrolling: touch; }
 .sidebar-menu::-webkit-scrollbar { display: none; }
@@ -521,10 +369,10 @@ html, body {
 .sidebar-item:active { transform: scale(0.95); }
 .sidebar-item .sb-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
-.sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
+.sidebar-item.active { background: rgba(91, 107, 174, 0.15); color: #5B6BAE; }
 .sidebar-item.active .sb-label { font-weight: 700; }
 </style>
-<meta name="theme-color" content="#C9985A">
+<meta name="theme-color" content="#5B6BAE">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -532,6 +380,7 @@ html, body {
 <link rel="icon" type="image/png" href="icons/favicon-32.png">
 </head>
 <body>
+
 <!-- ===== 左侧固定侧边栏 ===== -->
 <div class="sidebar">
   <div class="sidebar-header">
@@ -555,54 +404,468 @@ html, body {
   </div>
 </div>
 
+<!-- ===== 顶部导航栏 ===== -->
+<div class="header">
+  <a class="header-back" href="index.html">‹</a>
+  <div class="header-title">🌙 复盘</div>
+  <div class="header-drawer"><span></span><span></span><span></span></div>
+</div>
 
+<!-- ===== 主体内容 ===== -->
+<div class="main">
 
+  <!-- 第1块：周度/月度切换 -->
+  <div class="period-card">
+    <div class="period-tabs">
+      <button class="period-btn" data-period="week">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        周度
+      </button>
+      <button class="period-btn active" data-period="month">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        月度
+      </button>
+    </div>
+    <div class="period-info" id="periodInfo">2026年8月复盘</div>
   </div>
 
-  <!-- 底部固定操作区 -->
-  <div class="footer">
-    <button class="btn-primary" id="checkinBtn">打卡提交</button>
-    <button class="btn-secondary" id="saveBtn">记录保存</button>
+  <!-- 第2块：速览项 - 各模块打分 -->
+  <div class="score-card">
+    <div class="section-title">
+      <span class="emoji">⚡</span>速览得分
+      <span class="sub-hint">点击打分 · 满分10分</span>
+    </div>
+    <div class="score-grid" id="scoreGrid"></div>
   </div>
 
-  <script>
-function getTodayKey(){var n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')}
-function getCheckinRecords(){try{var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');return d[getTodayKey()]||[]}catch(e){return[]}}
-function isChecked(id){return getCheckinRecords().indexOf(id)!==-1}
-function submitCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(!d[t])d[t]=[];if(d[t].indexOf(id)===-1){d[t].push(id);localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,true);showToast('打卡成功 🌿')}
-function undoCheckin(id){var d=JSON.parse(localStorage.getItem('checkin_records')||'{}');var t=getTodayKey();if(d[t]){d[t]=d[t].filter(function(i){return i!==id});localStorage.setItem('checkin_records',JSON.stringify(d))}updateCheckinButton(id,false);showToast('已撤销打卡')}
-function updateCheckinButton(id,checked){var b=document.getElementById('checkinBtn');if(!b)return;if(checked){b.classList.add('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已完成打卡'}else{b.classList.remove('checked');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>打卡提交'}}
-function toggleCheckin(id){if(isChecked(id)){undoCheckin(id)}else{submitCheckin(id)}}
-function initCheckinState(id){updateCheckinButton(id,isChecked(id))}
-function toggleTodo(el){el.classList.toggle('done');var c=el.querySelector('.todo-check');if(c)c.classList.toggle('done')}
-/* 抽屉已移除，使用侧边栏导航 */
-function resetToday(){try{localStorage.setItem('checkin_records',JSON.stringify({}))}catch(e){}showToast('今日打卡已重置 🌿')}
-function showToast(msg,dur){var e=document.getElementById('appToast');if(e)e.remove();var t=document.createElement('div');t.className='toast';t.id='appToast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},dur||1500)}
-function initDrawerEvents(){
-  var resetBtn=document.getElementById('resetBtn');
-  var checkinBtn=document.getElementById('checkinBtn');
-  var saveBtn=document.getElementById('saveBtn');
-  if(resetBtn){resetBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();resetToday()});}
-  if(checkinBtn){checkinBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleCheckin(12)});}
-  if(saveBtn){saveBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();showToast('记录已保存') });}
+  <!-- 第3块：总体总结 -->
+  <div class="summary-card">
+    <div class="section-title"><span class="emoji">📊</span>总体总结</div>
+
+    <!-- 满意度滑块 -->
+    <div class="satisfaction-row">
+      <div class="satisfaction-label">满意度</div>
+      <div class="satisfaction-slider-wrap" id="sliderWrap">
+        <div class="satisfaction-track">
+          <div class="satisfaction-fill" id="satisFill"></div>
+        </div>
+        <div class="satisfaction-thumb" id="satisThumb"></div>
+      </div>
+      <div class="satisfaction-value" id="satisValue">7</div>
+    </div>
+
+    <!-- 感受 -->
+    <textarea class="feeling-textarea" id="feelingText" placeholder="写写这个月/周的整体感受..." maxlength="500"></textarea>
+
+    <!-- 满意/提升 双栏 -->
+    <div class="dual-section">
+      <div class="dual-col good">
+        <div class="dual-col-title">😊 满意的事</div>
+        <textarea class="dual-input" id="goodText" placeholder="1-2件满意的事..." maxlength="200"></textarea>
+      </div>
+      <div class="dual-col improve">
+        <div class="dual-col-title">💪 可提升的</div>
+        <textarea class="dual-input" id="improveText" placeholder="1-2件可改进的事..." maxlength="200"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 底部操作栏 -->
+<div class="footer">
+  <button class="btn-primary" id="saveBtn">💾 保存</button>
+  <button class="btn-secondary" id="exportBtn">📄 导出Markdown</button>
+</div>
+
+<!-- ===== 打分弹窗 ===== -->
+<div class="modal-overlay" id="scoreOverlay"></div>
+<div class="modal" id="scoreModal">
+  <div class="modal-header">
+    <div class="modal-title" id="scoreModalTitle">打分</div>
+    <button class="modal-close" id="scoreClose">✕</button>
+  </div>
+  <div class="score-display">
+    <div class="score-display-num" id="scoreDisplayNum">7</div>
+    <div class="score-display-label" id="scoreDisplayLabel">分 / 满分10分</div>
+  </div>
+  <div class="score-picker" id="scorePicker"></div>
+  <button class="modal-confirm-btn" id="scoreConfirm">确认</button>
+</div>
+
+<script>
+/* ============================================
+   模块配置 - 9项（排除首页、待办、复盘）
+   ============================================ */
+var scoreModules = [
+  { id: 'reading',  name: '阅读', emoji: '📖' },
+  { id: 'eating',   name: '饮食', emoji: '🍱' },
+  { id: 'exercise', name: '运动', emoji: '🏃' },
+  { id: 'baking',   name: '烘焙', emoji: '🧁' },
+  { id: 'fashion',  name: '穿搭', emoji: '👗' },
+  { id: 'media',    name: '自媒体', emoji: '📱' },
+  { id: 'photo',    name: '摄影', emoji: '📷' },
+  { id: 'podcast',  name: '播客', emoji: '🎧' },
+  { id: 'finance',  name: '理财', emoji: '💰' }
+];
+
+/* ============================================
+   数据层 - localStorage
+   ============================================ */
+var currentPeriod = 'month';
+
+function getPeriodKey() {
+  var now = new Date();
+  if(currentPeriod === 'week') {
+    /* 获取本周一日期 */
+    var monday = new Date(now);
+    var day = now.getDay() || 7;
+    monday.setDate(now.getDate() - day + 1);
+    return 'review_week_' + monday.getFullYear() + '-' + String(monday.getMonth()+1).padStart(2,'0') + '-' + String(monday.getDate()).padStart(2,'0');
+  } else {
+    return 'review_month_' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+  }
 }
-document.addEventListener('DOMContentLoaded',function(){initDrawerEvents()});
-initCheckinState(12);
+
+function getReviewData() {
+  try { return JSON.parse(localStorage.getItem(getPeriodKey()) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveReviewData(data) {
+  localStorage.setItem(getPeriodKey(), JSON.stringify(data));
+}
+
+/* ============================================
+   周度/月度切换
+   ============================================ */
+document.querySelectorAll('.period-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.period-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    currentPeriod = btn.getAttribute('data-period');
+    updatePeriodInfo();
+    loadAllData();
+  });
+});
+
+function updatePeriodInfo() {
+  var now = new Date();
+  var info = document.getElementById('periodInfo');
+  if(currentPeriod === 'week') {
+    var monday = new Date(now);
+    var day = now.getDay() || 7;
+    monday.setDate(now.getDate() - day + 1);
+    info.textContent = monday.getMonth()+1 + '月' + monday.getDate() + '日 周复盘';
+  } else {
+    info.textContent = now.getFullYear() + '年' + (now.getMonth()+1) + '月 复盘';
+  }
+}
+
+/* ============================================
+   速览得分渲染
+   ============================================ */
+var CIRCUMFERENCE = 2 * Math.PI * 24;
+
+function renderScoreGrid() {
+  var grid = document.getElementById('scoreGrid');
+  var data = getReviewData();
+  grid.innerHTML = '';
+
+  scoreModules.forEach(function(m) {
+    var score = data.scores && data.scores[m.id] !== undefined ? data.scores[m.id] : 0;
+    var item = document.createElement('div');
+    item.className = 'score-item';
+    item.setAttribute('data-module', m.id);
+
+    var progress = score / 10;
+    var offset = CIRCUMFERENCE * (1 - progress);
+
+    item.innerHTML = '<div class="score-circle">' +
+      '<svg width="56" height="56">' +
+        '<circle class="sc-bg" cx="28" cy="28" r="24"/>' +
+        '<circle class="sc-fg" cx="28" cy="28" r="24" stroke-dasharray="' + CIRCUMFERENCE + '" stroke-dashoffset="' + offset + '"/>' +
+      '</svg>' +
+      '<div class="score-emoji">' + m.emoji + '</div>' +
+      '<div class="sc-text">' + (score > 0 ? score : '-') + (score > 0 ? '<span class="sc-max">/10</span>' : '') + '</div>' +
+    '</div>' +
+    '<div class="score-name">' + m.name + '</div>';
+
+    item.addEventListener('click', function() {
+      openScoreModal(m.id, m.name, m.emoji);
+    });
+
+    grid.appendChild(item);
+  });
+}
+
+/* 更新单个分数显示 */
+function updateScoreDisplay(moduleId, score) {
+  var item = document.querySelector('.score-item[data-module="' + moduleId + '"]');
+  if(!item) return;
+  var fg = item.querySelector('.sc-fg');
+  var text = item.querySelector('.sc-text');
+  var progress = score / 10;
+  var offset = CIRCUMFERENCE * (1 - progress);
+  fg.setAttribute('stroke-dashoffset', offset);
+  text.innerHTML = score > 0 ? score + '<span class="sc-max">/10</span>' : '-';
+}
+
+/* ============================================
+   打分弹窗
+   ============================================ */
+var currentScoreModule = '';
+var tempScore = 7;
+
+function openScoreModal(moduleId, moduleName, emoji) {
+  currentScoreModule = moduleId;
+  var data = getReviewData();
+  var currentScore = data.scores && data.scores[moduleId] !== undefined ? data.scores[moduleId] : 7;
+  tempScore = currentScore;
+
+  document.getElementById('scoreModalTitle').innerHTML = emoji + ' ' + moduleName + ' 打分';
+  updateScorePicker(tempScore);
+  updateScoreDisplayNum(tempScore);
+
+  document.getElementById('scoreOverlay').classList.add('open');
+  document.getElementById('scoreModal').classList.add('open');
+}
+
+function closeScoreModal() {
+  document.getElementById('scoreOverlay').classList.remove('open');
+  document.getElementById('scoreModal').classList.remove('open');
+}
+
+function updateScorePicker(score) {
+  var picker = document.getElementById('scorePicker');
+  picker.innerHTML = '';
+  for(var i = 1; i <= 10; i++) {
+    var btn = document.createElement('button');
+    btn.className = 'score-pick-btn' + (i === score ? ' active' : '');
+    btn.textContent = i;
+    btn.setAttribute('data-score', i);
+    btn.addEventListener('click', function() {
+      tempScore = parseInt(this.getAttribute('data-score'));
+      updateScorePicker(tempScore);
+      updateScoreDisplayNum(tempScore);
+    });
+    picker.appendChild(btn);
+  }
+}
+
+function updateScoreDisplayNum(score) {
+  document.getElementById('scoreDisplayNum').textContent = score;
+  var labels = ['', '很差', '较差', '一般', '还行', '及格', '不错', '良好', '优秀', '出色', '完美'];
+  document.getElementById('scoreDisplayLabel').textContent = labels[score] + ' · ' + score + '分/满分10分';
+}
+
+document.getElementById('scoreClose').addEventListener('click', closeScoreModal);
+document.getElementById('scoreOverlay').addEventListener('click', closeScoreModal);
+
+document.getElementById('scoreConfirm').addEventListener('click', function() {
+  var data = getReviewData();
+  if(!data.scores) data.scores = {};
+  data.scores[currentScoreModule] = tempScore;
+  saveReviewData(data);
+  updateScoreDisplay(currentScoreModule, tempScore);
+  closeScoreModal();
+  showToast('已打分 ' + tempScore + '分');
+});
+
+/* ============================================
+   满意度滑块（可拖动）
+   ============================================ */
+var satisValue = 7;
+var sliderWrap = document.getElementById('sliderWrap');
+var satisFill = document.getElementById('satisFill');
+var satisThumb = document.getElementById('satisThumb');
+var satisValueEl = document.getElementById('satisValue');
+
+function setSatisfaction(val) {
+  val = Math.max(1, Math.min(10, val));
+  satisValue = val;
+  var percent = ((val - 1) / 9) * 100;
+  satisFill.style.width = percent + '%';
+  satisThumb.style.left = percent + '%';
+  satisValueEl.textContent = val;
+}
+
+/* 拖动逻辑 */
+var isDragging = false;
+
+function handleSliderMove(clientX) {
+  var rect = sliderWrap.getBoundingClientRect();
+  var x = clientX - rect.left;
+  var percent = Math.max(0, Math.min(1, x / rect.width));
+  var val = Math.round(1 + percent * 9);
+  setSatisfaction(val);
+}
+
+satisThumb.addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  isDragging = true;
+});
+satisThumb.addEventListener('mousedown', function(e) {
+  e.preventDefault();
+  isDragging = true;
+});
+
+/* 点击轨道也可以跳转 */
+sliderWrap.addEventListener('click', function(e) {
+  handleSliderMove(e.clientX);
+});
+
+document.addEventListener('touchmove', function(e) {
+  if(isDragging) {
+    e.preventDefault();
+    handleSliderMove(e.touches[0].clientX);
+  }
+}, { passive: false });
+
+document.addEventListener('mousemove', function(e) {
+  if(isDragging) {
+    handleSliderMove(e.clientX);
+  }
+});
+
+document.addEventListener('touchend', function() { isDragging = false; });
+document.addEventListener('mouseup', function() { isDragging = false; });
+
+/* ============================================
+   加载/保存数据
+   ============================================ */
+function loadAllData() {
+  var data = getReviewData();
+
+  /* 分数 */
+  renderScoreGrid();
+
+  /* 满意度 */
+  setSatisfaction(data.satisfaction || 7);
+
+  /* 感受 */
+  document.getElementById('feelingText').value = data.feeling || '';
+
+  /* 满意/提升 */
+  document.getElementById('goodText').value = data.good || '';
+  document.getElementById('improveText').value = data.improve || '';
+}
+
+function saveAllData() {
+  var data = getReviewData();
+  data.satisfaction = satisValue;
+  data.feeling = document.getElementById('feelingText').value.trim();
+  data.good = document.getElementById('goodText').value.trim();
+  data.improve = document.getElementById('improveText').value.trim();
+  data.savedAt = new Date().toISOString();
+  saveReviewData(data);
+}
+
+document.getElementById('saveBtn').addEventListener('click', function() {
+  saveAllData();
+  showToast('复盘已保存 💾');
+});
+
+/* ============================================
+   导出 Markdown
+   ============================================ */
+document.getElementById('exportBtn').addEventListener('click', function() {
+  saveAllData();
+  var data = getReviewData();
+  var now = new Date();
+  var title;
+  if(currentPeriod === 'week') {
+    var monday = new Date(now);
+    var day = now.getDay() || 7;
+    monday.setDate(now.getDate() - day + 1);
+    title = '# 周复盘 · ' + (monday.getMonth()+1) + '月' + monday.getDate() + '日';
+  } else {
+    title = '# 月复盘 · ' + now.getFullYear() + '年' + (now.getMonth()+1) + '月';
+  }
+
+  var md = title + '\n\n';
+  md += '## ⚡ 速览得分\n\n';
+  md += '| 模块 | 得分 |\n|------|------|\n';
+  var totalScore = 0;
+  var scoredCount = 0;
+  scoreModules.forEach(function(m) {
+    var s = data.scores && data.scores[m.id] !== undefined ? data.scores[m.id] : '-';
+    if(typeof s === 'number') { totalScore += s; scoredCount++; }
+    md += '| ' + m.emoji + ' ' + m.name + ' | ' + s + ' |\n';
+  });
+  if(scoredCount > 0) {
+    md += '\n> 平均得分: ' + (totalScore / scoredCount).toFixed(1) + ' 分\n';
+  }
+
+  md += '\n## 📊 总体总结\n\n';
+  md += '- **整体满意度**: ' + (data.satisfaction || 7) + '/10\n\n';
+
+  if(data.feeling) {
+    md += '### 感受\n\n' + data.feeling + '\n\n';
+  }
+
+  if(data.good) {
+    md += '### 😊 满意的事\n\n' + data.good + '\n\n';
+  }
+
+  if(data.improve) {
+    md += '### 💪 可提升的\n\n' + data.improve + '\n\n';
+  }
+
+  md += '---\n*导出时间: ' + now.toLocaleString('zh-CN') + '*\n';
+
+  /* 复制到剪贴板 */
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(md).then(function() {
+      showToast('Markdown已复制到剪贴板');
+    }).catch(function() {
+      downloadMarkdown(md);
+    });
+  } else {
+    downloadMarkdown(md);
+  }
+});
+
+function downloadMarkdown(md) {
+  var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  var now = new Date();
+  a.download = 'review_' + now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + '.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Markdown已下载');
+}
+
+/* ============================================
+   Toast
+   ============================================ */
+function showToast(msg) {
+  var e = document.getElementById('appToast');
+  if(e) e.remove();
+  var t = document.createElement('div');
+  t.className = 'toast'; t.id = 'appToast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(function() { t.classList.add('show'); });
+  setTimeout(function() {
+    t.classList.remove('show');
+    setTimeout(function() { t.remove(); }, 300);
+  }, 1500);
+}
+
+/* ============================================
+   初始化
+   ============================================ */
+document.addEventListener('DOMContentLoaded', function() {
+  updatePeriodInfo();
+  loadAllData();
+});
 </script>
-  <script>
-    initCheckinState(12);
 
-    // 情绪emoji切换选中态
-    function selectMood(el) {
-      var items = document.querySelectorAll('.mood-item');
-      for (var i = 0; i < items.length; i++) {
-        items[i].classList.remove('active');
-      }
-      el.classList.add('active');
-    }
-  </script>
-
-<!-- Service Worker 注册（PWA 离线支持） -->
+<!-- Service Worker 注册 -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
