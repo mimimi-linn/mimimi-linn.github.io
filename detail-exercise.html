@@ -453,6 +453,136 @@ body {
 .sidebar-item .sb-label { font-size: 15px; font-weight: 600; line-height: 1.2; }
 .sidebar-item.active { background: rgba(107, 154, 196, 0.15); color: #6B9AC4; }
 .sidebar-item.active .sb-label { font-weight: 700; }
+
+/* ============================================
+   课程编辑/添加/删除 - 弹窗 & 操作按钮
+   ============================================ */
+/* 课程项操作按钮组 */
+.course-actions {
+  display: flex; gap: 6px; flex-shrink: 0; align-items: center;
+}
+/* 编辑小图标按钮 */
+.course-edit-btn {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--choco-light);
+  font-size: 14px; line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.course-edit-btn:active { background: var(--mint-light); color: var(--mint); border-color: var(--mint); }
+
+/* + 添加课程按钮 */
+.course-add-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 14px;
+  border: 1.5px dashed var(--mint);
+  background: var(--mint-light);
+  color: var(--mint);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.course-add-btn:active { background: var(--mint); color: var(--white); transform: scale(0.98); }
+
+/* 编辑弹窗（底部弹出） */
+.edit-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 400;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.edit-modal-overlay.open { opacity: 1; visibility: visible; }
+.edit-modal {
+  width: 100%; max-width: 430px;
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  padding: 20px 16px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+}
+.edit-modal-overlay.open .edit-modal { transform: translateY(0); }
+.edit-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.edit-modal-title {
+  font-size: 16px; font-weight: 700; color: var(--choco);
+}
+.edit-modal-close {
+  width: 30px; height: 30px; border: none; border-radius: 50%;
+  background: var(--mint-light); color: var(--choco-light);
+  font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s;
+}
+.edit-modal-close:active { transform: scale(0.9); }
+.edit-modal-body {
+  display: flex; flex-direction: column; gap: 14px;
+  margin-bottom: 20px;
+}
+.edit-modal-field {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.edit-modal-label {
+  font-size: 12px; font-weight: 600; color: var(--choco-light);
+}
+.edit-modal-input {
+  width: 100%; height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-size: 14px; color: var(--choco);
+  background: var(--mint-lighter);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.edit-modal-input:focus { border-color: var(--mint); background: var(--white); }
+.edit-modal-actions {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.edit-modal-delete {
+  border: none; background: none;
+  color: #E85A5A; font-size: 13px; font-weight: 600;
+  cursor: pointer; padding: 8px 4px;
+  font-family: inherit;
+}
+.edit-modal-delete:active { opacity: 0.6; }
+.edit-modal-delete[hidden] { display: none; }
+.edit-modal-btns {
+  display: flex; gap: 10px; flex: 1; justify-content: flex-end;
+}
+.edit-modal-cancel {
+  padding: 10px 20px; border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--white); color: var(--choco);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.edit-modal-cancel:active { background: var(--mint-lighter); transform: scale(0.97); }
+.edit-modal-save {
+  padding: 10px 24px; border-radius: 12px;
+  border: none;
+  background: var(--mint); color: var(--white);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.15s;
+}
+.edit-modal-save:active { transform: scale(0.96); }
 </style>
 </head>
 <body>
@@ -591,6 +721,37 @@ body {
 <div class="footer">
   <button class="btn-primary" id="checkinBtn">打卡提交</button>
   <button class="btn-secondary" id="saveBtn">记录保存</button>
+</div>
+
+<!-- ===== 编辑/添加课程弹窗 ===== -->
+<div class="edit-modal-overlay" id="editModalOverlay">
+  <div class="edit-modal">
+    <div class="edit-modal-header">
+      <div class="edit-modal-title" id="editModalTitle">编辑课程</div>
+      <button class="edit-modal-close" id="editModalClose" type="button">✕</button>
+    </div>
+    <div class="edit-modal-body">
+      <div class="edit-modal-field">
+        <label class="edit-modal-label" for="editCourseTitle">课程名称</label>
+        <input type="text" class="edit-modal-input" id="editCourseTitle" placeholder="请输入课程名称" maxlength="30">
+      </div>
+      <div class="edit-modal-field">
+        <label class="edit-modal-label" for="editCourseSub">课程描述</label>
+        <input type="text" class="edit-modal-input" id="editCourseSub" placeholder="如：4组×12次" maxlength="40">
+      </div>
+      <div class="edit-modal-field">
+        <label class="edit-modal-label" for="editCourseUrl">跟练链接</label>
+        <input type="url" class="edit-modal-input" id="editCourseUrl" placeholder="粘贴B站/YouTube链接">
+      </div>
+    </div>
+    <div class="edit-modal-actions">
+      <button class="edit-modal-delete" id="editModalDelete" type="button">删除课程</button>
+      <div class="edit-modal-btns">
+        <button class="edit-modal-cancel" id="editModalCancel" type="button">取消</button>
+        <button class="edit-modal-save" id="editModalSave" type="button">保存</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -744,6 +905,145 @@ var coursesData={
   ]}
 };
 
+/* ===== 课程数据持久化（localStorage 覆盖默认数据） ===== */
+function loadCustomCourses(){
+  try{
+    var saved=localStorage.getItem('exercise_custom_courses');
+    if(saved){
+      var parsed=JSON.parse(saved);
+      if(parsed&&typeof parsed==='object'){
+        coursesData=parsed;
+      }
+    }
+  }catch(e){}
+}
+function saveCustomCourses(){
+  try{
+    localStorage.setItem('exercise_custom_courses',JSON.stringify(coursesData));
+  }catch(e){}
+}
+
+/* ===== 课程编辑/添加/删除 ===== */
+var editingMode='edit';  /* 'edit' 或 'add' */
+var editingCourseId=null;
+
+/* 工具：HTML 转义，防止用户输入破坏结构 */
+function escapeHtml(str){
+  if(str==null)return'';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* 工具：按 id 查找课程对象 */
+function findCourseById(id){
+  for(var l1 in coursesData){
+    if(!coursesData[l1])continue;
+    for(var l2 in coursesData[l1]){
+      var arr=coursesData[l1][l2];
+      if(!arr)continue;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].id===id)return arr[i];
+      }
+    }
+  }
+  return null;
+}
+
+/* 打开编辑弹窗 */
+function openEditModal(courseId){
+  var course=findCourseById(courseId);
+  if(!course)return;
+  editingMode='edit';
+  editingCourseId=courseId;
+  document.getElementById('editModalTitle').textContent='编辑课程';
+  document.getElementById('editCourseTitle').value=course.title||'';
+  document.getElementById('editCourseSub').value=course.sub||'';
+  document.getElementById('editCourseUrl').value=(course.url&&course.url!=='#')?course.url:'';
+  document.getElementById('editModalDelete').hidden=false;
+  document.getElementById('editModalOverlay').classList.add('open');
+}
+
+/* 打开添加弹窗 */
+function openAddModal(){
+  editingMode='add';
+  editingCourseId=null;
+  document.getElementById('editModalTitle').textContent='添加课程';
+  document.getElementById('editCourseTitle').value='';
+  document.getElementById('editCourseSub').value='';
+  document.getElementById('editCourseUrl').value='';
+  document.getElementById('editModalDelete').hidden=true;
+  document.getElementById('editModalOverlay').classList.add('open');
+  setTimeout(function(){document.getElementById('editCourseTitle').focus()},350);
+}
+
+/* 关闭弹窗 */
+function closeEditModal(){
+  document.getElementById('editModalOverlay').classList.remove('open');
+  editingCourseId=null;
+}
+
+/* 保存（编辑或新增） */
+function saveCourseFromModal(){
+  var title=document.getElementById('editCourseTitle').value.trim();
+  var sub=document.getElementById('editCourseSub').value.trim();
+  var url=document.getElementById('editCourseUrl').value.trim();
+  if(!title){showToast('请输入课程名称');return}
+  var finalUrl=url?url:'#';
+
+  if(editingMode==='edit'&&editingCourseId){
+    var course=findCourseById(editingCourseId);
+    if(course){
+      course.title=title;
+      course.sub=sub;
+      course.url=finalUrl;
+    }
+  }else if(editingMode==='add'){
+    var newId='custom_'+Date.now();
+    if(!coursesData[currentL1])coursesData[currentL1]={};
+    if(!coursesData[currentL1][currentL2])coursesData[currentL1][currentL2]=[];
+    coursesData[currentL1][currentL2].push({id:newId,title:title,sub:sub,url:finalUrl});
+  }
+  saveCustomCourses();
+  closeEditModal();
+  renderCourses();
+  updateProgress();
+  renderHistory();
+  showToast('已保存 ✓');
+}
+
+/* 删除当前编辑的课程 */
+function deleteCourseFromModal(){
+  if(!editingCourseId)return;
+  if(!confirm('确定删除该课程吗？'))return;
+  for(var l1 in coursesData){
+    if(!coursesData[l1])continue;
+    for(var l2 in coursesData[l1]){
+      var arr=coursesData[l1][l2];
+      if(!arr)continue;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].id===editingCourseId){
+          arr.splice(i,1);
+          break;
+        }
+      }
+    }
+  }
+  /* 同步清理打卡记录中的引用 */
+  try{
+    if(courseCheckins[editingCourseId])delete courseCheckins[editingCourseId];
+    var d=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');
+    for(var date in d){
+      if(d[date]&&d[date][editingCourseId])delete d[date][editingCourseId];
+    }
+    localStorage.setItem('exercise_course_checkins',JSON.stringify(d));
+  }catch(e){}
+  saveCustomCourses();
+  closeEditModal();
+  renderCourses();
+  updateProgress();
+  renderHistory();
+  showToast('已删除');
+}
+
 function loadCheckins(){
   try{
     var d=JSON.parse(localStorage.getItem('exercise_course_checkins')||'{}');
@@ -769,18 +1069,28 @@ function renderCourses(){
   var courses=coursesData[currentL1]&&coursesData[currentL1][currentL2]||[];
   var container=document.getElementById('courseList');
   if(!container)return;
-  if(courses.length===0){container.innerHTML='<div class="course-empty">暂未添加课程，后续可自定义</div>';return}
-  container.innerHTML=courses.map(function(c){
-    var done=courseCheckins[c.id];
-    return '<div class="course-item">'+
-      '<button class="course-check'+(done?' done':'')+'" data-cid="'+c.id+'" type="button">✓</button>'+
-      '<div class="course-body'+(done?' done':'')+'">'+
-        '<div class="course-title">'+c.title+'</div>'+
-        '<div class="course-sub">'+c.sub+'</div>'+
-      '</div>'+
-      '<button class="course-go-btn" data-url="'+c.url+'" type="button">跟练</button>'+
-    '</div>';
-  }).join('');
+  var html='';
+  if(courses.length===0){
+    html='<div class="course-empty">暂未添加课程，点击下方按钮添加</div>';
+  }else{
+    html=courses.map(function(c){
+      var done=courseCheckins[c.id];
+      return '<div class="course-item">'+
+        '<button class="course-check'+(done?' done':'')+'" data-cid="'+escapeHtml(c.id)+'" type="button">✓</button>'+
+        '<div class="course-body'+(done?' done':'')+'">'+
+          '<div class="course-title">'+escapeHtml(c.title)+'</div>'+
+          '<div class="course-sub">'+escapeHtml(c.sub)+'</div>'+
+        '</div>'+
+        '<div class="course-actions">'+
+          '<button class="course-edit-btn" data-eid="'+escapeHtml(c.id)+'" type="button" title="编辑">✎</button>'+
+          '<button class="course-go-btn" data-url="'+escapeHtml(c.url)+'" type="button">跟练</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+  /* 底部“+ 添加课程”按钮 */
+  html+='<button class="course-add-btn" id="courseAddBtn" type="button">+ 添加课程</button>';
+  container.innerHTML=html;
   /* 绑定勾选事件 */
   container.querySelectorAll('.course-check').forEach(function(btn){
     btn.addEventListener('click',function(e){e.stopPropagation();toggleCourseCheckin(this.getAttribute('data-cid'))});
@@ -792,6 +1102,13 @@ function renderCourses(){
       if(url&&url!=='#')window.location.href=url;else showToast('请先设置课程链接');
     });
   });
+  /* 绑定编辑事件 */
+  container.querySelectorAll('.course-edit-btn').forEach(function(btn){
+    btn.addEventListener('click',function(e){e.stopPropagation();openEditModal(this.getAttribute('data-eid'))});
+  });
+  /* 绑定添加课程事件 */
+  var addBtn=document.getElementById('courseAddBtn');
+  if(addBtn)addBtn.addEventListener('click',function(e){e.stopPropagation();openAddModal()});
 }
 
 function switchL1(l1){
@@ -942,7 +1259,23 @@ document.addEventListener('DOMContentLoaded',function(){
   if(appKeep)appKeep.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://m.gotokeep.com/fd-page/shareSportRecord?shareid=6a6b698ee1540a00010d37e3&title_type=group_a&utm_source=wechat'});
   if(appAnt)appAnt.addEventListener('click',function(e){e.stopPropagation();window.location.href='https://u.antaq.com/?scheme=aijk%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D20002184%26ijk_source%3Dmain_chat_share'});
 
+  /* 课程编辑弹窗事件 */
+  var editOverlay=document.getElementById('editModalOverlay');
+  var editClose=document.getElementById('editModalClose');
+  var editCancel=document.getElementById('editModalCancel');
+  var editSave=document.getElementById('editModalSave');
+  var editDelete=document.getElementById('editModalDelete');
+  if(editClose)editClose.addEventListener('click',function(e){e.stopPropagation();closeEditModal()});
+  if(editCancel)editCancel.addEventListener('click',function(e){e.stopPropagation();closeEditModal()});
+  if(editSave)editSave.addEventListener('click',function(e){e.stopPropagation();saveCourseFromModal()});
+  if(editDelete)editDelete.addEventListener('click',function(e){e.stopPropagation();deleteCourseFromModal()});
+  /* 点击遮罩关闭 */
+  if(editOverlay)editOverlay.addEventListener('click',function(e){
+    if(e.target===editOverlay)closeEditModal();
+  });
+
   /* 初始化：加载数据 → 恢复状态 → 渲染 */
+  loadCustomCourses();
   loadCheckins();
   loadMorningState();
   var streak=getStreakDays();
