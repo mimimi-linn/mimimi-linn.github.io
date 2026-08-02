@@ -664,7 +664,7 @@ document.getElementById('aiSummaryBtn').addEventListener('click', function() {
 });
 
 /* ============================================
-   资讯信息流 - 东方财富接口（JSONP）
+   资讯信息流 - 本地JSON文件（由GitHub Action定时更新）
    按关键词分类过滤国内政策/国际新闻
    ============================================ */
 var domesticKeywords = ['国务院', '政策', '改革', '法规', '发改委', '央行', '财政部', '全国', '人大', '政协', '法律', '制度', '主席', '总理', '部委', '监管', '规划', '纲要', '意见', '通知', '办法', '条例', '实施', '部署', '会议', '指示', '批示'];
@@ -704,67 +704,53 @@ function saveCachedStreamNews(data) {
 }
 
 function fetchStreamNews() {
-  /* 东方财富接口固定写入全局变量 ajaxResult，不支持自定义回调名 */
-  var oldScript = document.querySelector('#streamScript');
-  if(oldScript) oldScript.parentNode.removeChild(oldScript);
+  /* 先尝试从缓存加载（即时显示，避免空白闪烁） */
+  var cached = getCachedStreamNews();
+  if(cached && cached.data) {
+    streamNewsFromCache = true;
+    processStreamData(cached.data);
+  }
 
-  /* 先清除旧数据 */
-  window.ajaxResult = null;
-  streamNewsFromCache = false;
-
-  var script = document.createElement('script');
-  script.id = 'streamScript';
-  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_50_1_.html';
-  script.onerror = function() {
-    handleStreamNewsFail();
-  };
-  document.head.appendChild(script);
-
-  /* 轮询等待 ajaxResult 被赋值，延长超时至30次×200ms=6秒 */
-  var attempts = 0;
-  var timer = setInterval(function() {
-    attempts++;
-    if(window.ajaxResult && window.ajaxResult.LivesList) {
-      clearInterval(timer);
-      processStreamData(window.ajaxResult);
-      saveCachedStreamNews(window.ajaxResult);
-      if(script.parentNode) script.parentNode.removeChild(script);
-      streamNewsRetryCount = 0;
-    } else if(attempts > 30) {
-      clearInterval(timer);
-      if(script.parentNode) script.parentNode.removeChild(script);
-      handleStreamNewsFail();
-    }
-  }, 200);
+  /* 从本地JSON文件加载（由GitHub Action每小时定时更新，无跨域问题） */
+  fetch('data-stream-news.json', { cache: 'no-store' })
+    .then(function(response) {
+      if(!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(function(data) {
+      if(data && data.items && data.items.length > 0) {
+        processStreamData(data);
+        saveCachedStreamNews(data);
+        streamNewsFromCache = false;
+      }
+    })
+    .catch(function(error) {
+      console.error('资讯加载失败:', error);
+      if(!cached) {
+        document.getElementById('newsList').innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">资讯加载失败，请稍后刷新重试</div>';
+      }
+    });
 }
 
-/* 失败处理：重试 -> 缓存 -> 错误提示 */
+/* 失败处理：缓存兜底（无重试，避免闪烁） */
 function handleStreamNewsFail() {
-  streamNewsRetryCount++;
-  if(streamNewsRetryCount <= STREAM_NEWS_MAX_RETRY) {
-    /* 友好的重试提示，间隔递增：1s, 2s, 3s */
-    document.getElementById('newsList').innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">资讯加载中，正在重试...（第' + streamNewsRetryCount + '次）</div>';
-    setTimeout(function() {
-      fetchStreamNews();
-    }, streamNewsRetryCount * 1000);
+  var cached = getCachedStreamNews();
+  if(cached && cached.data) {
+    streamNewsFromCache = true;
+    processStreamData(cached.data);
   } else {
-    /* 重试用尽，先尝试缓存 */
-    var cached = getCachedStreamNews();
-    streamNewsRetryCount = 0;
-    if(cached && cached.data) {
-      streamNewsFromCache = true;
-      processStreamData(cached.data);
-    } else {
-      document.getElementById('newsList').innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">资讯获取失败，请稍后刷新重试</div>';
-    }
+    document.getElementById('newsList').innerHTML = '<div style="text-align:center;padding:20px;color:#B0B0B0;font-size:13px;">资讯加载失败，请稍后刷新重试</div>';
   }
 }
 
 function processStreamData(data) {
-  if(!data || !data.LivesList) return;
+  /* 兼容两种格式：新格式 data.items / 旧格式 data.LivesList */
+  var items = (data && data.items) ? data.items : (data && data.LivesList ? data.LivesList : []);
+  if(!items || items.length === 0) return;
+
   var domestic = [];
   var international = [];
-  data.LivesList.forEach(function(item) {
+  items.forEach(function(item) {
     var text = (item.title || '') + (item.digest || '');
     var emoji = '📰';
     var isDomestic = false;
@@ -781,16 +767,16 @@ function processStreamData(data) {
     else if(isDomestic) emoji = '🏛️';
 
     var newsItem = {
-      id: item.newsid || item.id,
+      id: item.id || item.newsid || '',
       emoji: emoji,
-      title: item.title,
+      title: item.title || '',
       source: '东方财富',
-      time: item.showtime || '',
-      url: item.url_m || item.url_w || ''
+      time: item.time || item.showtime || '',
+      url: item.url || item.url_m || item.url_w || ''
     };
 
-    if(isDomestic) domestic.push(newsItem);
     if(isInternational) international.push(newsItem);
+    else domestic.push(newsItem);
   });
 
   allStreamData.domestic = domestic.slice(0, 30);

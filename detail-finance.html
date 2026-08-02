@@ -841,20 +841,16 @@ function updateSectorItem(varName, sectorName) {
 }
 
 /* ============================================
-   财经资讯 - 东方财富接口（免费无Key，JSONP）
-   接口: https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_N_1_.html?cb=cbFunc
-   返回: cbFunc({"LivesList":[{title,digest,showtime,url_m,...}],...})
+   财经资讯 - 本地JSON文件（由GitHub Action定时更新）
+   无跨域问题，fetch直接加载 data-finance-news.json
    ============================================ */
 var allNewsData = { latest: [], fav: [] };
 
-/* 重试与缓存配置 */
-var newsRetryCount = 0;
-var NEWS_MAX_RETRY = 3;
 var newsFromCache = false;
 var NEWS_CACHE_KEY = 'news_cache_finance';
 var NEWS_CACHE_TTL = 30 * 60 * 1000; /* 30分钟 */
 
-/* 读取本地缓存（超时后仍可返回，由调用方决定是否标注） */
+/* 读取本地缓存 */
 function getCachedNewsData() {
   try {
     var raw = localStorage.getItem(NEWS_CACHE_KEY);
@@ -878,10 +874,11 @@ function saveCachedNewsData(data) {
   } catch(e) {}
 }
 
-/* 解析东方财富数据并渲染（成功与缓存复用） */
+/* 解析数据并渲染（兼容新格式 items / 旧格式 LivesList） */
 function processNewsData(data) {
-  if(!data || !data.LivesList) return;
-  allNewsData.latest = data.LivesList.map(function(item) {
+  var items = (data && data.items) ? data.items : (data && data.LivesList ? data.LivesList : []);
+  if(!items || items.length === 0) return;
+  allNewsData.latest = items.map(function(item) {
     var digest = item.digest || item.title || '';
     var emoji = '📰';
     if(digest.indexOf('央行') !== -1 || digest.indexOf('利率') !== -1) emoji = '🏦';
@@ -893,12 +890,12 @@ function processNewsData(data) {
     else if(digest.indexOf('美联储') !== -1 || digest.indexOf('日本') !== -1 || digest.indexOf('美国') !== -1) emoji = '🌍';
 
     return {
-      id: item.newsid || item.id,
+      id: item.id || item.newsid || '',
       emoji: emoji,
-      title: item.title,
+      title: item.title || '',
       source: '东方财富',
-      time: item.showtime || '',
-      url: item.url_m || item.url_w || '',
+      time: item.time || item.showtime || '',
+      url: item.url || item.url_m || item.url_w || '',
       digest: digest
     };
   });
@@ -906,70 +903,35 @@ function processNewsData(data) {
 }
 
 function fetchNewsData() {
-  /* 东方财富接口固定写入全局变量 ajaxResult，不支持自定义回调名（去掉无用的 ?cb= 参数） */
-  var oldScript = document.querySelector('#newsScript');
-  if(oldScript) oldScript.parentNode.removeChild(oldScript);
-
-  /* 先清除旧数据 */
-  window.ajaxResult = null;
-  newsFromCache = false;
-
-  var script = document.createElement('script');
-  script.id = 'newsScript';
-  script.src = 'https://newsapi.eastmoney.com/kuaixun/v1/getlist_101_ajaxResult_20_1_.html';
-  script.onerror = function() {
-    handleNewsFail();
-  };
-  document.head.appendChild(script);
-
-  /* 轮询等待 ajaxResult 被赋值，30次×200ms=6秒超时 */
-  var attempts = 0;
-  var timer = setInterval(function() {
-    attempts++;
-    if(window.ajaxResult && window.ajaxResult.LivesList) {
-      clearInterval(timer);
-      processNewsData(window.ajaxResult);
-      saveCachedNewsData(window.ajaxResult);
-      if(script.parentNode) script.parentNode.removeChild(script);
-      newsRetryCount = 0;
-    } else if(attempts > 30) {
-      clearInterval(timer);
-      if(script.parentNode) script.parentNode.removeChild(script);
-      handleNewsFail();
-    }
-  }, 200);
-}
-
-/* 失败处理：重试 -> 缓存 -> 错误提示 */
-function handleNewsFail() {
-  newsRetryCount++;
-  if(newsRetryCount <= NEWS_MAX_RETRY) {
-    /* 友好的重试提示，间隔递增：1s, 2s, 3s */
-    allNewsData.latest = [
-      {id:'retry_' + newsRetryCount, emoji:'⏳', title:'资讯加载中，正在重试...（第' + newsRetryCount + '次）', source:'系统提示', time:'', url:'', digest:''}
-    ];
-    renderNews('latest');
-    setTimeout(function() {
-      fetchNewsData();
-    }, newsRetryCount * 1000);
-  } else {
-    /* 重试用尽，交由 renderNewsFallback 优先取缓存 */
-    newsRetryCount = 0;
-    renderNewsFallback();
-  }
-}
-
-function renderNewsFallback() {
+  /* 先尝试从缓存加载（即时显示，避免空白闪烁） */
   var cached = getCachedNewsData();
   if(cached && cached.data) {
     newsFromCache = true;
     processNewsData(cached.data);
-  } else {
-    allNewsData.latest = [
-      {id:'fb1', emoji:'⚠️', title:'实时资讯获取失败，请稍后刷新重试', source:'系统提示', time:'', url:'', digest:''}
-    ];
-    renderNews('latest');
   }
+
+  /* 从本地JSON文件加载（由GitHub Action每小时定时更新，无跨域问题） */
+  fetch('data-finance-news.json', { cache: 'no-store' })
+    .then(function(response) {
+      if(!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(function(data) {
+      if(data && data.items && data.items.length > 0) {
+        processNewsData(data);
+        saveCachedNewsData(data);
+        newsFromCache = false;
+      }
+    })
+    .catch(function(error) {
+      console.error('财经资讯加载失败:', error);
+      if(!cached) {
+        allNewsData.latest = [
+          {id:'fb1', emoji:'⚠️', title:'资讯加载失败，请稍后刷新重试', source:'系统提示', time:'', url:'', digest:''}
+        ];
+        renderNews('latest');
+      }
+    });
 }
 
 function renderNews(type) {
